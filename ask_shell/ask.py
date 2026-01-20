@@ -3,9 +3,7 @@ from ask_shell._internal.interactive import ChoiceTyped as _ChoiceTyped
 from ask_shell._internal.interactive import KeyInput as _KeyInput
 from ask_shell._internal.interactive import NewHandlerChoice as _NewHandlerChoice
 from ask_shell._internal.interactive import PromptMatch as _PromptMatch
-from ask_shell._internal.interactive import (
-    RaiseOnQuestionError as _RaiseOnQuestionError,
-)
+from ask_shell._internal.interactive import RaiseOnQuestionError as _RaiseOnQuestionError
 from ask_shell._internal.interactive import SelectOptions as _SelectOptions
 from ask_shell._internal.interactive import confirm as _confirm
 from ask_shell._internal.interactive import force_interactive as _force_interactive
@@ -14,12 +12,8 @@ from ask_shell._internal.interactive import raise_on_question as _raise_on_quest
 from ask_shell._internal.interactive import select_dict as _select_dict
 from ask_shell._internal.interactive import select_list as _select_list
 from ask_shell._internal.interactive import select_list_choice as _select_list_choice
-from ask_shell._internal.interactive import (
-    select_list_multiple as _select_list_multiple,
-)
-from ask_shell._internal.interactive import (
-    select_list_multiple_choices as _select_list_multiple_choices,
-)
+from ask_shell._internal.interactive import select_list_multiple as _select_list_multiple
+from ask_shell._internal.interactive import select_list_multiple_choices as _select_list_multiple_choices
 from ask_shell._internal.interactive import text as _text
 
 ChoiceTyped = _ChoiceTyped
