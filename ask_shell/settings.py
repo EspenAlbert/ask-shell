@@ -26,10 +26,10 @@ def default_callbacks_funcs() -> list[str]:
 
     return [
         as_name(call)
-        for call in [
+        for call in (
             wait_on_available_threads,
             rich_live_callback,
-        ]
+        )
     ]
 
 

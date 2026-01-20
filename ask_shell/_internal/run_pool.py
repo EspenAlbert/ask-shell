@@ -19,7 +19,7 @@ T_co = TypeVar("T_co", covariant=True)
 
 
 class SubmitFunc(Protocol[T_co]):
-    def __call__(self, *args: Any, **kwds: Any) -> T_co: ...
+    def __call__(self, *args: Any, **kwargs: Any) -> T_co: ...
 
 
 @dataclass

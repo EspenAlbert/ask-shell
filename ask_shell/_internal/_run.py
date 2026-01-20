@@ -116,7 +116,7 @@ def kill_all_runs(
             reason=reason,
             abort_timeout=abort_timeout,
         )
-    if len(_runs) > 0:
+    if _runs:
         logger.warning(
             f"still {_runs} runs left after killing, maybe some were started again, will try to kill them again"
         )
@@ -229,7 +229,7 @@ def _read_until_complete(
     config: ShellConfig,
     is_stdout: bool,
 ):
-    with open(output_path, "w") as f:
+    with output_path.open("w") as f:
         console = Console(
             file=f,
             record=True,

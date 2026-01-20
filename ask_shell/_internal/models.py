@@ -332,7 +332,7 @@ class ShellRun:
         return remove_callback
 
     def _call_callbacks(self, message: ShellRunEventT):
-        for callback in list(self.config.message_callbacks):
+        for callback in self.config.message_callbacks.copy():
             try:
                 if callback(message):
                     self.config.message_callbacks.remove(callback)
@@ -508,7 +508,7 @@ class ShellError(Exception):
         if lines_stderr:
             lines_stderr.insert(0, "STDERR")
         last_lines_str = "\n".join(line.strip() for line in lines_stdout + lines_stderr if line.strip())
-        return f"{str(self.run)}\nExit code: {self.exit_code}\nlines:{last_lines_str}"
+        return f"{self.run}\nExit code: {self.exit_code}\nlines:{last_lines_str}"
 
 
 class RunIncompleteError(Exception):

@@ -6,6 +6,7 @@ import asyncio
 import io
 import logging
 import os
+import string
 from dataclasses import dataclass, field
 from functools import wraps
 from typing import Any, Callable, Generic, Self, TypeVar
@@ -148,7 +149,7 @@ class SelectOptions(BaseModel, Generic[T]):
 
     @model_validator(mode="after")
     def validate_compatibility(self) -> SelectOptions:
-        if self.use_search_filter is True and self.use_jk_keys is True:
+        if self.use_search_filter is True is self.use_jk_keys:
             raise ValueError("use_search_filter and use_jk_keys cannot be used together")
         return self
 
@@ -561,7 +562,7 @@ if __name__ == "__main__":
         ChoiceTyped(name="Option 2", value=2, description="Second option"),
     ]
     logger.info(select_list_multiple_choices("Select options:", choices_typed, default=[1]))
-    logger.info(select_list("Choose a letter", list("abcdefghijklmnopqrstuvwxyz")))
+    logger.info(select_list("Choose a letter", list(string.ascii_lowercase)))
     logger.info(
         select_dict(
             "Select an option:",

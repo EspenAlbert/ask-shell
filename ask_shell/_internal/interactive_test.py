@@ -1,3 +1,5 @@
+import string
+
 import pytest
 
 from ask_shell._internal.interactive import (
@@ -67,16 +69,16 @@ def test_select_list_multiple_with_default():
     "inputs, options, default, expected",
     [
         ([""], ["Option 1", "Option 2", "Option 3"], None, "Option 1"),
-        ([f"{KeyInput.DOWN}"], ["Option 1", "Option 2", "Option 3"], None, "Option 2"),
+        ([KeyInput.DOWN], ["Option 1", "Option 2", "Option 3"], None, "Option 2"),
         ([""], ["Option 1", "Option 2", "Option 3"], "Option 2", "Option 2"),
         (
-            [f"{KeyInput.DOWN}"],
+            [KeyInput.DOWN],
             ["Option 1", "Option 2", "Option 3"],
             "Option 1",
             "Option 2",
         ),
         (
-            [f"{KeyInput.DOWN}"],
+            [KeyInput.DOWN],
             ["Option 1", "Option 2", "Option 3"],
             "Option 2",
             "Option 3",
@@ -97,20 +99,17 @@ def test_select_list(inputs, options, default, expected):
 
 def test_select_list_many_options_supports_search():
     with question_patcher(responses=["q", ""]):
-        assert select_list("Choose a letter", list("abcdefghijklmnopqrstuvwxyz")) == "q"
+        assert select_list("Choose a letter", list(string.ascii_lowercase)) == "q"
 
 
 def test_select_list_supports_shortcut_on_shorter_lists():
     with question_patcher(responses=["3"]):
         assert select_list("Choose a number", ["1", "2", "3"]) == "3"
-    with question_patcher(responses=[f"{SEARCH_ENABLED_AFTER_CHOICES}"]):
-        assert (
-            select_list(
-                "Choose a number",
-                [str(i) for i in range(1, SEARCH_ENABLED_AFTER_CHOICES + 1)],
-            )
-            == f"{SEARCH_ENABLED_AFTER_CHOICES}"
-        )
+    with question_patcher(responses=[str(SEARCH_ENABLED_AFTER_CHOICES)]):
+        assert select_list(
+            "Choose a number",
+            [str(i) for i in range(1, SEARCH_ENABLED_AFTER_CHOICES + 1)],
+        ) == str(SEARCH_ENABLED_AFTER_CHOICES)
 
 
 def test_explicit_select_options():
@@ -118,7 +117,7 @@ def test_explicit_select_options():
         assert (
             select_list(
                 "Choose a letter",
-                list("abcdefghijklmnopqrstuvwxyz"),
+                list(string.ascii_lowercase),
                 options=SelectOptions(use_jk_keys=True),
             )
             == "b"
