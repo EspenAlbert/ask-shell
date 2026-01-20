@@ -12,7 +12,7 @@ from ask_shell._internal.models import (
 def test_infer_print_prefix(tmp_path):
     cwd = tmp_path / "some-repo/tf_module"
     cwd.mkdir(parents=True)
-    config = ShellConfig(shell_input="terraform apply", cwd=cwd)
+    config = ShellConfig(shell_input="terraform apply", cwd=cwd, skip_binary_check=True)
     assert config.print_prefix == "some-repo/tf_module terraform apply"
     assert config.is_binary_call
     assert config.ansi_content
@@ -23,7 +23,7 @@ def test_infer_print_prefix(tmp_path):
 def test_infer_print_prefix_with_global_flag(tmp_path, flag):
     cwd = tmp_path / "some-repo/tf_module"
     cwd.mkdir(parents=True)
-    config = ShellConfig(shell_input=f"terraform {flag} apply", cwd=cwd, skip_os_env=True)
+    config = ShellConfig(shell_input=f"terraform {flag} apply", cwd=cwd, skip_os_env=True, skip_binary_check=True)
     assert config.print_prefix == "some-repo/tf_module terraform apply"
     assert config.env == {}
 

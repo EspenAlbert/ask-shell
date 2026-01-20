@@ -63,6 +63,7 @@ extend-select = ["Q", "RUF100", "C90", "UP", "I", "T"]
 [tool.pytest.ini_options]
 addopts = "-s -vv --log-cli-level=INFO"
 python_files = ["*_test.py", "test_*.py"]
+asyncio_mode = "auto"
 # === OK_EDIT: path-sync pytest ===
 
 # === DO_NOT_EDIT: path-sync coverage ===
@@ -75,6 +76,7 @@ exclude_lines = ["no cov", "if __name__ == .__main__.:"]
 dev = [
   "pyright>=1.1",
   "pytest>=9.0",
+  "pytest-asyncio>=0.24",
   "pytest-cov>=7.0",
   "pytest-model-lib",
   "ruff>=0.14",
