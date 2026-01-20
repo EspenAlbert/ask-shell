@@ -31,7 +31,7 @@
 
 ### class: `ChoiceTyped`
 - [source](../../ask_shell/_internal/interactive.py#L105)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ChoiceTyped(Generic):
@@ -43,17 +43,17 @@ class ChoiceTyped(Generic):
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| name | `str` | - | 0.2.0 |
-| value | `~T` | - | 0.2.0 |
-| description | `str | None` | `None` | 0.2.0 |
-| checked | `bool` | `False` | 0.2.0 |
+| name | `str` | - | 0.4.0 |
+| value | `~T` | - | 0.4.0 |
+| description | `str | None` | `None` | 0.4.0 |
+| checked | `bool` | `False` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext choicetyped_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext keyinput_def === -->
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
 - [source](../../ask_shell/_internal/interactive.py#L315)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class KeyInput:
@@ -65,7 +65,7 @@ class KeyInput:
 
 ### class: `NewHandlerChoice`
 - [source](../../ask_shell/_internal/interactive.py#L99)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class NewHandlerChoice(Generic):
@@ -75,15 +75,15 @@ class NewHandlerChoice(Generic):
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| constructor | `Callable[[<class 'str'>], ~T]` | - | 0.2.0 |
-| new_prompt | `str` | - | 0.2.0 |
+| constructor | `Callable[[<class 'str'>], ~T]` | - | 0.4.0 |
+| new_prompt | `str` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext newhandlerchoice_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext promptmatch_def === -->
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
 - [source](../../ask_shell/_internal/interactive.py#L337)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class PromptMatch:
@@ -97,19 +97,19 @@ class PromptMatch:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| response | `str | None` | `None` | 0.2.0 |
-| responses | `list[str]` | `...` | 0.2.0 |
-| substring | `str` | `''` | 0.2.0 |
-| exact | `str` | `''` | 0.2.0 |
-| max_matches | `int` | `1` | 0.2.0 |
-| matches_so_far | `int` | `0` | 0.2.0 |
+| response | `str | None` | `None` | 0.4.0 |
+| responses | `list[str]` | `...` | 0.4.0 |
+| substring | `str` | `''` | 0.4.0 |
+| exact | `str` | `''` | 0.4.0 |
+| max_matches | `int` | `1` | 0.4.0 |
+| matches_so_far | `int` | `0` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext promptmatch_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext raiseonquestionerror_def === -->
 <a id="raiseonquestionerror_def"></a>
 
 ### exception: `RaiseOnQuestionError`
 - [source](../../ask_shell/_internal/interactive.py#L503)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class RaiseOnQuestionError(Exception):
@@ -121,29 +121,29 @@ class RaiseOnQuestionError(Exception):
 
 ### class: `SelectOptions`
 - [source](../../ask_shell/_internal/interactive.py#L139)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class SelectOptions(BaseModel, Generic):
-    use_search_filter: bool | object = <object object at 0x1026be820>
-    use_shortcuts: bool | object = <object object at 0x1026be820>
-    use_jk_keys: bool | object = <object object at 0x1026be820>
+    use_search_filter: bool | object = <object object at 0x100346830>
+    use_shortcuts: bool | object = <object object at 0x100346830>
+    use_jk_keys: bool | object = <object object at 0x100346830>
     new_handler_choice: NewHandlerChoice[~T] | None
 ```
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| use_search_filter | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
-| use_shortcuts | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
-| use_jk_keys | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
-| new_handler_choice | `NewHandlerChoice[~T] | None` | - | 0.2.0 |
+| use_search_filter | `bool | object` | `<object object at 0x100346830>` | 0.4.0 |
+| use_shortcuts | `bool | object` | `<object object at 0x100346830>` | 0.4.0 |
+| use_jk_keys | `bool | object` | `<object object at 0x100346830>` | 0.4.0 |
+| new_handler_choice | `NewHandlerChoice[~T] | None` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext selectoptions_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext confirm_def === -->
 <a id="confirm_def"></a>
 
 ### function: `confirm`
 - [source](../../ask_shell/_internal/interactive.py#L80)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
@@ -155,7 +155,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
 
 ### class: `force_interactive`
 - [source](../../ask_shell/_internal/interactive.py#L380)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class force_interactive:
@@ -164,14 +164,14 @@ class force_interactive:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| settings | `AskShellSettings` | `...` | 0.2.0 |
+| settings | `AskShellSettings` | `...` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext force_interactive_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext question_patcher_def === -->
 <a id="question_patcher_def"></a>
 
 ### class: `question_patcher`
 - [source](../../ask_shell/_internal/interactive.py#L396)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class question_patcher(force_interactive):
@@ -190,17 +190,17 @@ thread pools, prompt_toolkit may still write to closed streams.
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| settings | `AskShellSettings` | `...` | 0.2.0 |
-| responses | `list[str]` | `...` | 0.2.0 |
-| next_response | `int` | `0` | 0.2.0 |
-| dynamic_responses | `list[PromptMatch]` | `...` | 0.2.0 |
+| settings | `AskShellSettings` | `...` | 0.4.0 |
+| responses | `list[str]` | `...` | 0.4.0 |
+| next_response | `int` | `0` | 0.4.0 |
+| dynamic_responses | `list[PromptMatch]` | `...` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext question_patcher_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext raise_on_question_def === -->
 <a id="raise_on_question_def"></a>
 
 ### class: `raise_on_question`
 - [source](../../ask_shell/_internal/interactive.py#L509)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class raise_on_question(force_interactive):
@@ -210,15 +210,15 @@ class raise_on_question(force_interactive):
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| settings | `AskShellSettings` | `...` | 0.2.0 |
-| raise_error | `Callable[[<class 'str'>], BaseException]` | `<class 'ask_shell._internal.interactive.RaiseOnQuestionError'>` | 0.2.0 |
+| settings | `AskShellSettings` | `...` | 0.4.0 |
+| raise_error | `Callable[[<class 'str'>], BaseException]` | `<class 'ask_shell._internal.interactive.RaiseOnQuestionError'>` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext raise_on_question_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_dict_def === -->
 <a id="select_dict_def"></a>
 
 ### function: `select_dict`
 - [source](../../ask_shell/_internal/interactive.py#L260)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None = None, options: SelectOptions | None = None) -> ~T:
@@ -230,7 +230,7 @@ def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None
 
 ### function: `select_list`
 - [source](../../ask_shell/_internal/interactive.py#L276)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def select_list(prompt_text: str, choices: list[str], *, default: str | None = None, options: SelectOptions | None = None) -> str:
@@ -242,7 +242,7 @@ def select_list(prompt_text: str, choices: list[str], *, default: str | None = N
 
 ### function: `select_list_choice`
 - [source](../../ask_shell/_internal/interactive.py#L301)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, default: ~T | None = None, options: SelectOptions | None = None) -> ~T:
@@ -254,7 +254,7 @@ def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, defa
 
 ### function: `select_list_multiple`
 - [source](../../ask_shell/_internal/interactive.py#L229)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[str] | None = None, options: SelectOptions | None = None) -> list[str]:
@@ -266,7 +266,7 @@ def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[
 
 ### function: `select_list_multiple_choices`
 - [source](../../ask_shell/_internal/interactive.py#L245)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]], default: list[~T] | None = None, *, options: SelectOptions | None = None) -> list[~T]:
@@ -278,7 +278,7 @@ def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]
 
 ### function: `text`
 - [source](../../ask_shell/_internal/interactive.py#L128)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def text(prompt_text: str, default: str = '') -> str:

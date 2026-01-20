@@ -3,7 +3,7 @@
 # === OK_EDIT: path-sync header ===
 [project]
 name = "ask-shell"
-version = "0.2.1"
+version = "0.3.0"
 description = "Build Pretty, Helpful, and Testable CLIs"
 requires-python = ">=3.13"
 license = "MIT"

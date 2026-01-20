@@ -524,11 +524,6 @@ ts: 2025-10-19 17:08:57.461768+00:00
 type: keep_private
 full_path: _internal.typer_command.except_hook_custom
 ---
-name: 0.2.0
-ts: 2025-10-19 17:16:50.463390+00:00
-type: release
-old_version: 0.1.0
----
 name: console
 ts: 2025-10-22 06:46:37.528267+00:00
 type: fix
@@ -536,11 +531,6 @@ author: EspenAlbert
 changelog_message: 'fix: Adds flag for skip_rich_exception instead of hard-coded'
 message: 'fix: Adds flag for skip_rich_exception instead of hard-coded'
 short_sha: 123bf4
----
-name: 0.2.1
-ts: 2025-10-22 06:49:57.506342+00:00
-type: release
-old_version: 0.2.0
 ---
 name: as_upper
 ts: 2026-01-20 19:44:16.576076+00:00
@@ -558,3 +548,8 @@ author: Espen Albert
 ignored: true
 message: 'fix: improve slow test handling in tf_dir fixture'
 short_sha: c08df2
+---
+name: 0.3.0
+ts: 2026-01-20 20:23:41.982621+00:00
+type: release
+old_version: 0.2.1

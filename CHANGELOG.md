@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 2026-01-20T20-23Z
+
+- Chore release in standalone repo
+
+
 ## 0.2.1 2025-10-22T06-49Z
 
 ### Console

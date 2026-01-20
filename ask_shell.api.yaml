@@ -1,0 +1,1970 @@
+pkg_import_name: ask_shell
+version: 0.3.0
+groups:
+- name: __ROOT__
+  symbols:
+  - name: AskShellSettings
+    module_path: settings
+    docstring: ''
+    line_number: 93
+    type: class
+    direct_bases:
+    - StaticSettings
+    fields:
+    - name: STATIC_DIR
+      type_annotation: Path
+      type_imports:
+      - pathlib.Path
+      default:
+        value_repr: PydanticUndefined
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - static_dir
+    - name: CACHE_DIR
+      type_annotation: Path
+      type_imports:
+      - pathlib.Path
+      default:
+        value_repr: PydanticUndefined
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - cache_dir
+    - name: SKIP_APP_NAME
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - skip_app_name
+    - name: log_level
+      type_annotation: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET]
+      type_imports: []
+      default:
+        value_repr: '''UNSET'''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - log_level
+    - name: force_interactive_shell
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Useful for testing
+      env_vars:
+      - ask_shell_force_interactive_shell
+      - force_interactive_shell
+    - name: thread_count
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '50'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Thread count for ask-shell pool
+      env_vars:
+      - ask_shell_thread_count
+      - thread_count
+    - name: thread_pool_full_wait_time_seconds
+      type_annotation: float
+      type_imports: []
+      default:
+        value_repr: '5'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: How long to wait when the thread pools is full before trying again
+      env_vars:
+      - ask_shell_thread_pool_full_wait_time_seconds
+      - thread_pool_full_wait_time_seconds
+    - name: search_enabled_after_choices
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '7'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: How many choices to show before enabling search
+      env_vars:
+      - ask_shell_search_enabled_after_choices
+      - search_enabled_after_choices
+    - name: global_callback_strings
+      type_annotation: list[str]
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+      description: Use global callbacks to receive ShellRun events. Uses `locate` to find the callback function by its string name. Setting this will override defaults
+      env_vars:
+      - ask_shell_global_callbacks
+      - global_callback_strings
+    - name: remove_os_secrets
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+      description: Use a log filter to remove secrets from the terminal output. No guarantees though. Always be careful when logging.
+      env_vars:
+      - ask_shell_remove_os_secrets
+      - remove_os_secrets
+    - name: run_logs_dir
+      type_annotation: Path | None
+      type_imports:
+      - pathlib.Path
+      is_class_var: false
+      is_computed: false
+      description: Directory to store run logs. If not set, defaults to `cache_root/run_logs/YYYY-MM-DD`. You can also use `configure_run_logs_dir_if_unset` to set it dynamically.
+      env_vars:
+      - ask_shell_run_logs_dir
+      - run_logs_dir
+    - name: run_logs_clean
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: '''yesterday'''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Runs once If `run_logs_dir` is not set. Can be 'yesterday' or a date string like '2023-01-01'. Will clean all logs up until the specified date but not that date itself.
+      env_vars:
+      - ask_shell_run_logs_clean
+      - run_logs_clean
+- name: ask
+  symbols:
+  - name: ChoiceTyped
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 105
+    type: class
+    direct_bases:
+    - Generic
+    fields:
+    - name: name
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: value
+      type_annotation: ~T
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: description
+      type_annotation: str | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: checked
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: KeyInput
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 315
+    type: class
+    direct_bases: []
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_only
+        type_imports: []
+      - name: args
+        kind: var_positional
+        type_imports: []
+      - name: kwargs
+        kind: var_keyword
+        type_imports: []
+      return_type_imports: []
+  - name: NewHandlerChoice
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 99
+    type: class
+    direct_bases:
+    - Generic
+    fields:
+    - name: constructor
+      type_annotation: Callable[[<class 'str'>], ~T]
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: new_prompt
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: PromptMatch
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 337
+    type: class
+    direct_bases: []
+    fields:
+    - name: response
+      type_annotation: str | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: responses
+      type_annotation: list[str]
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: substring
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: ''''''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: exact
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: ''''''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: max_matches
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '1'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: matches_so_far
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '0'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: RaiseOnQuestionError
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 503
+    type: exception
+    direct_bases:
+    - Exception
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      return_type_imports: []
+  - name: SelectOptions
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 139
+    type: class
+    direct_bases:
+    - BaseModel
+    - Generic
+    fields:
+    - name: use_search_filter
+      type_annotation: bool | object
+      type_imports: []
+      default:
+        value_repr: <object object at 0x100346830>
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: use_shortcuts
+      type_annotation: bool | object
+      type_imports: []
+      default:
+        value_repr: <object object at 0x100346830>
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: use_jk_keys
+      type_annotation: bool | object
+      type_imports: []
+      default:
+        value_repr: <object object at 0x100346830>
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: new_handler_choice
+      type_annotation: NewHandlerChoice[~T] | None
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: confirm
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 80
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: default
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: bool
+      return_type_imports: []
+  - name: force_interactive
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 380
+    type: class
+    direct_bases: []
+    fields:
+    - name: settings
+      type_annotation: AskShellSettings
+      type_imports:
+      - ask_shell.settings.AskShellSettings
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+  - name: question_patcher
+    module_path: _internal.interactive
+    docstring: 'Context manager to patch the questionary.ask_question, useful for testing.
+
+
+      Uses PlainTextOutput with a controlled buffer and direct unsafe_ask() calls
+
+      to avoid I/O conflicts with Click''s CliRunner. The CliRunner replaces
+
+      sys.stdout/stderr with its own wrappers, and if we use DummyOutput or
+
+      thread pools, prompt_toolkit may still write to closed streams.
+
+      '
+    line_number: 396
+    type: class
+    direct_bases:
+    - force_interactive
+    fields:
+    - name: settings
+      type_annotation: AskShellSettings
+      type_imports:
+      - ask_shell.settings.AskShellSettings
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: responses
+      type_annotation: list[str]
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: next_response
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '0'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: dynamic_responses
+      type_annotation: list[PromptMatch]
+      type_imports:
+      - ask_shell._internal.interactive.PromptMatch
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+  - name: raise_on_question
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 509
+    type: class
+    direct_bases:
+    - force_interactive
+    fields:
+    - name: settings
+      type_annotation: AskShellSettings
+      type_imports:
+      - ask_shell.settings.AskShellSettings
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: raise_error
+      type_annotation: Callable[[<class 'str'>], BaseException]
+      type_imports: []
+      default:
+        value_repr: <class 'ask_shell._internal.interactive.RaiseOnQuestionError'>
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: select_dict
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 260
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: choices
+        kind: positional_or_keyword
+        type_annotation: dict[str, ~T]
+        type_imports: []
+      - name: default
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: options
+        kind: keyword_only
+        type_annotation: SelectOptions | None
+        type_imports:
+        - ask_shell._internal.interactive.SelectOptions
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: ~T
+      return_type_imports: []
+  - name: select_list
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 276
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: choices
+        kind: positional_or_keyword
+        type_annotation: list[str]
+        type_imports: []
+      - name: default
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: options
+        kind: keyword_only
+        type_annotation: SelectOptions | None
+        type_imports:
+        - ask_shell._internal.interactive.SelectOptions
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: str
+      return_type_imports: []
+  - name: select_list_choice
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 301
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: choices
+        kind: positional_or_keyword
+        type_annotation: list[ChoiceTyped[~T]]
+        type_imports: []
+      - name: default
+        kind: keyword_only
+        type_annotation: ~T | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: options
+        kind: keyword_only
+        type_annotation: SelectOptions | None
+        type_imports:
+        - ask_shell._internal.interactive.SelectOptions
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: ~T
+      return_type_imports: []
+  - name: select_list_multiple
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 229
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: choices
+        kind: positional_or_keyword
+        type_annotation: list[str]
+        type_imports: []
+      - name: default
+        kind: keyword_only
+        type_annotation: list[str] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: options
+        kind: keyword_only
+        type_annotation: SelectOptions | None
+        type_imports:
+        - ask_shell._internal.interactive.SelectOptions
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: list[str]
+      return_type_imports: []
+  - name: select_list_multiple_choices
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 245
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: choices
+        kind: positional_or_keyword
+        type_annotation: list[ChoiceTyped[~T]]
+        type_imports: []
+      - name: default
+        kind: positional_or_keyword
+        type_annotation: list[~T] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: options
+        kind: keyword_only
+        type_annotation: SelectOptions | None
+        type_imports:
+        - ask_shell._internal.interactive.SelectOptions
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: list[~T]
+      return_type_imports: []
+  - name: text
+    module_path: _internal.interactive
+    docstring: ''
+    line_number: 128
+    type: function
+    signature:
+      parameters:
+      - name: prompt_text
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+      - name: default
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
+      return_annotation: str
+      return_type_imports: []
+- name: console
+  symbols:
+  - name: interactive_shell
+    module_path: _internal._run_env
+    docstring: ''
+    line_number: 27
+    type: function
+    signature:
+      parameters: []
+      return_annotation: bool
+      return_type_imports: []
+  - name: RemoveLivePart
+    module_path: _internal.rich_live
+    docstring: ''
+    line_number: 148
+    type: class
+    direct_bases:
+    - Protocol
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: args
+        kind: var_positional
+        type_imports: []
+      - name: kwargs
+        kind: var_keyword
+        type_imports: []
+      return_type_imports: []
+  - name: add_renderable
+    module_path: _internal.rich_live
+    docstring: ''
+    line_number: 152
+    type: function
+    signature:
+      parameters:
+      - name: renderable
+        kind: positional_or_keyword
+        type_annotation: ConsoleRenderable | RichCast | str
+        type_imports:
+        - rich.console.ConsoleRenderable
+        - rich.console.RichCast
+      - name: order
+        kind: keyword_only
+        type_annotation: int
+        type_imports: []
+        default:
+          value_repr: '0'
+          is_factory: false
+      - name: name
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
+      return_annotation: RemoveLivePart
+      return_type_imports:
+      - ask_shell._internal.rich_live.RemoveLivePart
+  - name: get_live_console
+    module_path: _internal.rich_live
+    docstring: ''
+    line_number: 170
+    type: function
+    signature:
+      parameters: []
+      return_annotation: Console
+      return_type_imports:
+      - rich.console.Console
+  - name: log_to_live
+    module_path: _internal.rich_live
+    docstring: ''
+    line_number: 210
+    type: function
+    signature:
+      parameters:
+      - name: objects
+        kind: var_positional
+        type_annotation: Any
+        type_imports:
+        - typing.Any
+      - name: sep
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''' '''
+          is_factory: false
+      - name: end
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: '''\n'''
+          is_factory: false
+      - name: style
+        kind: keyword_only
+        type_annotation: str | Style | None
+        type_imports:
+        - rich.style.Style
+        default:
+          value_repr: None
+          is_factory: false
+      - name: justify
+        kind: keyword_only
+        type_annotation: Literal[default, left, center, right, full] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: emoji
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: markup
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: highlight
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: log_locals
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: _stack_offset
+        kind: keyword_only
+        type_annotation: int
+        type_imports: []
+        default:
+          value_repr: '1'
+          is_factory: false
+      return_annotation: None
+      return_type_imports: []
+  - name: print_to_live
+    module_path: _internal.rich_live
+    docstring: ''
+    line_number: 174
+    type: function
+    signature:
+      parameters:
+      - name: objects
+        kind: var_positional
+        type_annotation: Any
+        type_imports:
+        - typing.Any
+      - name: sep
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''' '''
+          is_factory: false
+      - name: end
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: '''\n'''
+          is_factory: false
+      - name: style
+        kind: keyword_only
+        type_annotation: str | Style | None
+        type_imports:
+        - rich.style.Style
+        default:
+          value_repr: None
+          is_factory: false
+      - name: justify
+        kind: keyword_only
+        type_annotation: Literal[default, left, center, right, full] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: overflow
+        kind: keyword_only
+        type_annotation: Literal[fold, crop, ellipsis, ignore] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: no_wrap
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: emoji
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: markup
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: highlight
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: width
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: height
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: crop
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'True'
+          is_factory: false
+      - name: soft_wrap
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: new_line_start
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_type_imports: []
+  - name: new_task
+    module_path: _internal.rich_progress
+    docstring: ''
+    line_number: 153
+    type: class
+    direct_bases: []
+    fields:
+    - name: description
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: total
+      type_annotation: float
+      type_imports: []
+      default:
+        value_repr: '1'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: visible
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'True'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: task_fields
+      type_annotation: dict
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: log_after_remove
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'True'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: log_updates
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: manager
+      type_annotation: ProgressManager
+      type_imports:
+      - ask_shell._internal.rich_progress.ProgressManager
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: completed
+      type_annotation: float
+      type_imports: []
+      default:
+        value_repr: '0.0'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: configure_logging
+    module_path: _internal.typer_command
+    docstring: ''
+    line_number: 133
+    type: function
+    signature:
+      parameters:
+      - name: app
+        kind: positional_or_keyword
+        type_annotation: Typer
+        type_imports:
+        - typer.main.Typer
+      - name: settings
+        kind: keyword_only
+        type_annotation: AskShellSettings | None
+        type_imports:
+        - ask_shell.settings.AskShellSettings
+        default:
+          value_repr: None
+          is_factory: false
+      - name: app_pretty_exceptions_enable
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: app_pretty_exceptions_show_locals
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: skip_except_hook
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: use_app_name_command_for_logs
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'True'
+          is_factory: false
+      - name: render_rich_error_on_sys_exit
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_annotation: Handler
+      return_type_imports:
+      - logging.Handler
+- name: shell
+  symbols:
+  - name: handle_interrupt_wait
+    module_path: _internal._run
+    docstring: ''
+    line_number: 140
+    type: class
+    direct_bases: []
+    fields:
+    - name: interrupt_message
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: immediate_kill
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: kill
+    module_path: _internal._run
+    docstring: https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
+    line_number: 72
+    type: function
+    signature:
+      parameters:
+      - name: run
+        kind: positional_or_keyword
+        type_annotation: ShellRun
+        type_imports:
+        - ask_shell._internal.models.ShellRun
+      - name: immediate
+        kind: positional_or_keyword
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: reason
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
+      - name: abort_timeout
+        kind: positional_or_keyword
+        type_annotation: float
+        type_imports: []
+        default:
+          value_repr: '3.0'
+          is_factory: false
+      return_type_imports: []
+  - name: kill_all_runs
+    module_path: _internal._run
+    docstring: ''
+    line_number: 105
+    type: function
+    signature:
+      parameters:
+      - name: immediate
+        kind: positional_or_keyword
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      - name: reason
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
+      - name: abort_timeout
+        kind: positional_or_keyword
+        type_annotation: float
+        type_imports: []
+        default:
+          value_repr: '3.0'
+          is_factory: false
+      - name: skip_retry
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_type_imports: []
+  - name: run
+    module_path: _internal._run
+    docstring: ''
+    line_number: 428
+    type: function
+    signature:
+      parameters:
+      - name: config
+        kind: positional_or_keyword
+        type_annotation: ShellConfig | str
+        type_imports:
+        - ask_shell._internal.models.ShellConfig
+      - name: allow_non_zero_exit
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: ansi_content
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: attempts
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: cwd
+        kind: keyword_only
+        type_annotation: str | Path | None
+        type_imports:
+        - pathlib.Path
+        default:
+          value_repr: None
+          is_factory: false
+      - name: env
+        kind: keyword_only
+        type_annotation: dict[str, str] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: extra_popen_kwargs
+        kind: keyword_only
+        type_annotation: dict | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: is_binary_call
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: message_callbacks
+        kind: keyword_only
+        type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: print_prefix
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: run_log_stem_prefix
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: run_output_dir
+        kind: keyword_only
+        type_annotation: Path | None
+        type_imports:
+        - pathlib.Path
+        default:
+          value_repr: None
+          is_factory: false
+      - name: settings
+        kind: keyword_only
+        type_annotation: AskShellSettings | None
+        type_imports:
+        - ask_shell.settings.AskShellSettings
+        default:
+          value_repr: None
+          is_factory: false
+      - name: should_retry
+        kind: keyword_only
+        type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_binary_check
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_html_log_files
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_progress_output
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: include_log_time
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_os_env
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: start_timeout
+        kind: keyword_only
+        type_annotation: float | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: terminal_width
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_interactive_check
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: ShellRun
+      return_type_imports:
+      - ask_shell._internal.models.ShellRun
+  - name: run_and_wait
+    module_path: _internal._run
+    docstring: ''
+    line_number: 486
+    type: function
+    signature:
+      parameters:
+      - name: script
+        kind: positional_or_keyword
+        type_annotation: ShellConfig | str
+        type_imports:
+        - ask_shell._internal.models.ShellConfig
+      - name: timeout
+        kind: positional_or_keyword
+        type_annotation: float | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: allow_non_zero_exit
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: ansi_content
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: attempts
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: cwd
+        kind: keyword_only
+        type_annotation: str | Path | None
+        type_imports:
+        - pathlib.Path
+        default:
+          value_repr: None
+          is_factory: false
+      - name: env
+        kind: keyword_only
+        type_annotation: dict[str, str] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: extra_popen_kwargs
+        kind: keyword_only
+        type_annotation: dict | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: is_binary_call
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: message_callbacks
+        kind: keyword_only
+        type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: print_prefix
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: run_log_stem_prefix
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: run_output_dir
+        kind: keyword_only
+        type_annotation: Path | None
+        type_imports:
+        - pathlib.Path
+        default:
+          value_repr: None
+          is_factory: false
+      - name: settings
+        kind: keyword_only
+        type_annotation: AskShellSettings | None
+        type_imports:
+        - ask_shell.settings.AskShellSettings
+        default:
+          value_repr: None
+          is_factory: false
+      - name: should_retry
+        kind: keyword_only
+        type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_binary_check
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_progress_output
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_html_log_files
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: include_log_time
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_os_env
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: user_input
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: terminal_width
+        kind: keyword_only
+        type_annotation: int | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_interactive_check
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: ShellRun
+      return_type_imports:
+      - ask_shell._internal.models.ShellRun
+  - name: run_error
+    module_path: _internal._run
+    docstring: ''
+    line_number: 545
+    type: function
+    signature:
+      parameters:
+      - name: run
+        kind: positional_or_keyword
+        type_annotation: ShellRun
+        type_imports:
+        - ask_shell._internal.models.ShellRun
+      - name: timeout
+        kind: positional_or_keyword
+        type_annotation: float | None
+        type_imports: []
+        default:
+          value_repr: '1'
+          is_factory: false
+      return_annotation: BaseException | None
+      return_type_imports: []
+  - name: stop_runs_and_pool
+    module_path: _internal._run
+    docstring: ''
+    line_number: 132
+    type: function
+    signature:
+      parameters:
+      - name: reason
+        kind: positional_or_keyword
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: '''atexit'''
+          is_factory: false
+      - name: immediate
+        kind: positional_or_keyword
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_type_imports: []
+  - name: wait_on_ok_errors
+    module_path: _internal._run
+    docstring: ''
+    line_number: 552
+    type: function
+    signature:
+      parameters:
+      - name: runs
+        kind: var_positional
+        type_annotation: ShellRun
+        type_imports:
+        - ask_shell._internal.models.ShellRun
+      - name: timeout
+        kind: keyword_only
+        type_annotation: float | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      - name: skip_kill_timeouts
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_annotation: tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]
+      return_type_imports:
+      - ask_shell._internal.models.ShellRun
+      - ask_shell._internal.models.ShellRun
+  - name: ShellConfig
+    module_path: _internal.models
+    docstring: '
+
+      >>> ShellConfig("some_script").print_prefix
+
+      ''some_script''
+
+      >>> ShellConfig("some_script some_arg").print_prefix
+
+      ''some_script some_arg''
+
+      >>> ShellConfig("some_script some_arg --option1").print_prefix
+
+      ''some_script some_arg''
+
+      >>> ShellConfig("some_script some_arg", cwd="/some/path/prefix").print_prefix
+
+      ''prefix some_script some_arg''
+
+      >>> ShellConfig("some_script some_arg", cwd="/some/path/prefix", print_prefix="override").print_prefix
+
+      ''override''
+
+      '
+    line_number: 127
+    type: class
+    direct_bases:
+    - Entity
+    fields:
+    - name: shell_input
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: PydanticUndefined
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: env
+      type_annotation: dict[str, str]
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: extra_popen_kwargs
+      type_annotation: dict
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: allow_non_zero_exit
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: skip_os_env
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: skip_binary_check
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: skip_interactive_check
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: cwd
+      type_annotation: Path
+      type_imports:
+      - pathlib.Path
+      is_class_var: false
+      is_computed: false
+      description: Set to Path.cwd() if not provided
+    - name: user_input
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: attempts
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '1'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: should_retry
+      type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]
+      type_imports: []
+      default:
+        value_repr: <function always_retry at 0x1029828e0>
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: print_prefix
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+      description: Use cwd+binary_name+first_arg if not provided
+    - name: include_log_time
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: ansi_content
+      type_annotation: bool
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+      description: Inferred if not provided
+    - name: run_output_dir
+      type_annotation: Path | None
+      type_imports:
+      - pathlib.Path
+      is_class_var: false
+      is_computed: false
+      description: Directory to store run logs, defaults to settings.run_logs /{XX}_{self.exec_name}
+    - name: run_log_stem_prefix
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: ''''''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Prefix for run log stem
+    - name: skip_html_log_files
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Skip HTML log files, by default dumps HTML logs to support viewing colored output in browsers
+    - name: skip_progress_output
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Skip transitive std out/err output, useful for large outputs that are not needed in the logs when running parallel scripts
+    - name: terminal_width
+      type_annotation: int | None
+      type_imports: []
+      default:
+        value_repr: '999'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: is_binary_call
+      type_annotation: bool
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+      description: Inferred if not provided
+    - name: settings
+      type_annotation: AskShellSettings
+      type_imports:
+      - ask_shell.settings.AskShellSettings
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+    - name: message_callbacks
+      type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]]
+      type_imports: []
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+      description: Callbacks for run messages, useful for custom handling of stdout/stderr
+  - name: ShellError
+    module_path: _internal.models
+    docstring: ''
+    line_number: 484
+    type: exception
+    direct_bases:
+    - Exception
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: run
+        kind: positional_or_keyword
+        type_annotation: ShellRun
+        type_imports:
+        - ask_shell._internal.models.ShellRun
+      - name: base_error
+        kind: positional_or_keyword
+        type_annotation: BaseException | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      return_type_imports: []
+  - name: ShellRun
+    module_path: _internal.models
+    docstring: "Stores dynamic behavior. Only created by this file never outside.\n\nArgs:\n    _start_flag: Future[ShellRun]: Flag that is set when the run has both p_open and stdout/stderr reading started. During multiple attempts, only the 1st attempt will call it.\n\n"
+    line_number: 269
+    type: class
+    direct_bases: []
+    fields:
+    - name: config
+      type_annotation: ShellConfig
+      type_imports:
+      - ask_shell._internal.models.ShellConfig
+      is_class_var: false
+      is_computed: false
+    - name: p_open
+      type_annotation: Popen | None
+      type_imports:
+      - subprocess.Popen
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: current_attempt
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '1'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: run_pool
+    module_path: _internal.run_pool
+    docstring: ''
+    line_number: 25
+    type: class
+    direct_bases: []
+    fields:
+    - name: task_name
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: total
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '0'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: max_concurrent_submits
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '4'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: threads_used_per_submit
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '5'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: sleep_time
+      type_annotation: float
+      type_imports: []
+      default:
+        value_repr: '1'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: sleep_callback
+      type_annotation: Callable[[], Any] | None
+      type_imports:
+      - typing.Any
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: exit_wait_timeout
+      type_annotation: float | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: pool
+      type_annotation: ThreadPoolExecutor
+      type_imports:
+      - concurrent.futures.thread.ThreadPoolExecutor
+      default:
+        value_repr: '...'
+        is_factory: true
+      is_class_var: false
+      is_computed: false
+- name: shell_events
+  symbols:
+  - name: OutputCallbackT
+    module_path: _internal.events
+    docstring: ''
+    type: type_alias
+    alias_target: typing.Callable[[str], bool | None]
+  - name: ShellRunAfter
+    module_path: _internal.events
+    docstring: ''
+    line_number: 49
+    type: class
+    direct_bases: []
+    fields:
+    - name: run
+      type_annotation: ShellRun
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: error
+      type_annotation: BaseException | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunBefore
+    module_path: _internal.events
+    docstring: ''
+    line_number: 44
+    type: class
+    direct_bases: []
+    fields:
+    - name: run
+      type_annotation: ShellRun
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunCallbackT
+    module_path: _internal.events
+    docstring: ''
+    type: type_alias
+    alias_target: typing.Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]
+  - name: ShellRunPOpenStarted
+    module_path: _internal.events
+    docstring: ''
+    line_number: 28
+    type: class
+    direct_bases: []
+    fields:
+    - name: p_open
+      type_annotation: Popen
+      type_imports:
+      - subprocess.Popen
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunRetryAttempt
+    module_path: _internal.events
+    docstring: ''
+    line_number: 39
+    type: class
+    direct_bases: []
+    fields:
+    - name: attempt
+      type_annotation: int
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunStdOutput
+    module_path: _internal.events
+    docstring: ''
+    line_number: 22
+    type: class
+    direct_bases: []
+    fields:
+    - name: is_stdout
+      type_annotation: bool
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: content
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunStdReadError
+    module_path: _internal.events
+    docstring: ''
+    line_number: 33
+    type: class
+    direct_bases: []
+    fields:
+    - name: is_stdout
+      type_annotation: bool
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: error
+      type_annotation: BaseException
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+  - name: ShellRunStdStarted
+    module_path: _internal.events
+    docstring: ''
+    line_number: 15
+    type: class
+    direct_bases: []
+    fields:
+    - name: is_stdout
+      type_annotation: bool
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: console
+      type_annotation: Console
+      type_imports:
+      - rich.console.Console
+      is_class_var: false
+      is_computed: false
+    - name: log_path
+      type_annotation: Path
+      type_imports:
+      - pathlib.Path
+      is_class_var: false
+      is_computed: false
+dumped_at: 2026-01-20 20:23:41.920699+00:00

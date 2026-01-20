@@ -3,7 +3,7 @@
 <!-- === DO_NOT_EDIT: pkg-ext askshellsettings_def === -->
 ## class: AskShellSettings
 - [source](../../ask_shell/settings.py#L93)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class AskShellSettings(StaticSettings):
@@ -69,5 +69,5 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| 0.2.0 | Made public |
+| 0.4.0 | Made public |
 <!-- === OK_EDIT: pkg-ext askshellsettings_changes === -->

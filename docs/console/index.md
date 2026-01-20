@@ -23,7 +23,7 @@
 
 ### class: `RemoveLivePart`
 - [source](../../ask_shell/_internal/rich_live.py#L148)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class RemoveLivePart(Protocol):
@@ -35,7 +35,7 @@ class RemoveLivePart(Protocol):
 
 ### function: `add_renderable`
 - [source](../../ask_shell/_internal/rich_live.py#L152)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = '') -> RemoveLivePart:
@@ -47,7 +47,7 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 
 ### function: `configure_logging`
 - [source](../../ask_shell/_internal/typer_command.py#L133)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, app_pretty_exceptions_enable: bool = False, app_pretty_exceptions_show_locals: bool = False, skip_except_hook: bool = False, use_app_name_command_for_logs: bool = True, render_rich_error_on_sys_exit: bool = False) -> Handler:
@@ -59,7 +59,7 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 
 ### function: `get_live_console`
 - [source](../../ask_shell/_internal/rich_live.py#L170)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def get_live_console() -> Console:
@@ -71,7 +71,7 @@ def get_live_console() -> Console:
 
 ### function: `interactive_shell`
 - [source](../../ask_shell/_internal/_run_env.py#L27)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def interactive_shell() -> bool:
@@ -83,7 +83,7 @@ def interactive_shell() -> bool:
 
 ### function: `log_to_live`
 - [source](../../ask_shell/_internal/rich_live.py#L210)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, log_locals: bool = False, _stack_offset: int = 1) -> None:
@@ -95,7 +95,7 @@ def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | 
 
 ### class: `new_task`
 - [source](../../ask_shell/_internal/rich_progress.py#L153)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class new_task:
@@ -111,21 +111,21 @@ class new_task:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| description | `str` | - | 0.2.0 |
-| total | `float` | `1` | 0.2.0 |
-| visible | `bool` | `True` | 0.2.0 |
-| task_fields | `dict` | `...` | 0.2.0 |
-| log_after_remove | `bool` | `True` | 0.2.0 |
-| log_updates | `bool` | `False` | 0.2.0 |
-| manager | `ProgressManager` | `...` | 0.2.0 |
-| completed | `float` | `0.0` | 0.2.0 |
+| description | `str` | - | 0.4.0 |
+| total | `float` | `1` | 0.4.0 |
+| visible | `bool` | `True` | 0.4.0 |
+| task_fields | `dict` | `...` | 0.4.0 |
+| log_after_remove | `bool` | `True` | 0.4.0 |
+| log_updates | `bool` | `False` | 0.4.0 |
+| manager | `ProgressManager` | `...` | 0.4.0 |
+| completed | `float` | `0.0` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext new_task_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext print_to_live_def === -->
 <a id="print_to_live_def"></a>
 
 ### function: `print_to_live`
 - [source](../../ask_shell/_internal/rich_live.py#L174)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, overflow: Literal[fold, crop, ellipsis, ignore] | None = None, no_wrap: bool | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, width: int | None = None, height: int | None = None, crop: bool = True, soft_wrap: bool | None = None, new_line_start: bool = False):

@@ -24,7 +24,7 @@
 
 ### type_alias: `OutputCallbackT`
 - [source](../../ask_shell/_internal/events.py)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 OutputCallbackT = typing.Callable[[str], bool | None]
@@ -35,7 +35,7 @@ OutputCallbackT = typing.Callable[[str], bool | None]
 
 ### class: `ShellRunAfter`
 - [source](../../ask_shell/_internal/events.py#L49)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunAfter:
@@ -45,15 +45,15 @@ class ShellRunAfter:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| run | `ShellRun` | - | 0.2.0 |
-| error | `BaseException | None` | `None` | 0.2.0 |
+| run | `ShellRun` | - | 0.4.0 |
+| error | `BaseException | None` | `None` | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunafter_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunbefore_def === -->
 <a id="shellrunbefore_def"></a>
 
 ### class: `ShellRunBefore`
 - [source](../../ask_shell/_internal/events.py#L44)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunBefore:
@@ -62,14 +62,14 @@ class ShellRunBefore:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| run | `ShellRun` | - | 0.2.0 |
+| run | `ShellRun` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunbefore_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellruncallbackt_def === -->
 <a id="shellruncallbackt_def"></a>
 
 ### type_alias: `ShellRunCallbackT`
 - [source](../../ask_shell/_internal/events.py)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 ShellRunCallbackT = typing.Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]
@@ -80,7 +80,7 @@ ShellRunCallbackT = typing.Callable[[typing.Union[ask_shell._internal.events.She
 
 ### class: `ShellRunPOpenStarted`
 - [source](../../ask_shell/_internal/events.py#L28)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunPOpenStarted:
@@ -89,14 +89,14 @@ class ShellRunPOpenStarted:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| p_open | `Popen` | - | 0.2.0 |
+| p_open | `Popen` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunpopenstarted_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunretryattempt_def === -->
 <a id="shellrunretryattempt_def"></a>
 
 ### class: `ShellRunRetryAttempt`
 - [source](../../ask_shell/_internal/events.py#L39)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunRetryAttempt:
@@ -105,14 +105,14 @@ class ShellRunRetryAttempt:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| attempt | `int` | - | 0.2.0 |
+| attempt | `int` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunretryattempt_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdoutput_def === -->
 <a id="shellrunstdoutput_def"></a>
 
 ### class: `ShellRunStdOutput`
 - [source](../../ask_shell/_internal/events.py#L22)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunStdOutput:
@@ -122,15 +122,15 @@ class ShellRunStdOutput:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| is_stdout | `bool` | - | 0.2.0 |
-| content | `str` | - | 0.2.0 |
+| is_stdout | `bool` | - | 0.4.0 |
+| content | `str` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunstdoutput_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdreaderror_def === -->
 <a id="shellrunstdreaderror_def"></a>
 
 ### class: `ShellRunStdReadError`
 - [source](../../ask_shell/_internal/events.py#L33)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunStdReadError:
@@ -140,15 +140,15 @@ class ShellRunStdReadError:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| is_stdout | `bool` | - | 0.2.0 |
-| error | `BaseException` | - | 0.2.0 |
+| is_stdout | `bool` | - | 0.4.0 |
+| error | `BaseException` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunstdreaderror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdstarted_def === -->
 <a id="shellrunstdstarted_def"></a>
 
 ### class: `ShellRunStdStarted`
 - [source](../../ask_shell/_internal/events.py#L15)
-> **Since:** 0.2.0
+> **Since:** 0.4.0
 
 ```python
 class ShellRunStdStarted:
@@ -159,7 +159,7 @@ class ShellRunStdStarted:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| is_stdout | `bool` | - | 0.2.0 |
-| console | `Console` | - | 0.2.0 |
-| log_path | `Path` | - | 0.2.0 |
+| is_stdout | `bool` | - | 0.4.0 |
+| console | `Console` | - | 0.4.0 |
+| log_path | `Path` | - | 0.4.0 |
 <!-- === OK_EDIT: pkg-ext shellrunstdstarted_def === -->
