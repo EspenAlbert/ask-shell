@@ -9,6 +9,12 @@ requires-python = ">=3.13"
 license = "MIT"
 license-files = ["LICENSE"]
 readme = "README.md"
+authors = [{ name = "EspenAlbert", email = "espen.albert1@gmail.com" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
 dependencies = [
   "model-lib[toml]",
   "zero-3rdparty",

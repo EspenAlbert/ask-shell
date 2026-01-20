@@ -49,7 +49,9 @@ from ask_shell._internal.models import (
 from ask_shell.settings import AskShellSettings, _global_settings
 
 logger = logging.getLogger(__name__)
-THREADS_PER_RUN = 4  # Each run will take 4 threads: 1 for stdout, 1 for stderr, 1 for consuming queue messages and 1 for popen wait.
+THREADS_PER_RUN = (
+    4  # Each run will take 4 threads: 1 for stdout, 1 for stderr, 1 for consuming queue messages and 1 for popen wait.
+)
 THREAD_POOL_FULL_WAIT_TIME_SECONDS = _global_settings.thread_pool_full_wait_time_seconds
 
 _pool = ThreadPoolExecutor(max_workers=_global_settings.thread_count)
@@ -60,9 +62,7 @@ def get_pool() -> ThreadPoolExecutor:
     return _pool
 
 
-_runs: dict[
-    int, ShellRun
-] = {}  # internal to store running ShellRuns to support stopping them on exit
+_runs: dict[int, ShellRun] = {}  # internal to store running ShellRuns to support stopping them on exit
 
 
 def current_run_count() -> int:
@@ -92,12 +92,8 @@ def kill(
         proc.wait(timeout=abort_timeout)
         logger.info(f"killing completed: {run} {reason}")
     except subprocess.TimeoutExpired:
-        logger.warning(
-            f"killing timeout after {abort_timeout}s! forcing a kill: {run} {reason}"
-        )
-        with suppress(
-            OSError, NameError, subprocess.TimeoutExpired
-        ):  # Process group may no longer exist
+        logger.warning(f"killing timeout after {abort_timeout}s! forcing a kill: {run} {reason}")
+        with suppress(OSError, NameError, subprocess.TimeoutExpired):  # Process group may no longer exist
             os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
             proc.wait(timeout=1)
     except (OSError, ValueError) as e:
@@ -210,9 +206,7 @@ class _run_completer:
         run._complete(error=exc_value, queue_consumer=self.consumer_future)
 
 
-def _stream_one_character_at_a_time(
-    stream: IO[str], on_line: Callable[[str], None], on_char: Callable[[str], Any]
-):
+def _stream_one_character_at_a_time(stream: IO[str], on_line: Callable[[str], None], on_char: Callable[[str], Any]):
     buffer = ""
     while True:
         chunk = stream.read(1)  # Read one character at a time
@@ -257,10 +251,7 @@ def _read_until_complete(
 
         def write_hook_ansi(text: str):
             try:
-                plain_text = "\n".join(
-                    decoder.decode_line(line).plain.strip()
-                    for line in text.splitlines()
-                )
+                plain_text = "\n".join(decoder.decode_line(line).plain.strip() for line in text.splitlines())
             except MarkupError:
                 return old_write(text)
             return old_write(plain_text)
@@ -307,11 +298,7 @@ def _run(
         queue.put_nowait(ShellRunPOpenStarted(proc))
 
         def stdout_started(is_stdout: bool, console: Console, log_path: Path):
-            queue.put_nowait(
-                ShellRunStdStarted(
-                    is_stdout=is_stdout, console=console, log_path=log_path
-                )
-            )
+            queue.put_nowait(ShellRunStdStarted(is_stdout=is_stdout, console=console, log_path=log_path))
 
         def add_stdout_line(line: str):
             queue.put_nowait(ShellRunStdOutput(is_stdout=True, content=line))
@@ -397,9 +384,7 @@ def _execute_run(shell_run: ShellRun) -> ShellRun:
             try:
                 shell_run._on_event(message)
             except BaseException as e:
-                logger.warning(
-                    f"Error processing message '{type(message).__name__}' for {shell_run}: {e!r}"
-                )
+                logger.warning(f"Error processing message '{type(message).__name__}' for {shell_run}: {e!r}")
                 logger.exception(e)
 
     try:
@@ -425,16 +410,12 @@ def _execute_run(shell_run: ShellRun) -> ShellRun:
         for attempt in range(1, config.attempts + 1):
             if attempt > 1:
                 queue.put_nowait(ShellRunRetryAttempt(attempt=attempt))
-                logger.warning(
-                    f"Retrying run {shell_run} attempt {attempt} of {config.attempts}"
-                )
+                logger.warning(f"Retrying run {shell_run} attempt {attempt} of {config.attempts}")
             attempt_log_prefix = config.run_log_stem(attempt)
 
             result = _attempt_run(shell_run, output_dir, attempt_log_prefix)
             match result:
-                case ShellRun() if result.clean_complete or not config.should_retry(
-                    result
-                ):
+                case ShellRun() if result.clean_complete or not config.should_retry(result):
                     break
                 case BaseException():
                     error = result
@@ -497,9 +478,7 @@ def run(
     )
     run = ShellRun(config)
     future = _pool.submit(_execute_run, run)
-    add_error_logging(
-        future, error_logger=logger, error_hint="unexpected error in _execute_run"
-    )
+    add_error_logging(future, error_logger=logger, error_hint="unexpected error in _execute_run")
     with handle_interrupt_wait(f"interrupt when starting {run}"):
         return run.wait_on_started(start_timeout)
 
@@ -556,9 +535,7 @@ def run_and_wait(
     )
     run = ShellRun(config)
     future = _pool.submit(_execute_run, run)
-    add_error_logging(
-        future, error_logger=logger, error_hint="unexpected error in _execute_run"
-    )
+    add_error_logging(future, error_logger=logger, error_hint="unexpected error in _execute_run")
     chain_future(future, run._complete_flag, skip_log_already_complete=True)
     with handle_interrupt_wait(f"interrupt when waiting for {run}"):
         run.wait_until_complete(timeout)
@@ -579,9 +556,7 @@ def wait_on_ok_errors(
 ) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]:
     future_runs = {run._complete_flag: run for run in runs}
     with handle_interrupt_wait("interrupt when waiting for runs"):
-        done, not_done = wait(
-            [run._complete_flag for run in runs], timeout, return_when="ALL_COMPLETED"
-        )
+        done, not_done = wait([run._complete_flag for run in runs], timeout, return_when="ALL_COMPLETED")
     errors: list[tuple[BaseException, ShellRun]] = []
     oks: list[ShellRun] = []
 

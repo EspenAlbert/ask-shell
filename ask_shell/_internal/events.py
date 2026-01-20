@@ -52,9 +52,7 @@ class ShellRunAfter:
     error: BaseException | None = None
 
 
-OutputCallbackT: TypeAlias = Callable[
-    [str], bool | None
-]  # returns True if the callback is done and should be removed
+OutputCallbackT: TypeAlias = Callable[[str], bool | None]  # returns True if the callback is done and should be removed
 ShellRunEventT: TypeAlias = Union[
     ShellRunBefore,
     ShellRunPOpenStarted,

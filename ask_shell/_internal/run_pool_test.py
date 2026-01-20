@@ -25,9 +25,7 @@ def test_running_enough_scripts_to_wait(settings, capture_console):
     def log_sleeping():
         nonlocal log_calls
         log_calls += 1
-        logger.info(
-            f"Waiting for threads to finish before starting new tasks, sleeping call {log_calls}"
-        )
+        logger.info(f"Waiting for threads to finish before starting new tasks, sleeping call {log_calls}")
 
     with run_pool(
         task_name="Test Submit should block",

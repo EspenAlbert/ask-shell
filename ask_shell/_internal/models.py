@@ -70,11 +70,7 @@ class ShellInput(NamedTuple):
 
     def file_path_relative(self, cwd: Path) -> str:
         assert self.file_path, "file_path should not be None"
-        return (
-            str(self.file_path.relative_to(cwd))
-            if self.file_path.is_relative_to(cwd)
-            else str(self.file_path)
-        )
+        return str(self.file_path.relative_to(cwd)) if self.file_path.is_relative_to(cwd) else str(self.file_path)
 
     @property
     def first_arg(self) -> str:
@@ -148,9 +144,7 @@ class ShellConfig(Entity):
     allow_non_zero_exit: bool = False
     skip_os_env: bool = False
     skip_binary_check: bool = False
-    skip_interactive_check: bool = (
-        False  # can be useful for testing purposes, to skip the interactive shell check
-    )
+    skip_interactive_check: bool = False  # can be useful for testing purposes, to skip the interactive shell check
     cwd: Path = Field(default=None, description="Set to Path.cwd() if not provided")  # type: ignore
     user_input: bool = False  # whether to use user input for the script, if True, will use stdin for input and write character by character
 
@@ -159,9 +153,7 @@ class ShellConfig(Entity):
     should_retry: Callable[[ShellRun], bool] = always_retry
 
     # logging/output
-    print_prefix: str = Field(
-        default=None, description="Use cwd+binary_name+first_arg if not provided"
-    )  # type: ignore
+    print_prefix: str = Field(default=None, description="Use cwd+binary_name+first_arg if not provided")  # type: ignore
     include_log_time: bool = False
     ansi_content: bool = Field(default=None, description="Inferred if not provided")  # type: ignore
     run_output_dir: Path | None = Field(
@@ -319,10 +311,7 @@ class ShellRun:
         """
 
         def only_on_output_callback(message: ShellRunEventT) -> bool | None:
-            if (
-                isinstance(message, ShellRunStdOutput)
-                and message.is_stdout == is_stdout
-            ):
+            if isinstance(message, ShellRunStdOutput) and message.is_stdout == is_stdout:
                 return call(message.content)
             return False
 
@@ -335,9 +324,7 @@ class ShellRun:
             self.config.message_callbacks.append(only_on_output_callback)
         if skip_old_lines:
             return remove_callback
-        start_lines = (
-            self.stdout.splitlines() if is_stdout else self.stderr.splitlines()
-        )
+        start_lines = self.stdout.splitlines() if is_stdout else self.stderr.splitlines()
         for line in start_lines:
             if call(line):
                 remove_callback()
@@ -372,14 +359,10 @@ class ShellRun:
         with self._lock:
             self._call_callbacks(message)
             match message:
-                case ShellRunStdStarted(
-                    is_stdout=True, console=console, log_path=log_path
-                ):
+                case ShellRunStdStarted(is_stdout=True, console=console, log_path=log_path):
                     self._stdout = console
                     self._stdout_log_path = log_path
-                case ShellRunStdStarted(
-                    is_stdout=False, console=console, log_path=log_path
-                ):
+                case ShellRunStdStarted(is_stdout=False, console=console, log_path=log_path):
                     self._stderr = console
                     self._stderr_log_path = log_path
                 case ShellRunPOpenStarted(p_open=p_open):
@@ -389,18 +372,14 @@ class ShellRun:
                         self._dump_html_logs()
                     self._reset_read_state(attempt)
                 case ShellRunStdReadError(is_stdout=is_stdout, error=error):
-                    logger.error(
-                        f"Error reading {'stdout' if is_stdout else 'stderr'} for {self}: {error!r}"
-                    )
+                    logger.error(f"Error reading {'stdout' if is_stdout else 'stderr'} for {self}: {error!r}")
             if not self._start_flag.done() and self.has_started:
                 self._start_flag.set_result(self)
 
     def wait_on_started(self, timeout: float | None = None) -> ShellRun:
         return self._start_flag.result(timeout)
 
-    def wait_until_complete(
-        self, timeout: float | None = None, *, no_raise: bool = False
-    ) -> ShellRun:
+    def wait_until_complete(self, timeout: float | None = None, *, no_raise: bool = False) -> ShellRun:
         """Raises: ShellError"""
         if no_raise:
             try:
@@ -423,9 +402,7 @@ class ShellRun:
             return p_open.returncode
         return None
 
-    def _complete(
-        self, error: BaseException | None = None, queue_consumer: Future | None = None
-    ):
+    def _complete(self, error: BaseException | None = None, queue_consumer: Future | None = None):
         with self._lock:
             if self._complete_flag.done():
                 logger.warning(f"already done {self}")
@@ -434,18 +411,11 @@ class ShellRun:
         if queue_consumer:  # wait outside of lock, since the callback use the lock
             queue_consumer.result()  # ensure the queue consumer is done before calling complete
         with self._lock:
-            if (
-                (error or self.exit_code != 0)
-                and self.config.allow_non_zero_exit
-                or not error
-                and self.exit_code == 0
-            ):
+            if (error or self.exit_code != 0) and self.config.allow_non_zero_exit or not error and self.exit_code == 0:
                 self._complete_flag.set_result(self)
             else:
                 shell_error = ShellError(self, error)
-                if (
-                    not self._start_flag.done()
-                ):  # if the run has not started yet, we must also set the start flag
+                if not self._start_flag.done():  # if the run has not started yet, we must also set the start flag
                     self._start_flag.set_exception(shell_error)
                 self._complete_flag.set_exception(shell_error)
 
@@ -467,9 +437,7 @@ class ShellRun:
         stream: Literal["stdout", "stderr"] = "stdout",
     ) -> OutputT:
         """Raises EmptyOutputError if the output is empty."""
-        stream_content = (
-            self.stdout_one_line if stream == "stdout" else self.stderr_one_line
-        )
+        stream_content = self.stdout_one_line if stream == "stdout" else self.stderr_one_line
         if not stream_content:
             raise EmptyOutputError(self, stream=stream)
         elif output_t is list:
@@ -506,11 +474,7 @@ class ShellRun:
                 "ShellRun(",
                 self.config.print_prefix,
                 "running" if self.is_running else f"exit_code={self.exit_code}",
-                (
-                    ""
-                    if self.current_attempt == 1
-                    else f"attempt={self.current_attempt}/{self.config.attempts}"
-                ),
+                ("" if self.current_attempt == 1 else f"attempt={self.current_attempt}/{self.config.attempts}"),
                 ")",
             )
             if part
@@ -543,9 +507,7 @@ class ShellError(Exception):
             lines_stdout.insert(0, "STDOUT")
         if lines_stderr:
             lines_stderr.insert(0, "STDERR")
-        last_lines_str = "\n".join(
-            line.strip() for line in lines_stdout + lines_stderr if line.strip()
-        )
+        last_lines_str = "\n".join(line.strip() for line in lines_stdout + lines_stderr if line.strip())
         return f"{str(self.run)}\nExit code: {self.exit_code}\nlines:{last_lines_str}"
 
 

@@ -62,9 +62,7 @@ def _clean_run_logs(run_logs: Path, clean_value: str) -> None:
     try:
         parsed_date = datetime.strptime(clean_date, "%Y-%m-%d")
     except ValueError:
-        logger.warning(
-            "Invalid date format for run logs cleaning. Expected 'YYYY-MM-DD' or 'yesterday'."
-        )
+        logger.warning("Invalid date format for run logs cleaning. Expected 'YYYY-MM-DD' or 'yesterday'.")
         return
     for path in run_logs.iterdir():
         if not path.is_dir():
@@ -96,9 +94,7 @@ class AskShellSettings(StaticSettings):
     model_config = ConfigDict(populate_by_name=True)  # type: ignore
     log_level: LogLevelIgnoredCase = "UNSET"
 
-    ENV_NAME_FORCE_INTERACTIVE_SHELL: ClassVar[str] = (
-        f"{ENV_PREFIX}FORCE_INTERACTIVE_SHELL"
-    )
+    ENV_NAME_FORCE_INTERACTIVE_SHELL: ClassVar[str] = f"{ENV_PREFIX}FORCE_INTERACTIVE_SHELL"
     force_interactive_shell: bool = Field(
         default=False,
         alias=ENV_NAME_FORCE_INTERACTIVE_SHELL,
@@ -160,11 +156,7 @@ class AskShellSettings(StaticSettings):
         if self.run_logs_dir is not None:
             self.run_logs_dir.mkdir(parents=True, exist_ok=True)
             return self.run_logs_dir
-        return (
-            self.cache_root
-            / DEFAULT_RUN_LOGS_BASE_DIR
-            / datetime.now().strftime("%Y-%m-%d")
-        )
+        return self.cache_root / DEFAULT_RUN_LOGS_BASE_DIR / datetime.now().strftime("%Y-%m-%d")
 
     def configure_run_logs_dir_if_unset(
         self,
@@ -178,9 +170,7 @@ class AskShellSettings(StaticSettings):
 
         if self.run_logs_dir is not None:
             return self.run_logs_dir
-        assert new_relative_path or new_absolute_path, (
-            "Either new_absolute_path or new_relative_path must be provided"
-        )
+        assert new_relative_path or new_absolute_path, "Either new_absolute_path or new_relative_path must be provided"
         if new_absolute_path is not None:
             self.run_logs_dir = new_absolute_path
         else:
@@ -205,11 +195,7 @@ class AskShellSettings(StaticSettings):
             return 0
         existing_dirs = [path for path in run_logs.iterdir() if path.is_dir()]
         return max(
-            (
-                int(path.name.split("_")[0])
-                for path in existing_dirs
-                if path.name[0].isdigit()
-            ),
+            (int(path.name.split("_")[0]) for path in existing_dirs if path.name[0].isdigit()),
             default=0,
         )
 
@@ -230,6 +216,4 @@ def default_rich_info_style() -> str:
     return "[cyan]"
 
 
-_global_settings = AskShellSettings.for_testing(
-    global_callback_strings=[], remove_os_secrets=False
-)
+_global_settings = AskShellSettings.for_testing(global_callback_strings=[], remove_os_secrets=False)

@@ -149,9 +149,7 @@ class RemoveLivePart(Protocol):
     def __call__(self, *, print_after_removing: bool = False) -> Any: ...
 
 
-def add_renderable(
-    renderable: RenderableType, *, order: int = 0, name: str = ""
-) -> RemoveLivePart:
+def add_renderable(renderable: RenderableType, *, order: int = 0, name: str = "") -> RemoveLivePart:
     name = name or simple_id()
     part = LivePart(name=name, renderable=renderable, order=order)
     with _lock:
@@ -163,9 +161,7 @@ def add_renderable(
         with _lock:
             if print_after_removing:
                 get_live().console.print(part.renderable)
-            _renderables = [
-                renderable for renderable in _renderables if renderable.name != name
-            ]
+            _renderables = [renderable for renderable in _renderables if renderable.name != name]
             render_live()
 
     return remove_renderable

@@ -16,18 +16,12 @@ def test_hide_secrets(caplog, tmp_path):
         "my-secret-path": str(tmp_path),
     }
     hide_secrets(handler, secrets)
-    expect_hidden = {
-        value for key, value in secrets.items() if key not in {"ok", "my-secret-path"}
-    }
-    expect_shown = {
-        value for key, value in secrets.items() if key in {"ok", "my-secret-path"}
-    }
+    expect_hidden = {value for key, value in secrets.items() if key not in {"ok", "my-secret-path"}}
+    expect_shown = {value for key, value in secrets.items() if key in {"ok", "my-secret-path"}}
     all_vars_logged = ",".join(f"{key}={value}" for key, value in secrets.items())
     root_logger.warning(f"Logging all variables: {all_vars_logged}")
     output = caplog.text
     found_hidden = {value for value in expect_hidden if value in output}
     assert not found_hidden
     found_shown: set[str] = {value for value in expect_shown if value in output}
-    assert found_shown == expect_shown, (
-        f"Expected to find {expect_shown}, but found {found_shown}"
-    )
+    assert found_shown == expect_shown, f"Expected to find {expect_shown}, but found {found_shown}"

@@ -51,9 +51,7 @@ FuncT = TypeVar("FuncT", bound=Callable)
 
 
 def return_default_if_not_interactive(func: FuncT) -> FuncT:
-    assert "default" in func_arg_names(func), (
-        f"Function {as_name(func)} must have a 'default' parameter"
-    )
+    assert "default" in func_arg_names(func), f"Function {as_name(func)} must have a 'default' parameter"
 
     @wraps(func)
     def return_default(*args, **kwargs):
@@ -151,9 +149,7 @@ class SelectOptions(BaseModel, Generic[T]):
     @model_validator(mode="after")
     def validate_compatibility(self) -> SelectOptions:
         if self.use_search_filter is True and self.use_jk_keys is True:
-            raise ValueError(
-                "use_search_filter and use_jk_keys cannot be used together"
-            )
+            raise ValueError("use_search_filter and use_jk_keys cannot be used together")
         return self
 
     def set_defaults(self, choices_length: int) -> SelectChosenOptions:
@@ -165,10 +161,7 @@ class SelectOptions(BaseModel, Generic[T]):
         assert isinstance(self.use_search_filter, bool)
         if self.use_shortcuts is _unset:
             # search filter and shortcuts don't work well together
-            self.use_shortcuts = (
-                not self.use_search_filter
-                and choices_length <= SEARCH_ENABLED_AFTER_CHOICES
-            )
+            self.use_shortcuts = not self.use_search_filter and choices_length <= SEARCH_ENABLED_AFTER_CHOICES
         assert isinstance(self.use_shortcuts, bool)
         if self.use_jk_keys is _unset:
             self.use_jk_keys = not self.use_search_filter
@@ -181,9 +174,7 @@ class SelectOptions(BaseModel, Generic[T]):
 
     def _ask_for_new_value(self) -> T:
         new_handler_choice = self.new_handler_choice
-        assert new_handler_choice, (
-            "Should never happen, new_handler_choice must be set when allow_new is True"
-        )
+        assert new_handler_choice, "Should never happen, new_handler_choice must be set when allow_new is True"
         new_text = text(new_handler_choice.new_prompt)
         return new_handler_choice.constructor(new_text)
 
@@ -194,9 +185,7 @@ class SelectOptions(BaseModel, Generic[T]):
         _questionary_choices = [typed_choice.as_choice() for typed_choice in choices]
         question = _select(
             prompt_text,
-            default=next(
-                (choice for choice in _questionary_choices if choice.checked), None
-            ),
+            default=next((choice for choice in _questionary_choices if choice.checked), None),
             choices=_questionary_choices,
             use_jk_keys=chosen.use_jk_keys,
             use_shortcuts=chosen.use_shortcuts,
@@ -210,9 +199,7 @@ class SelectOptions(BaseModel, Generic[T]):
                 raise
             return self._ask_for_new_value()
 
-    def _select_multiple(
-        self, prompt_text: str, choices: list[ChoiceTyped[T]]
-    ) -> list[T]:
+    def _select_multiple(self, prompt_text: str, choices: list[ChoiceTyped[T]]) -> list[T]:
         chosen = self.set_defaults(len(choices))
         if self.allow_new:
             prompt_text = ensure_suffix(prompt_text, " (use ctrl+c to add new choice)")
@@ -251,10 +238,7 @@ def select_list_multiple(
     assert choices, f"choices must not be empty for {as_name(select_list_multiple)}"
     options = options or SelectOptions()
     default = default or []
-    default_choices = [
-        ChoiceTyped(option, checked=option in default, value=option)
-        for option in choices
-    ]
+    default_choices = [ChoiceTyped(option, checked=option in default, value=option) for option in choices]
     return options._select_multiple(prompt_text, default_choices)
 
 
@@ -268,9 +252,7 @@ def select_list_multiple_choices(
     *,
     options: SelectOptions | None = None,
 ) -> list[T]:
-    assert choices, (
-        f"choices must not be empty for {as_name(select_list_multiple_choices)}"
-    )
+    assert choices, f"choices must not be empty for {as_name(select_list_multiple_choices)}"
     options = options or SelectOptions()
     return options._select_multiple(prompt_text, choices)
 
@@ -287,10 +269,7 @@ def select_dict(
     assert choices, f"choices must not be empty for {as_name(select_dict)}"
     options = options or SelectOptions()
     default_safe = default or ""
-    choices_typed = [
-        ChoiceTyped(name=key, value=value, checked=key == default_safe)
-        for key, value in choices.items()
-    ]
+    choices_typed = [ChoiceTyped(name=key, value=value, checked=key == default_safe) for key, value in choices.items()]
     return options._select(prompt_text, choices_typed)
 
 
@@ -365,9 +344,7 @@ class PromptMatch:
     matches_so_far: int = field(init=False, default=0)
 
     def __post_init__(self):
-        assert not (self.response and self.responses), (
-            f"set either response or responses, not both! {self!r}"
-        )
+        assert not (self.response and self.responses), f"set either response or responses, not both! {self!r}"
         if self.response is not None:
             self.responses.append(self.response)
         assert len(self.responses) == self.max_matches, (
@@ -394,11 +371,7 @@ class PromptMatch:
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, PromptMatch):
             return NotImplemented
-        return (
-            self.substring == value.substring
-            and self.exact == value.exact
-            and self.max_matches == value.max_matches
-        )
+        return self.substring == value.substring and self.exact == value.exact and self.max_matches == value.max_matches
 
     def __hash__(self) -> int:
         return hash((self.substring, self.exact, self.max_matches))
@@ -416,9 +389,7 @@ class force_interactive:
         return self
 
     def __exit__(self, exc_val, exc_type, exc_tb):
-        os.environ[self.settings.ENV_NAME_FORCE_INTERACTIVE_SHELL] = (
-            self._old_force_interactive_env_str
-        )
+        os.environ[self.settings.ENV_NAME_FORCE_INTERACTIVE_SHELL] = self._old_force_interactive_env_str
         interactive_shell.cache_clear()
 
 
@@ -439,11 +410,7 @@ class question_patcher(force_interactive):
 
     def _dynamic_match(self, prompt_text: str) -> str | None:
         return next(
-            (
-                matcher.next_response()
-                for matcher in self.dynamic_responses
-                if matcher(prompt_text)
-            ),
+            (matcher.next_response() for matcher in self.dynamic_responses if matcher(prompt_text)),
             None,
         )
 
@@ -536,9 +503,7 @@ class question_patcher(force_interactive):
 class RaiseOnQuestionError(Exception):
     def __init__(self, prompt_text: str):
         self.prompt_text = prompt_text
-        super().__init__(
-            f"Question asked: '{prompt_text}' when {raise_on_question.__name__} was active"
-        )
+        super().__init__(f"Question asked: '{prompt_text}' when {raise_on_question.__name__} was active")
 
 
 @dataclass
@@ -567,9 +532,7 @@ if __name__ == "__main__":
     choices = [ChoiceTyped(name="c1", value=1)]
     _create = object()
     _skip = object()
-    choices.append(
-        ChoiceTyped(name="Create new Jira issue", value=_create, checked=True)
-    )
+    choices.append(ChoiceTyped(name="Create new Jira issue", value=_create, checked=True))
     choices.append(ChoiceTyped(name="Skip for now", value=_skip))
     selected = select_list_choice("select me", choices)
     if selected is _create:
@@ -588,18 +551,14 @@ if __name__ == "__main__":
     )
 
     async def async_main():
-        logger.info(
-            f"Async confirm: {confirm('Can you confirm from async?', default=True)}"
-        )
+        logger.info(f"Async confirm: {confirm('Can you confirm from async?', default=True)}")
 
     asyncio.run(async_main())
     choices_typed = [
         ChoiceTyped(name="Option 1", value=1, description="First option"),
         ChoiceTyped(name="Option 2", value=2, description="Second option"),
     ]
-    logger.info(
-        select_list_multiple_choices("Select options:", choices_typed, default=[1])
-    )
+    logger.info(select_list_multiple_choices("Select options:", choices_typed, default=[1]))
     logger.info(select_list("Choose a letter", list("abcdefghijklmnopqrstuvwxyz")))
     logger.info(
         select_dict(

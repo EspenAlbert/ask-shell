@@ -38,22 +38,14 @@ logger = logging.getLogger(__name__)
 @pytest.mark.parametrize("func", [run, run_and_wait], ids=["run", "run_and_wait"])
 def test_check_all_config_args_in_signatures(func):
     names = set(fields.field_names(ShellConfig)) - {"shell_input"}
-    annotations = {
-        name: annotation for name, annotation in ShellConfig.__annotations__.items()
-    }
+    annotations = {name: annotation for name, annotation in ShellConfig.__annotations__.items()}
     signature = inspect.signature(func)
     parameters = signature.parameters
     missing_names = names - set(parameters.keys())
     if func is run:
-        missing_names -= {
-            "user_input"
-        }  # run does not have user_input, as it is not supported
-    missing_names = "\n".join(
-        f"{name}: {annotations[name]} | None = None," for name in sorted(missing_names)
-    )
-    assert not missing_names, (
-        f"please update the signature of {func.__name__} to include:\n{missing_names}"
-    )
+        missing_names -= {"user_input"}  # run does not have user_input, as it is not supported
+    missing_names = "\n".join(f"{name}: {annotations[name]} | None = None," for name in sorted(missing_names))
+    assert not missing_names, f"please update the signature of {func.__name__} to include:\n{missing_names}"
 
 
 def test_normal_run():
@@ -79,9 +71,7 @@ def test_async_run():
 
 @pytest.mark.skipif(os.environ.get("SLOW", "") == "", reason="needs os.environ[SLOW]")
 def test_error_run():
-    with pytest.raises(
-        ValidationError, match=r"Binary or non-executable 'unknown' not found"
-    ):
+    with pytest.raises(ValidationError, match=r"Binary or non-executable 'unknown' not found"):
         run_and_wait(ShellConfig(shell_input="unknown hello"))
 
 
@@ -94,11 +84,7 @@ def test_invalid_popen_args():
 def test_allow_non_zero_exit():
     with pytest.raises(ShellError):
         run_and_wait("exit 1", skip_binary_check=True)
-    result = run_and_wait(
-        ShellConfig(
-            shell_input="exit 1", allow_non_zero_exit=True, skip_binary_check=True
-        )
-    )
+    result = run_and_wait(ShellConfig(shell_input="exit 1", allow_non_zero_exit=True, skip_binary_check=True))
     assert result.exit_code == 1
 
 
@@ -126,9 +112,7 @@ def test_multiple_attempts(tmp_path):
     """error might look weird due to flushing"""
     script_path = tmp_path / "attempt.py"
     script_path.write_text(_attempt_script)
-    result = run_and_wait(
-        ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=3)
-    )
+    result = run_and_wait(ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=3))
     assert result.clean_complete
 
 
@@ -136,9 +120,7 @@ def test_not_enough_attempts(tmp_path):
     script_path = tmp_path / "attempt.py"
     script_path.write_text(_attempt_script)
     with pytest.raises(ShellError) as exc:
-        run_and_wait(
-            ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=2)
-        )
+        run_and_wait(ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=2))
     assert "attempt in script: 2/3" in exc.value.stdout
     assert exc.value.exit_code == 1
 
@@ -327,9 +309,7 @@ def test_break_of_match_statement_breaks_loop():
 def test_ansi_content(tf_dir):
     output = run_and_wait("terraform init", cwd=tf_dir, ansi_content=True)
     assert "Terraform has been successfully initialized!\n" in output.stdout
-    assert "[0m[1m[32m" not in output.stdout, (
-        "ANSI codes should not be present in the output"
-    )
+    assert "[0m[1m[32m" not in output.stdout, "ANSI codes should not be present in the output"
 
 
 def test_message_callbacks():

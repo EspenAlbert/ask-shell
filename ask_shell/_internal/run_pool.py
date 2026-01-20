@@ -47,9 +47,7 @@ class run_pool:
     def __post_init__(self):
         self._pool_max_workers = self.pool._max_workers
         max_run_count = max_run_count_for_workers(self._pool_max_workers)
-        workers_required_if_full = (
-            self.max_concurrent_submits * self.threads_used_per_submit
-        )
+        workers_required_if_full = self.max_concurrent_submits * self.threads_used_per_submit
         run_count_used_by_this_pool = ceil(workers_required_if_full / THREADS_PER_RUN)
         assert run_count_used_by_this_pool < max_run_count, (
             f"Run count used by this pool ({run_count_used_by_this_pool}) exceeds max run count ({max_run_count}). Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} environment variable or decrease `max_concurrent_submits` parameter."
@@ -73,9 +71,7 @@ class run_pool:
             self._current_submit_count += 1
             if self._current_submit_count == 1:
                 self._event = Event()  # reset the event when the first submit is made
-        with handle_interrupt_wait(
-            interrupt_message=f"run_pool submit for {self.task_name}"
-        ):
+        with handle_interrupt_wait(interrupt_message=f"run_pool submit for {self.task_name}"):
             while self._current_submit_count >= self.max_concurrent_submits:
                 if self.sleep_callback:
                     self.sleep_callback()
@@ -97,9 +93,7 @@ class run_pool:
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
         # no cleanup necessary, the pool will be cleaned up automatically due to atexit call
-        with handle_interrupt_wait(
-            interrupt_message=f"interrupt in `run_pool` exit method for {self.task_name}"
-        ):
+        with handle_interrupt_wait(interrupt_message=f"interrupt in `run_pool` exit method for {self.task_name}"):
             self._event.wait(self.exit_wait_timeout)
 
         if task := self._task:

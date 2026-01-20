@@ -60,9 +60,7 @@ def test_select_list_multiple(inputs, options, expected):
 def test_select_list_multiple_with_default():
     with question_patcher(responses=[""]):
         options = ["Option 1", "Option 2", "Option 3"]
-        assert (
-            select_list_multiple("Select options:", options, default=options) == options
-        )
+        assert select_list_multiple("Select options:", options, default=options) == options
 
 
 @pytest.mark.parametrize(
@@ -129,12 +127,7 @@ def test_explicit_select_options():
 
 def test_select_dict():
     with question_patcher(responses=["", "Option 2"]):
-        assert (
-            select_dict(
-                "Select an option:", {"Option 1": 1, "Option 2": 2}, default="Option 2"
-            )
-            == 2
-        )
+        assert select_dict("Select an option:", {"Option 1": 1, "Option 2": 2}, default="Option 2") == 2
         assert select_dict("Select an option:", {"Option 1": 1, "Option 2": 2}) == 2
 
 
@@ -254,9 +247,7 @@ def test_prompt_match_twice():
 def test_prompt_dynamic_match():
     prompt_text = "my prompt"
     response_expected = "hello world!"
-    with question_patcher(
-        dynamic_responses=[PromptMatch(exact=prompt_text, response=response_expected)]
-    ):
+    with question_patcher(dynamic_responses=[PromptMatch(exact=prompt_text, response=response_expected)]):
         response = text(prompt_text)
     assert response_expected == response
 

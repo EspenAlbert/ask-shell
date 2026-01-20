@@ -15,9 +15,7 @@ from ask_shell.settings import AskShellSettings
 
 @pytest.fixture(autouse=True)
 def settings(static_env_vars: StaticSettings) -> AskShellSettings:
-    return AskShellSettings.from_env(
-        global_callback_strings=[], **static_env_vars.model_dump()
-    )
+    return AskShellSettings.from_env(global_callback_strings=[], **static_env_vars.model_dump())
 
 
 tf_example = """\
@@ -54,9 +52,7 @@ def reset_progress_fix():
 
 
 # https://github.com/Textualize/rich/blob/8c4d3d1d50047e3aaa4140d0ffc1e0c9f1df5af4/tests/test_live.py#L11
-def create_capture_console(
-    *, width: int = 60, height: int = 80, force_terminal: bool = True
-) -> Console:
+def create_capture_console(*, width: int = 60, height: int = 80, force_terminal: bool = True) -> Console:
     return Console(
         width=width,
         height=height,

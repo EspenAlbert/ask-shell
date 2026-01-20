@@ -94,9 +94,7 @@ def manager_for_runs() -> ProgressManager:
 @dataclass
 class _RunState:
     runs: dict[int, _RunInfo] = field(default_factory=dict, repr=False)
-    _progress_manager: ProgressManager = field(
-        init=False, repr=False, default_factory=manager_for_runs
-    )
+    _progress_manager: ProgressManager = field(init=False, repr=False, default_factory=manager_for_runs)
 
     @property
     def active_runs(self) -> list[ShellRun]:

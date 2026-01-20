@@ -78,9 +78,7 @@ class ProgressManager:
             if self._progress is None:
                 return
             if not self._progress.finished:
-                logger.warning(
-                    f"Resetting progress {self.title} while it is still running"
-                )
+                logger.warning(f"Resetting progress {self.title} while it is still running")
             self._progress = None
 
     def add_task(self, task: new_task) -> None:
@@ -95,17 +93,13 @@ class ProgressManager:
             )
             task._rich_task = next(t for t in progress.tasks if t.id == task._task_id)
             if len(progress.tasks) == 1:
-                self._remove_progress = add_renderable(
-                    progress, name=self.title, order=-100
-                )
+                self._remove_progress = add_renderable(progress, name=self.title, order=-100)
 
     def remove_task(self, task: new_task, error: BaseException | None = None) -> None:
         with self._lock:
             progress = self.get_progress()
             task_id = task._task_id
-            assert task_id is not None, (
-                f"Task ID should not be None: {task.description}"
-            )
+            assert task_id is not None, f"Task ID should not be None: {task.description}"
             progress_task = next((t for t in progress.tasks if t.id == task_id), None)
             if not progress_task:
                 raise ValueError(
@@ -131,9 +125,7 @@ class ProgressManager:
         log_update: bool = False,
         **task_fields,
     ):
-        assert task._task_id is not None, (
-            f"Task ID should not be None: {task.description}"
-        )
+        assert task._task_id is not None, f"Task ID should not be None: {task.description}"
         with self._lock:
             progress = self.get_progress()
             progress.update(
@@ -207,9 +199,7 @@ class new_task:
             self.total = total
         if log_update is None:
             log_update = self.log_updates
-        self.manager.update_task(
-            self, advance=advance, total=total, log_update=log_update, **task_fields
-        )
+        self.manager.update_task(self, advance=advance, total=total, log_update=log_update, **task_fields)
 
     def __enter__(self) -> Self:
         self.manager.add_task(self)

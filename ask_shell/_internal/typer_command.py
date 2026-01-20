@@ -23,9 +23,7 @@ original_excepthook = sys.excepthook
 
 
 def log_exit_summary(settings: AskShellSettings):
-    log_to_live(
-        f"{default_rich_info_style()}You can find the run logs in {settings.run_logs} "
-    )
+    log_to_live(f"{default_rich_info_style()}You can find the run logs in {settings.run_logs} ")
 
 
 def except_hook_custom(
@@ -49,9 +47,7 @@ def except_hook_custom(
         )
         if not skip_rich_exception:
             console.print(rich_tb)
-        standard_exception = traceback.TracebackException(
-            exc_type, exc_value, tb, limit=-7, compact=True
-        )
+        standard_exception = traceback.TracebackException(exc_type, exc_value, tb, limit=-7, compact=True)
         for line in standard_exception.format(chain=True):
             console.print(line, end="")
 
@@ -70,12 +66,12 @@ def track_progress_decorator(
     def decorator(command: T) -> T:
         @wraps(command)
         def wrapper(*args, **kwargs):
-            if not skip_except_hook:  # this must be done inside of the call as the typer.main sets the except hook when the app is called
+            if (
+                not skip_except_hook
+            ):  # this must be done inside of the call as the typer.main sets the except hook when the app is called
                 sys.excepthook = except_hook_custom(skip_rich_exception)  # type: ignore
             if use_app_name_command_for_logs:
-                settings.configure_run_logs_dir_if_unset(
-                    new_relative_path=f"{app_name}/{command_name}"
-                )
+                settings.configure_run_logs_dir_if_unset(new_relative_path=f"{app_name}/{command_name}")
             sys_args = " ".join(sys.argv)
             with new_task(
                 description=f"Running: '{sys_args}'",
@@ -157,9 +153,7 @@ def configure_logging(
         )(
             command.callback  # type: ignore
         )
-    handler = RichHandler(
-        rich_tracebacks=False, level=settings.log_level, console=get_live_console()
-    )
+    handler = RichHandler(rich_tracebacks=False, level=settings.log_level, console=get_live_console())
     logging.basicConfig(
         level=settings.log_level,
         format="%(message)s",
