@@ -31,9 +31,10 @@ terraform {
 
 
 @pytest.fixture()
-@pytest.mark.skipif(os.environ.get("SLOW", "") == "", reason="needs os.environ[SLOW]")
 def tf_dir(settings):
     """Fixture to create a temporary directory with a Terraform example."""
+    if os.environ.get("SLOW", "") == "":
+        pytest.skip("needs os.environ[SLOW]")
     tf_path = settings.static_root / "terraform_example/main.tf"
     ensure_parents_write_text(tf_path, tf_example)
     return tf_path.parent
