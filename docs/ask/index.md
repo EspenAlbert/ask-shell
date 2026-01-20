@@ -30,7 +30,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L105)
+- [source](../../ask_shell/_internal/interactive.py#L105)
 > **Since:** 0.2.0
 
 ```python
@@ -52,7 +52,7 @@ class ChoiceTyped(Generic):
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L315)
+- [source](../../ask_shell/_internal/interactive.py#L315)
 > **Since:** 0.2.0
 
 ```python
@@ -64,7 +64,7 @@ class KeyInput:
 <a id="newhandlerchoice_def"></a>
 
 ### class: `NewHandlerChoice`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L99)
+- [source](../../ask_shell/_internal/interactive.py#L99)
 > **Since:** 0.2.0
 
 ```python
@@ -82,7 +82,7 @@ class NewHandlerChoice(Generic):
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L337)
+- [source](../../ask_shell/_internal/interactive.py#L337)
 > **Since:** 0.2.0
 
 ```python
@@ -108,7 +108,7 @@ class PromptMatch:
 <a id="raiseonquestionerror_def"></a>
 
 ### exception: `RaiseOnQuestionError`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L503)
+- [source](../../ask_shell/_internal/interactive.py#L503)
 > **Since:** 0.2.0
 
 ```python
@@ -120,29 +120,29 @@ class RaiseOnQuestionError(Exception):
 <a id="selectoptions_def"></a>
 
 ### class: `SelectOptions`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L139)
+- [source](../../ask_shell/_internal/interactive.py#L139)
 > **Since:** 0.2.0
 
 ```python
 class SelectOptions(BaseModel, Generic):
-    use_search_filter: bool | object = <object object at 0x1007be820>
-    use_shortcuts: bool | object = <object object at 0x1007be820>
-    use_jk_keys: bool | object = <object object at 0x1007be820>
+    use_search_filter: bool | object = <object object at 0x1026be820>
+    use_shortcuts: bool | object = <object object at 0x1026be820>
+    use_jk_keys: bool | object = <object object at 0x1026be820>
     new_handler_choice: NewHandlerChoice[~T] | None
 ```
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| use_search_filter | `bool | object` | `<object object at 0x1007be820>` | 0.2.0 |
-| use_shortcuts | `bool | object` | `<object object at 0x1007be820>` | 0.2.0 |
-| use_jk_keys | `bool | object` | `<object object at 0x1007be820>` | 0.2.0 |
+| use_search_filter | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
+| use_shortcuts | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
+| use_jk_keys | `bool | object` | `<object object at 0x1026be820>` | 0.2.0 |
 | new_handler_choice | `NewHandlerChoice[~T] | None` | - | 0.2.0 |
 <!-- === OK_EDIT: pkg-ext selectoptions_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext confirm_def === -->
 <a id="confirm_def"></a>
 
 ### function: `confirm`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L80)
+- [source](../../ask_shell/_internal/interactive.py#L80)
 > **Since:** 0.2.0
 
 ```python
@@ -154,7 +154,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L380)
+- [source](../../ask_shell/_internal/interactive.py#L380)
 > **Since:** 0.2.0
 
 ```python
@@ -170,7 +170,7 @@ class force_interactive:
 <a id="question_patcher_def"></a>
 
 ### class: `question_patcher`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L396)
+- [source](../../ask_shell/_internal/interactive.py#L396)
 > **Since:** 0.2.0
 
 ```python
@@ -199,7 +199,7 @@ thread pools, prompt_toolkit may still write to closed streams.
 <a id="raise_on_question_def"></a>
 
 ### class: `raise_on_question`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L509)
+- [source](../../ask_shell/_internal/interactive.py#L509)
 > **Since:** 0.2.0
 
 ```python
@@ -217,7 +217,7 @@ class raise_on_question(force_interactive):
 <a id="select_dict_def"></a>
 
 ### function: `select_dict`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L260)
+- [source](../../ask_shell/_internal/interactive.py#L260)
 > **Since:** 0.2.0
 
 ```python
@@ -229,7 +229,7 @@ def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None
 <a id="select_list_def"></a>
 
 ### function: `select_list`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L276)
+- [source](../../ask_shell/_internal/interactive.py#L276)
 > **Since:** 0.2.0
 
 ```python
@@ -241,7 +241,7 @@ def select_list(prompt_text: str, choices: list[str], *, default: str | None = N
 <a id="select_list_choice_def"></a>
 
 ### function: `select_list_choice`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L301)
+- [source](../../ask_shell/_internal/interactive.py#L301)
 > **Since:** 0.2.0
 
 ```python
@@ -253,7 +253,7 @@ def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, defa
 <a id="select_list_multiple_def"></a>
 
 ### function: `select_list_multiple`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L229)
+- [source](../../ask_shell/_internal/interactive.py#L229)
 > **Since:** 0.2.0
 
 ```python
@@ -265,7 +265,7 @@ def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[
 <a id="select_list_multiple_choices_def"></a>
 
 ### function: `select_list_multiple_choices`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L245)
+- [source](../../ask_shell/_internal/interactive.py#L245)
 > **Since:** 0.2.0
 
 ```python
@@ -277,7 +277,7 @@ def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]
 <a id="text_def"></a>
 
 ### function: `text`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L128)
+- [source](../../ask_shell/_internal/interactive.py#L128)
 > **Since:** 0.2.0
 
 ```python

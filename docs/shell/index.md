@@ -26,7 +26,7 @@
 <a id="shellconfig_def"></a>
 
 ### class: `ShellConfig`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/models.py#L127)
+- [source](../../ask_shell/_internal/models.py#L127)
 > **Since:** 0.2.0
 
 ```python
@@ -41,7 +41,7 @@ class ShellConfig(Entity):
     cwd: Path
     user_input: bool = False
     attempts: int = 1
-    should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] = <function always_retry at 0x102e0e8e0>
+    should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] = <function always_retry at 0x106cba8e0>
     print_prefix: str
     include_log_time: bool = False
     ansi_content: bool
@@ -78,7 +78,7 @@ class ShellConfig(Entity):
 | cwd | `Path` | - | 0.2.0 | Set to Path.cwd() if not provided |
 | user_input | `bool` | `False` | 0.2.0 | - |
 | attempts | `int` | `1` | 0.2.0 | - |
-| should_retry | `Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]` | `<function always_retry at 0x102e0e8e0>` | 0.2.0 | - |
+| should_retry | `Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]` | `<function always_retry at 0x106cba8e0>` | 0.2.0 | - |
 | print_prefix | `str` | - | 0.2.0 | Use cwd+binary_name+first_arg if not provided |
 | include_log_time | `bool` | `False` | 0.2.0 | - |
 | ansi_content | `bool` | - | 0.2.0 | Inferred if not provided |
@@ -95,7 +95,7 @@ class ShellConfig(Entity):
 <a id="shellerror_def"></a>
 
 ### exception: `ShellError`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/models.py#L484)
+- [source](../../ask_shell/_internal/models.py#L484)
 > **Since:** 0.2.0
 
 ```python
@@ -107,7 +107,7 @@ class ShellError(Exception):
 <a id="shellrun_def"></a>
 
 ### class: `ShellRun`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/models.py#L269)
+- [source](../../ask_shell/_internal/models.py#L269)
 > **Since:** 0.2.0
 
 ```python
@@ -132,7 +132,7 @@ Args:
 <a id="handle_interrupt_wait_def"></a>
 
 ### class: `handle_interrupt_wait`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L140)
+- [source](../../ask_shell/_internal/_run.py#L140)
 > **Since:** 0.2.0
 
 ```python
@@ -150,7 +150,7 @@ class handle_interrupt_wait:
 <a id="kill_def"></a>
 
 ### function: `kill`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L72)
+- [source](../../ask_shell/_internal/_run.py#L72)
 > **Since:** 0.2.0
 
 ```python
@@ -164,7 +164,7 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 <a id="kill_all_runs_def"></a>
 
 ### function: `kill_all_runs`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L105)
+- [source](../../ask_shell/_internal/_run.py#L105)
 > **Since:** 0.2.0
 
 ```python
@@ -176,7 +176,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_def"></a>
 
 ### function: `run`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L428)
+- [source](../../ask_shell/_internal/_run.py#L428)
 > **Since:** 0.2.0
 
 ```python
@@ -188,7 +188,7 @@ def run(config: ShellConfig | str, *, allow_non_zero_exit: bool | None = None, a
 <a id="run_and_wait_def"></a>
 
 ### function: `run_and_wait`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L486)
+- [source](../../ask_shell/_internal/_run.py#L486)
 > **Since:** 0.2.0
 
 ```python
@@ -200,7 +200,7 @@ def run_and_wait(script: ShellConfig | str, timeout: float | None = None, *, all
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L545)
+- [source](../../ask_shell/_internal/_run.py#L545)
 > **Since:** 0.2.0
 
 ```python
@@ -212,7 +212,7 @@ def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
 <a id="run_pool_def"></a>
 
 ### class: `run_pool`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/run_pool.py#L25)
+- [source](../../ask_shell/_internal/run_pool.py#L25)
 > **Since:** 0.2.0
 
 ```python
@@ -242,7 +242,7 @@ class run_pool:
 <a id="stop_runs_and_pool_def"></a>
 
 ### function: `stop_runs_and_pool`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L132)
+- [source](../../ask_shell/_internal/_run.py#L132)
 > **Since:** 0.2.0
 
 ```python
@@ -254,7 +254,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run.py#L552)
+- [source](../../ask_shell/_internal/_run.py#L552)
 > **Since:** 0.2.0
 
 ```python

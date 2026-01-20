@@ -22,7 +22,7 @@
 <a id="removelivepart_def"></a>
 
 ### class: `RemoveLivePart`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_live.py#L148)
+- [source](../../ask_shell/_internal/rich_live.py#L148)
 > **Since:** 0.2.0
 
 ```python
@@ -34,7 +34,7 @@ class RemoveLivePart(Protocol):
 <a id="add_renderable_def"></a>
 
 ### function: `add_renderable`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_live.py#L152)
+- [source](../../ask_shell/_internal/rich_live.py#L152)
 > **Since:** 0.2.0
 
 ```python
@@ -46,7 +46,7 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 <a id="configure_logging_def"></a>
 
 ### function: `configure_logging`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/typer_command.py#L133)
+- [source](../../ask_shell/_internal/typer_command.py#L133)
 > **Since:** 0.2.0
 
 ```python
@@ -58,7 +58,7 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 <a id="get_live_console_def"></a>
 
 ### function: `get_live_console`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_live.py#L170)
+- [source](../../ask_shell/_internal/rich_live.py#L170)
 > **Since:** 0.2.0
 
 ```python
@@ -70,7 +70,7 @@ def get_live_console() -> Console:
 <a id="interactive_shell_def"></a>
 
 ### function: `interactive_shell`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/_run_env.py#L27)
+- [source](../../ask_shell/_internal/_run_env.py#L27)
 > **Since:** 0.2.0
 
 ```python
@@ -82,7 +82,7 @@ def interactive_shell() -> bool:
 <a id="log_to_live_def"></a>
 
 ### function: `log_to_live`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_live.py#L210)
+- [source](../../ask_shell/_internal/rich_live.py#L210)
 > **Since:** 0.2.0
 
 ```python
@@ -94,7 +94,7 @@ def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | 
 <a id="new_task_def"></a>
 
 ### class: `new_task`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_progress.py#L153)
+- [source](../../ask_shell/_internal/rich_progress.py#L153)
 > **Since:** 0.2.0
 
 ```python
@@ -124,7 +124,7 @@ class new_task:
 <a id="print_to_live_def"></a>
 
 ### function: `print_to_live`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/rich_live.py#L174)
+- [source](../../ask_shell/_internal/rich_live.py#L174)
 > **Since:** 0.2.0
 
 ```python

@@ -546,3 +546,15 @@ name: as_upper
 ts: 2026-01-20 19:44:16.576076+00:00
 type: keep_private
 full_path: settings.as_upper
+---
+ts: 2026-01-20 20:04:43.972060+00:00
+type: chore
+description: separate repo release
+---
+name: ''
+ts: 2026-01-20 20:05:44.146436+00:00
+type: fix
+author: Espen Albert
+ignored: true
+message: 'fix: improve slow test handling in tf_dir fixture'
+short_sha: c08df2
