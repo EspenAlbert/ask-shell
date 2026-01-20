@@ -1,0 +1,32 @@
+# === DO_NOT_EDIT: pkg-ext site ===
+site_name: ask_shell
+# === OK_EDIT: pkg-ext site ===
+
+# === DO_NOT_EDIT: pkg-ext theme ===
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+# === OK_EDIT: pkg-ext theme ===
+
+# === DO_NOT_EDIT: pkg-ext nav ===
+nav:
+  - Home: index.md
+  - ask_shell:
+    - Overview: _root/index.md
+    - AskShellSettings: _root/askshellsettings.md
+  - ask: ask/index.md
+  - console: console/index.md
+  - shell: shell/index.md
+  - shell_events: shell_events/index.md
+# === OK_EDIT: pkg-ext nav ===
+
+# === DO_NOT_EDIT: pkg-ext extensions ===
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - admonition
+  - attr_list
+# === OK_EDIT: pkg-ext extensions ===
