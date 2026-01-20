@@ -71,7 +71,6 @@ omit = ["*_test.py"]
 exclude_lines = ["no cov", "if __name__ == .__main__.:"]
 # === OK_EDIT: path-sync coverage ===
 
-# === DO_NOT_EDIT: path-sync dev ===
 [dependency-groups]
 dev = [
   "pyright>=1.1",
@@ -80,7 +79,6 @@ dev = [
   "pytest-model-lib",
   "ruff>=0.14",
 ]
-# === OK_EDIT: path-sync dev ===
 
 # === DO_NOT_EDIT: path-sync docs ===
 docs = [
