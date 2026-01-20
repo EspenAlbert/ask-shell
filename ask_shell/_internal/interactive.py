@@ -8,7 +8,7 @@ import logging
 import os
 from dataclasses import dataclass, field
 from functools import wraps
-from typing import Callable, Generic, Self, TypeVar
+from typing import Any, Callable, Generic, Self, TypeVar
 
 from prompt_toolkit.input.defaults import create_pipe_input
 from prompt_toolkit.output import DummyOutput
@@ -439,7 +439,7 @@ class question_patcher(force_interactive):
         except RuntimeError:
             return False
 
-    def _run_in_thread_with_isolated_io(self, q: Question) -> T:
+    def _run_in_thread_with_isolated_io(self, q: Question) -> Any:
         """Run unsafe_ask in thread pool with isolated stdout/stderr.
 
         When running in a thread, prompt_toolkit's flush_stdout may still
@@ -529,11 +529,13 @@ class raise_on_question(force_interactive):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    choices = [ChoiceTyped(name="c1", value=1)]
     _create = object()
     _skip = object()
-    choices.append(ChoiceTyped(name="Create new Jira issue", value=_create, checked=True))
-    choices.append(ChoiceTyped(name="Skip for now", value=_skip))
+    choices: list[ChoiceTyped[int | object]] = [
+        ChoiceTyped(name="c1", value=1),
+        ChoiceTyped(name="Create new Jira issue", value=_create, checked=True),
+        ChoiceTyped(name="Skip for now", value=_skip),
+    ]
     selected = select_list_choice("select me", choices)
     if selected is _create:
         logger.info("Creating new Jira issue")
