@@ -3,6 +3,7 @@ ts: 2025-10-18 21:33:26.175167+00:00
 type: make_public
 details: created in _internal/typer_command.py
 group: console
+full_path: _internal.typer_command.configure_logging
 ---
 name: log_exit_summary
 ts: 2025-10-18 21:33:26.175322+00:00
@@ -84,24 +85,28 @@ ts: 2025-10-18 21:33:26.177029+00:00
 type: make_public
 details: created in _internal/rich_live.py
 group: console
+full_path: _internal.rich_live.add_renderable
 ---
 name: get_live_console
 ts: 2025-10-18 21:33:26.177141+00:00
 type: make_public
 details: created in _internal/rich_live.py
 group: console
+full_path: _internal.rich_live.get_live_console
 ---
 name: print_to_live
 ts: 2025-10-18 21:33:26.177250+00:00
 type: make_public
 details: created in _internal/rich_live.py
 group: console
+full_path: _internal.rich_live.print_to_live
 ---
 name: log_to_live
 ts: 2025-10-18 21:33:26.177359+00:00
 type: make_public
 details: created in _internal/rich_live.py
 group: console
+full_path: _internal.rich_live.log_to_live
 ---
 name: reset_live
 ts: 2025-10-18 21:33:26.177470+00:00
@@ -133,6 +138,7 @@ ts: 2025-10-18 21:33:26.178032+00:00
 type: make_public
 details: exposed in the function _internal.rich_live.add_renderable
 group: console
+full_path: _internal.rich_live.RemoveLivePart
 ---
 name: always_retry
 ts: 2025-10-18 21:33:26.178140+00:00
@@ -154,42 +160,49 @@ ts: 2025-10-18 21:33:26.178469+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.confirm
 ---
 name: text
 ts: 2025-10-18 21:33:26.178580+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.text
 ---
 name: select_list_multiple
 ts: 2025-10-18 21:33:26.178692+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.select_list_multiple
 ---
 name: select_list_multiple_choices
 ts: 2025-10-18 21:33:26.178807+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.select_list_multiple_choices
 ---
 name: select_dict
 ts: 2025-10-18 21:33:26.178920+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.select_dict
 ---
 name: select_list
 ts: 2025-10-18 21:33:26.179028+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.select_list
 ---
 name: select_list_choice
 ts: 2025-10-18 21:33:26.179143+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.select_list_choice
 ---
 name: return_default_if_not_interactive
 ts: 2025-10-18 21:33:26.179264+00:00
@@ -206,48 +219,56 @@ ts: 2025-10-18 21:33:26.179492+00:00
 type: make_public
 details: created in _internal/_run_env.py
 group: console
+full_path: _internal._run_env.interactive_shell
 ---
 name: kill
 ts: 2025-10-18 21:33:26.179600+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.kill
 ---
 name: kill_all_runs
 ts: 2025-10-18 21:33:26.179710+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.kill_all_runs
 ---
 name: stop_runs_and_pool
 ts: 2025-10-18 21:33:26.179821+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.stop_runs_and_pool
 ---
 name: run
 ts: 2025-10-18 21:33:26.179929+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.run
 ---
 name: run_and_wait
 ts: 2025-10-18 21:33:26.180039+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.run_and_wait
 ---
 name: run_error
 ts: 2025-10-18 21:33:26.180146+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.run_error
 ---
 name: wait_on_ok_errors
 ts: 2025-10-18 21:33:26.180257+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.wait_on_ok_errors
 ---
 name: get_pool
 ts: 2025-10-18 21:33:26.180365+00:00
@@ -274,6 +295,7 @@ ts: 2025-10-18 21:33:26.180822+00:00
 type: make_public
 details: exposed in the function _internal._run.run
 group: shell
+full_path: _internal.models.ShellRun
 ---
 name: SecretsHider
 ts: 2025-10-18 21:33:26.180932+00:00
@@ -285,6 +307,7 @@ ts: 2025-10-18 21:33:26.181041+00:00
 type: make_public
 details: created in _internal/run_pool.py
 group: shell
+full_path: _internal.run_pool.run_pool
 ---
 name: SubmitFunc
 ts: 2025-10-18 21:33:26.181150+00:00
@@ -296,12 +319,14 @@ ts: 2025-10-18 21:33:26.181261+00:00
 type: make_public
 details: created in settings.py
 group: __ROOT__
+full_path: settings.AskShellSettings
 ---
 name: new_task
 ts: 2025-10-18 21:33:26.181381+00:00
 type: make_public
 details: created in _internal/rich_progress.py
 group: console
+full_path: _internal.rich_progress.new_task
 ---
 name: ProgressManager
 ts: 2025-10-18 21:33:26.181491+00:00
@@ -328,6 +353,7 @@ ts: 2025-10-18 21:33:26.181926+00:00
 type: make_public
 details: created in _internal/models.py
 group: shell
+full_path: _internal.models.ShellConfig
 ---
 name: ShellInput
 ts: 2025-10-18 21:33:26.182032+00:00
@@ -339,36 +365,42 @@ ts: 2025-10-18 21:33:26.182142+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.NewHandlerChoice
 ---
 name: ChoiceTyped
 ts: 2025-10-18 21:33:26.182249+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.ChoiceTyped
 ---
 name: SelectOptions
 ts: 2025-10-18 21:33:26.182355+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.SelectOptions
 ---
 name: KeyInput
 ts: 2025-10-18 21:33:26.182461+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.KeyInput
 ---
 name: PromptMatch
 ts: 2025-10-18 21:33:26.182568+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.PromptMatch
 ---
 name: question_patcher
 ts: 2025-10-18 21:33:26.182675+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.question_patcher
 ---
 name: SelectChosenOptions
 ts: 2025-10-18 21:33:26.182785+00:00
@@ -380,66 +412,77 @@ ts: 2025-10-18 21:33:26.182895+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunStdStarted
 ---
 name: ShellRunStdOutput
 ts: 2025-10-18 21:33:26.183003+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunStdOutput
 ---
 name: ShellRunPOpenStarted
 ts: 2025-10-18 21:33:26.183111+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunPOpenStarted
 ---
 name: ShellRunStdReadError
 ts: 2025-10-18 21:33:26.183225+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunStdReadError
 ---
 name: ShellRunRetryAttempt
 ts: 2025-10-18 21:33:26.183333+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunRetryAttempt
 ---
 name: ShellRunBefore
 ts: 2025-10-18 21:33:26.183440+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunBefore
 ---
 name: ShellRunAfter
 ts: 2025-10-18 21:33:26.183547+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunAfter
 ---
 name: OutputCallbackT
 ts: 2025-10-18 21:33:26.183655+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.OutputCallbackT
 ---
 name: ShellRunCallbackT
 ts: 2025-10-18 21:33:26.183762+00:00
 type: make_public
 details: created in _internal/events.py
 group: shell_events
+full_path: _internal.events.ShellRunCallbackT
 ---
 name: handle_interrupt_wait
 ts: 2025-10-18 21:33:26.183875+00:00
 type: make_public
 details: created in _internal/_run.py
 group: shell
+full_path: _internal._run.handle_interrupt_wait
 ---
 name: ShellError
 ts: 2025-10-18 21:33:26.183982+00:00
 type: make_public
 details: created in _internal/models.py
 group: shell
+full_path: _internal.models.ShellError
 ---
 name: RunIncompleteError
 ts: 2025-10-18 21:33:26.184093+00:00
@@ -476,18 +519,21 @@ ts: 2025-10-18 21:33:26.184881+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.force_interactive
 ---
 name: raise_on_question
 ts: 2025-10-18 21:33:26.184997+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.raise_on_question
 ---
 name: RaiseOnQuestionError
 ts: 2025-10-18 21:33:26.185113+00:00
 type: make_public
 details: created in _internal/interactive.py
 group: ask
+full_path: _internal.interactive.RaiseOnQuestionError
 ---
 name: ask
 ts: 2025-10-18 21:33:26.185251+00:00
