@@ -3,12 +3,12 @@
 <!-- === DO_NOT_EDIT: pkg-ext askshellsettings_def === -->
 ## class: AskShellSettings
 - [source](../../ask_shell/settings.py#L93)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class AskShellSettings(StaticSettings):
-    STATIC_DIR: Path = PydanticUndefined
-    CACHE_DIR: Path = PydanticUndefined
+    STATIC_DIR: Path | None
+    CACHE_DIR: Path | None
     SKIP_APP_NAME: bool = False
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
@@ -69,5 +69,5 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| 0.4.0 | Made public |
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext askshellsettings_changes === -->
