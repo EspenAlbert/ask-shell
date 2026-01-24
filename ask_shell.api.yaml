@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.3.0
+version: 0.3.1
 groups:
 - name: __ROOT__
   symbols:
@@ -1958,4 +1958,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-01-24 21:39:46.128010+00:00
+dumped_at: 2026-01-24 21:49:55.920601+00:00

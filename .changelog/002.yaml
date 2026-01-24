@@ -1,3 +1,8 @@
 ts: 2026-01-24 21:44:02.159875+00:00
 type: chore
 description: re-sync files and docs fixes
+---
+name: 0.3.1
+ts: 2026-01-24 21:49:55.993668+00:00
+type: release
+old_version: 0.3.0

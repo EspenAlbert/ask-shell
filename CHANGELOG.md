@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 2026-01-24T21-49Z
+
+### Other Changes
+- Chore: re-sync files and docs fixes
+
+
 ## 0.3.0 2026-01-20T20-23Z
 
 - Chore release in standalone repo
