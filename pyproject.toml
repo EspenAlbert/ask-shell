@@ -1,6 +1,5 @@
 # path-sync copy -n python-template
 
-# === OK_EDIT: path-sync header ===
 [project]
 name = "ask-shell"
 version = "0.3.0"
@@ -87,3 +86,7 @@ docs = [
   "mkdocs-material>=9.5",
 ]
 # === OK_EDIT: path-sync docs ===
+
+# === DO_NOT_EDIT: path-sync release ===
+release = ["pkg-ext"]
+# === OK_EDIT: path-sync release ===
