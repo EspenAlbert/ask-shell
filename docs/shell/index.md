@@ -27,11 +27,11 @@
 
 ### class: `ShellConfig`
 - [source](../../ask_shell/_internal/models.py#L127)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class ShellConfig(Entity):
-    shell_input: str = PydanticUndefined
+    shell_input: str
     env: dict[str, str] = ...
     extra_popen_kwargs: dict = ...
     allow_non_zero_exit: bool = False
@@ -41,7 +41,7 @@ class ShellConfig(Entity):
     cwd: Path
     user_input: bool = False
     attempts: int = 1
-    should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] = <function always_retry at 0x1029828e0>
+    should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] = <function always_retry>
     print_prefix: str
     include_log_time: bool = False
     ansi_content: bool
@@ -68,35 +68,35 @@ class ShellConfig(Entity):
 
 | Field | Type | Default | Since | Description |
 |---|---|---|---|---|
-| shell_input | `str` | `PydanticUndefined` | 0.4.0 | - |
-| env | `dict[str, str]` | `...` | 0.4.0 | - |
-| extra_popen_kwargs | `dict` | `...` | 0.4.0 | - |
-| allow_non_zero_exit | `bool` | `False` | 0.4.0 | - |
-| skip_os_env | `bool` | `False` | 0.4.0 | - |
-| skip_binary_check | `bool` | `False` | 0.4.0 | - |
-| skip_interactive_check | `bool` | `False` | 0.4.0 | - |
-| cwd | `Path` | - | 0.4.0 | Set to Path.cwd() if not provided |
-| user_input | `bool` | `False` | 0.4.0 | - |
-| attempts | `int` | `1` | 0.4.0 | - |
-| should_retry | `Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]` | `<function always_retry at 0x1029828e0>` | 0.4.0 | - |
-| print_prefix | `str` | - | 0.4.0 | Use cwd+binary_name+first_arg if not provided |
-| include_log_time | `bool` | `False` | 0.4.0 | - |
-| ansi_content | `bool` | - | 0.4.0 | Inferred if not provided |
-| run_output_dir | `Path | None` | - | 0.4.0 | Directory to store run logs, defaults to settings.run_logs /{XX}_{self.exec_name} |
-| run_log_stem_prefix | `str` | `''` | 0.4.0 | Prefix for run log stem |
-| skip_html_log_files | `bool` | `False` | 0.4.0 | Skip HTML log files, by default dumps HTML logs to support viewing colored output in browsers |
-| skip_progress_output | `bool` | `False` | 0.4.0 | Skip transitive std out/err output, useful for large outputs that are not needed in the logs when running parallel scripts |
-| terminal_width | `int | None` | `999` | 0.4.0 | - |
-| is_binary_call | `bool` | - | 0.4.0 | Inferred if not provided |
-| settings | `AskShellSettings` | `...` | 0.4.0 | - |
-| message_callbacks | `list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]]` | `...` | 0.4.0 | Callbacks for run messages, useful for custom handling of stdout/stderr |
+| shell_input | `str` | - | 0.3.0 | - |
+| env | `dict[str, str]` | `...` | 0.3.0 | - |
+| extra_popen_kwargs | `dict` | `...` | 0.3.0 | - |
+| allow_non_zero_exit | `bool` | `False` | 0.3.0 | - |
+| skip_os_env | `bool` | `False` | 0.3.0 | - |
+| skip_binary_check | `bool` | `False` | 0.3.0 | - |
+| skip_interactive_check | `bool` | `False` | 0.3.0 | - |
+| cwd | `Path` | - | 0.3.0 | Set to Path.cwd() if not provided |
+| user_input | `bool` | `False` | 0.3.0 | - |
+| attempts | `int` | `1` | 0.3.0 | - |
+| should_retry | `Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]` | `<function always_retry>` | 0.3.0 | - |
+| print_prefix | `str` | - | 0.3.0 | Use cwd+binary_name+first_arg if not provided |
+| include_log_time | `bool` | `False` | 0.3.0 | - |
+| ansi_content | `bool` | - | 0.3.0 | Inferred if not provided |
+| run_output_dir | `Path | None` | - | 0.3.0 | Directory to store run logs, defaults to settings.run_logs /{XX}_{self.exec_name} |
+| run_log_stem_prefix | `str` | `''` | 0.3.0 | Prefix for run log stem |
+| skip_html_log_files | `bool` | `False` | 0.3.0 | Skip HTML log files, by default dumps HTML logs to support viewing colored output in browsers |
+| skip_progress_output | `bool` | `False` | 0.3.0 | Skip transitive std out/err output, useful for large outputs that are not needed in the logs when running parallel scripts |
+| terminal_width | `int | None` | `999` | 0.3.0 | - |
+| is_binary_call | `bool` | - | 0.3.0 | Inferred if not provided |
+| settings | `AskShellSettings` | `...` | 0.3.0 | - |
+| message_callbacks | `list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]]` | `...` | 0.3.0 | Callbacks for run messages, useful for custom handling of stdout/stderr |
 <!-- === OK_EDIT: pkg-ext shellconfig_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellerror_def === -->
 <a id="shellerror_def"></a>
 
 ### exception: `ShellError`
 - [source](../../ask_shell/_internal/models.py#L484)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class ShellError(Exception):
@@ -108,7 +108,7 @@ class ShellError(Exception):
 
 ### class: `ShellRun`
 - [source](../../ask_shell/_internal/models.py#L269)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class ShellRun:
@@ -124,16 +124,16 @@ Args:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| config | `ShellConfig` | - | 0.4.0 |
-| p_open | `Popen | None` | `None` | 0.4.0 |
-| current_attempt | `int` | `1` | 0.4.0 |
+| config | `ShellConfig` | - | 0.3.0 |
+| p_open | `Popen | None` | `None` | 0.3.0 |
+| current_attempt | `int` | `1` | 0.3.0 |
 <!-- === OK_EDIT: pkg-ext shellrun_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext handle_interrupt_wait_def === -->
 <a id="handle_interrupt_wait_def"></a>
 
 ### class: `handle_interrupt_wait`
 - [source](../../ask_shell/_internal/_run.py#L140)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class handle_interrupt_wait:
@@ -143,15 +143,15 @@ class handle_interrupt_wait:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| interrupt_message | `str` | - | 0.4.0 |
-| immediate_kill | `bool` | `False` | 0.4.0 |
+| interrupt_message | `str` | - | 0.3.0 |
+| immediate_kill | `bool` | `False` | 0.3.0 |
 <!-- === OK_EDIT: pkg-ext handle_interrupt_wait_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext kill_def === -->
 <a id="kill_def"></a>
 
 ### function: `kill`
 - [source](../../ask_shell/_internal/_run.py#L72)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def kill(run: ShellRun, immediate: bool = False, reason: str = '', abort_timeout: float = 3.0):
@@ -165,7 +165,7 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 
 ### function: `kill_all_runs`
 - [source](../../ask_shell/_internal/_run.py#L105)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: float = 3.0, *, skip_retry: bool = False):
@@ -177,7 +177,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 
 ### function: `run`
 - [source](../../ask_shell/_internal/_run.py#L428)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def run(config: ShellConfig | str, *, allow_non_zero_exit: bool | None = None, ansi_content: bool | None = None, attempts: int | None = None, cwd: str | Path | None = None, env: dict[str, str] | None = None, extra_popen_kwargs: dict | None = None, is_binary_call: bool | None = None, message_callbacks: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None = None, print_prefix: str | None = None, run_log_stem_prefix: str | None = None, run_output_dir: Path | None = None, settings: AskShellSettings | None = None, should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None = None, skip_binary_check: bool | None = None, skip_html_log_files: bool | None = None, skip_progress_output: bool | None = None, include_log_time: bool | None = None, skip_os_env: bool | None = None, start_timeout: float | None = None, terminal_width: int | None = None, skip_interactive_check: bool | None = None) -> ShellRun:
@@ -189,7 +189,7 @@ def run(config: ShellConfig | str, *, allow_non_zero_exit: bool | None = None, a
 
 ### function: `run_and_wait`
 - [source](../../ask_shell/_internal/_run.py#L486)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def run_and_wait(script: ShellConfig | str, timeout: float | None = None, *, allow_non_zero_exit: bool | None = None, ansi_content: bool | None = None, attempts: int | None = None, cwd: str | Path | None = None, env: dict[str, str] | None = None, extra_popen_kwargs: dict | None = None, is_binary_call: bool | None = None, message_callbacks: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None = None, print_prefix: str | None = None, run_log_stem_prefix: str | None = None, run_output_dir: Path | None = None, settings: AskShellSettings | None = None, should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None = None, skip_binary_check: bool | None = None, skip_progress_output: bool | None = None, skip_html_log_files: bool | None = None, include_log_time: bool | None = None, skip_os_env: bool | None = None, user_input: bool | None = None, terminal_width: int | None = None, skip_interactive_check: bool | None = None) -> ShellRun:
@@ -201,7 +201,7 @@ def run_and_wait(script: ShellConfig | str, timeout: float | None = None, *, all
 
 ### function: `run_error`
 - [source](../../ask_shell/_internal/_run.py#L545)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
@@ -213,7 +213,7 @@ def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
 
 ### class: `run_pool`
 - [source](../../ask_shell/_internal/run_pool.py#L25)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 class run_pool:
@@ -229,21 +229,21 @@ class run_pool:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| task_name | `str` | - | 0.4.0 |
-| total | `int` | `0` | 0.4.0 |
-| max_concurrent_submits | `int` | `4` | 0.4.0 |
-| threads_used_per_submit | `int` | `5` | 0.4.0 |
-| sleep_time | `float` | `1` | 0.4.0 |
-| sleep_callback | `Callable[[], Any] | None` | `None` | 0.4.0 |
-| exit_wait_timeout | `float | None` | `None` | 0.4.0 |
-| pool | `ThreadPoolExecutor` | `...` | 0.4.0 |
+| task_name | `str` | - | 0.3.0 |
+| total | `int` | `0` | 0.3.0 |
+| max_concurrent_submits | `int` | `4` | 0.3.0 |
+| threads_used_per_submit | `int` | `5` | 0.3.0 |
+| sleep_time | `float` | `1` | 0.3.0 |
+| sleep_callback | `Callable[[], Any] | None` | `None` | 0.3.0 |
+| exit_wait_timeout | `float | None` | `None` | 0.3.0 |
+| pool | `ThreadPoolExecutor` | `...` | 0.3.0 |
 <!-- === OK_EDIT: pkg-ext run_pool_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext stop_runs_and_pool_def === -->
 <a id="stop_runs_and_pool_def"></a>
 
 ### function: `stop_runs_and_pool`
 - [source](../../ask_shell/_internal/_run.py#L132)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
@@ -255,7 +255,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 
 ### function: `wait_on_ok_errors`
 - [source](../../ask_shell/_internal/_run.py#L552)
-> **Since:** 0.4.0
+> **Since:** 0.3.0
 
 ```python
 def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: bool = False) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]:

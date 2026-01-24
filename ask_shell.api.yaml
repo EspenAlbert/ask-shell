@@ -12,23 +12,17 @@ groups:
     - StaticSettings
     fields:
     - name: STATIC_DIR
-      type_annotation: Path
+      type_annotation: Path | None
       type_imports:
       - pathlib.Path
-      default:
-        value_repr: PydanticUndefined
-        is_factory: false
       is_class_var: false
       is_computed: false
       env_vars:
       - static_dir
     - name: CACHE_DIR
-      type_annotation: Path
+      type_annotation: Path | None
       type_imports:
       - pathlib.Path
-      default:
-        value_repr: PydanticUndefined
-        is_factory: false
       is_class_var: false
       is_computed: false
       env_vars:
@@ -152,7 +146,7 @@ groups:
   - name: ChoiceTyped
     module_path: _internal.interactive
     docstring: ''
-    line_number: 105
+    line_number: 106
     type: class
     direct_bases:
     - Generic
@@ -186,7 +180,7 @@ groups:
   - name: KeyInput
     module_path: _internal.interactive
     docstring: ''
-    line_number: 315
+    line_number: 316
     type: class
     direct_bases: []
     init_signature:
@@ -204,7 +198,7 @@ groups:
   - name: NewHandlerChoice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 99
+    line_number: 100
     type: class
     direct_bases:
     - Generic
@@ -222,7 +216,7 @@ groups:
   - name: PromptMatch
     module_path: _internal.interactive
     docstring: ''
-    line_number: 337
+    line_number: 338
     type: class
     direct_bases: []
     fields:
@@ -277,7 +271,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 503
+    line_number: 504
     type: exception
     direct_bases:
     - Exception
@@ -294,7 +288,7 @@ groups:
   - name: SelectOptions
     module_path: _internal.interactive
     docstring: ''
-    line_number: 139
+    line_number: 140
     type: class
     direct_bases:
     - BaseModel
@@ -304,7 +298,7 @@ groups:
       type_annotation: bool | object
       type_imports: []
       default:
-        value_repr: <object object at 0x100346830>
+        value_repr: <object object>
         is_factory: false
       is_class_var: false
       is_computed: false
@@ -312,7 +306,7 @@ groups:
       type_annotation: bool | object
       type_imports: []
       default:
-        value_repr: <object object at 0x100346830>
+        value_repr: <object object>
         is_factory: false
       is_class_var: false
       is_computed: false
@@ -320,7 +314,7 @@ groups:
       type_annotation: bool | object
       type_imports: []
       default:
-        value_repr: <object object at 0x100346830>
+        value_repr: <object object>
         is_factory: false
       is_class_var: false
       is_computed: false
@@ -332,7 +326,7 @@ groups:
   - name: confirm
     module_path: _internal.interactive
     docstring: ''
-    line_number: 80
+    line_number: 81
     type: function
     signature:
       parameters:
@@ -352,7 +346,7 @@ groups:
   - name: force_interactive
     module_path: _internal.interactive
     docstring: ''
-    line_number: 380
+    line_number: 381
     type: class
     direct_bases: []
     fields:
@@ -379,7 +373,7 @@ groups:
       thread pools, prompt_toolkit may still write to closed streams.
 
       '
-    line_number: 396
+    line_number: 397
     type: class
     direct_bases:
     - force_interactive
@@ -421,7 +415,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 509
+    line_number: 510
     type: class
     direct_bases:
     - force_interactive
@@ -446,7 +440,7 @@ groups:
   - name: select_dict
     module_path: _internal.interactive
     docstring: ''
-    line_number: 260
+    line_number: 261
     type: function
     signature:
       parameters:
@@ -478,7 +472,7 @@ groups:
   - name: select_list
     module_path: _internal.interactive
     docstring: ''
-    line_number: 276
+    line_number: 277
     type: function
     signature:
       parameters:
@@ -510,7 +504,7 @@ groups:
   - name: select_list_choice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 301
+    line_number: 302
     type: function
     signature:
       parameters:
@@ -542,7 +536,7 @@ groups:
   - name: select_list_multiple
     module_path: _internal.interactive
     docstring: ''
-    line_number: 229
+    line_number: 230
     type: function
     signature:
       parameters:
@@ -574,7 +568,7 @@ groups:
   - name: select_list_multiple_choices
     module_path: _internal.interactive
     docstring: ''
-    line_number: 245
+    line_number: 246
     type: function
     signature:
       parameters:
@@ -606,7 +600,7 @@ groups:
   - name: text
     module_path: _internal.interactive
     docstring: ''
-    line_number: 128
+    line_number: 129
     type: function
     signature:
       parameters:
@@ -1545,9 +1539,6 @@ groups:
     - name: shell_input
       type_annotation: str
       type_imports: []
-      default:
-        value_repr: PydanticUndefined
-        is_factory: false
       is_class_var: false
       is_computed: false
     - name: env
@@ -1625,7 +1616,7 @@ groups:
       type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]
       type_imports: []
       default:
-        value_repr: <function always_retry at 0x1029828e0>
+        value_repr: <function always_retry>
         is_factory: false
       is_class_var: false
       is_computed: false
@@ -1967,4 +1958,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-01-20 20:23:41.920699+00:00
+dumped_at: 2026-01-24 21:39:46.128010+00:00
