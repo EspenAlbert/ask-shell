@@ -345,5 +345,5 @@ def test_mise_resolve(tmp_path):
 
 def test_readme_example():
     with question_patcher(responses=["y", "myname"]):
-        assert ask.confirm("Run?") is True
+        assert ask.confirm("Run?")
         assert ask.text("Name:") == "myname"

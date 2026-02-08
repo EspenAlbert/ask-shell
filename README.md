@@ -37,7 +37,7 @@ from ask_shell import ask
 from ask_shell.ask import question_patcher
 
 with question_patcher(responses=["y", "myname"]):
-    assert ask.confirm("Run?") is True
+    assert ask.confirm("Run?")
     assert ask.text("Name:") == "myname"
 ```
 
