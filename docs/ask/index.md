@@ -34,7 +34,7 @@
 > **Since:** 0.3.0
 
 ```python
-class ChoiceTyped(Generic):
+class ChoiceTyped:
     name: str
     value: ~T
     description: str | None = None
@@ -47,6 +47,12 @@ class ChoiceTyped(Generic):
 | value | `~T` | - | 0.3.0 |
 | description | `str | None` | `None` | 0.3.0 |
 | checked | `bool` | `False` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext choicetyped_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext keyinput_def === -->
 <a id="keyinput_def"></a>
@@ -59,6 +65,12 @@ class ChoiceTyped(Generic):
 class KeyInput:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext keyinput_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext newhandlerchoice_def === -->
 <a id="newhandlerchoice_def"></a>
@@ -68,7 +80,7 @@ class KeyInput:
 > **Since:** 0.3.0
 
 ```python
-class NewHandlerChoice(Generic):
+class NewHandlerChoice:
     constructor: Callable[[<class 'str'>], ~T]
     new_prompt: str
 ```
@@ -77,6 +89,12 @@ class NewHandlerChoice(Generic):
 |---|---|---|---|
 | constructor | `Callable[[<class 'str'>], ~T]` | - | 0.3.0 |
 | new_prompt | `str` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext newhandlerchoice_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext promptmatch_def === -->
 <a id="promptmatch_def"></a>
@@ -103,6 +121,12 @@ class PromptMatch:
 | exact | `str` | `''` | 0.3.0 |
 | max_matches | `int` | `1` | 0.3.0 |
 | matches_so_far | `int` | `0` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext promptmatch_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext raiseonquestionerror_def === -->
 <a id="raiseonquestionerror_def"></a>
@@ -115,6 +139,12 @@ class PromptMatch:
 class RaiseOnQuestionError(Exception):
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext raiseonquestionerror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext selectoptions_def === -->
 <a id="selectoptions_def"></a>
@@ -124,11 +154,11 @@ class RaiseOnQuestionError(Exception):
 > **Since:** 0.3.0
 
 ```python
-class SelectOptions(BaseModel, Generic):
+class SelectOptions(BaseModel):
     use_search_filter: bool | object = <object object>
     use_shortcuts: bool | object = <object object>
     use_jk_keys: bool | object = <object object>
-    new_handler_choice: NewHandlerChoice[~T] | None
+    new_handler_choice: NewHandlerChoice[~T] | None = None
 ```
 
 | Field | Type | Default | Since |
@@ -136,7 +166,13 @@ class SelectOptions(BaseModel, Generic):
 | use_search_filter | `bool | object` | `<object object>` | 0.3.0 |
 | use_shortcuts | `bool | object` | `<object object>` | 0.3.0 |
 | use_jk_keys | `bool | object` | `<object object>` | 0.3.0 |
-| new_handler_choice | `NewHandlerChoice[~T] | None` | - | 0.3.0 |
+| new_handler_choice | `NewHandlerChoice[~T] | None` | `None` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext selectoptions_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext confirm_def === -->
 <a id="confirm_def"></a>
@@ -149,6 +185,12 @@ class SelectOptions(BaseModel, Generic):
 def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext confirm_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext force_interactive_def === -->
 <a id="force_interactive_def"></a>
@@ -165,6 +207,12 @@ class force_interactive:
 | Field | Type | Default | Since |
 |---|---|---|---|
 | settings | `AskShellSettings` | `...` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext force_interactive_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext question_patcher_def === -->
 <a id="question_patcher_def"></a>
@@ -194,6 +242,12 @@ thread pools, prompt_toolkit may still write to closed streams.
 | responses | `list[str]` | `...` | 0.3.0 |
 | next_response | `int` | `0` | 0.3.0 |
 | dynamic_responses | `list[PromptMatch]` | `...` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext question_patcher_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext raise_on_question_def === -->
 <a id="raise_on_question_def"></a>
@@ -212,6 +266,12 @@ class raise_on_question(force_interactive):
 |---|---|---|---|
 | settings | `AskShellSettings` | `...` | 0.3.0 |
 | raise_error | `Callable[[<class 'str'>], BaseException]` | `<class 'ask_shell._internal.interactive.RaiseOnQuestionError'>` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext raise_on_question_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_dict_def === -->
 <a id="select_dict_def"></a>
@@ -224,6 +284,12 @@ class raise_on_question(force_interactive):
 def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None = None, options: SelectOptions | None = None) -> ~T:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_dict_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_list_def === -->
 <a id="select_list_def"></a>
@@ -236,6 +302,12 @@ def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None
 def select_list(prompt_text: str, choices: list[str], *, default: str | None = None, options: SelectOptions | None = None) -> str:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_list_choice_def === -->
 <a id="select_list_choice_def"></a>
@@ -248,6 +320,12 @@ def select_list(prompt_text: str, choices: list[str], *, default: str | None = N
 def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, default: ~T | None = None, options: SelectOptions | None = None) -> ~T:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_choice_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_list_multiple_def === -->
 <a id="select_list_multiple_def"></a>
@@ -260,6 +338,12 @@ def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, defa
 def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[str] | None = None, options: SelectOptions | None = None) -> list[str]:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_multiple_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_list_multiple_choices_def === -->
 <a id="select_list_multiple_choices_def"></a>
@@ -272,6 +356,12 @@ def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[
 def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]], default: list[~T] | None = None, *, options: SelectOptions | None = None) -> list[~T]:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_multiple_choices_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext text_def === -->
 <a id="text_def"></a>
@@ -284,4 +374,10 @@ def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]
 def text(prompt_text: str, default: str = '') -> str:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext text_def === -->

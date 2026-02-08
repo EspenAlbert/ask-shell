@@ -7,8 +7,8 @@
 
 ```python
 class AskShellSettings(StaticSettings):
-    STATIC_DIR: Path | None
-    CACHE_DIR: Path | None
+    STATIC_DIR: Path | None = None
+    CACHE_DIR: Path | None = None
     SKIP_APP_NAME: bool = False
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
@@ -17,7 +17,7 @@ class AskShellSettings(StaticSettings):
     search_enabled_after_choices: int = 7
     global_callback_strings: list[str] = ...
     remove_os_secrets: bool = ...
-    run_logs_dir: Path | None
+    run_logs_dir: Path | None = None
     run_logs_clean: str = 'yesterday'
 ```
 <!-- === OK_EDIT: pkg-ext askshellsettings_def === -->

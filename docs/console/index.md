@@ -26,9 +26,15 @@
 > **Since:** 0.3.0
 
 ```python
-class RemoveLivePart(Protocol):
+class RemoveLivePart:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext removelivepart_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext add_renderable_def === -->
 <a id="add_renderable_def"></a>
@@ -41,6 +47,12 @@ class RemoveLivePart(Protocol):
 def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = '') -> RemoveLivePart:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext add_renderable_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext configure_logging_def === -->
 <a id="configure_logging_def"></a>
@@ -53,6 +65,12 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, app_pretty_exceptions_enable: bool = False, app_pretty_exceptions_show_locals: bool = False, skip_except_hook: bool = False, use_app_name_command_for_logs: bool = True, render_rich_error_on_sys_exit: bool = False) -> Handler:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext configure_logging_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext get_live_console_def === -->
 <a id="get_live_console_def"></a>
@@ -65,6 +83,12 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 def get_live_console() -> Console:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext get_live_console_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext interactive_shell_def === -->
 <a id="interactive_shell_def"></a>
@@ -77,6 +101,12 @@ def get_live_console() -> Console:
 def interactive_shell() -> bool:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext interactive_shell_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext log_to_live_def === -->
 <a id="log_to_live_def"></a>
@@ -89,6 +119,12 @@ def interactive_shell() -> bool:
 def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, log_locals: bool = False, _stack_offset: int = 1) -> None:
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext log_to_live_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext new_task_def === -->
 <a id="new_task_def"></a>
@@ -119,6 +155,12 @@ class new_task:
 | log_updates | `bool` | `False` | 0.3.0 |
 | manager | `ProgressManager` | `...` | 0.3.0 |
 | completed | `float` | `0.0` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext new_task_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext print_to_live_def === -->
 <a id="print_to_live_def"></a>
@@ -131,4 +173,10 @@ class new_task:
 def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, overflow: Literal[fold, crop, ellipsis, ignore] | None = None, no_wrap: bool | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, width: int | None = None, height: int | None = None, crop: bool = True, soft_wrap: bool | None = None, new_line_start: bool = False):
     ...
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext print_to_live_def === -->

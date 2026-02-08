@@ -29,6 +29,12 @@
 ```python
 OutputCallbackT = typing.Callable[[str], bool | None]
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext outputcallbackt_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunafter_def === -->
 <a id="shellrunafter_def"></a>
@@ -47,6 +53,12 @@ class ShellRunAfter:
 |---|---|---|---|
 | run | `ShellRun` | - | 0.3.0 |
 | error | `BaseException | None` | `None` | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunafter_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunbefore_def === -->
 <a id="shellrunbefore_def"></a>
@@ -63,6 +75,12 @@ class ShellRunBefore:
 | Field | Type | Default | Since |
 |---|---|---|---|
 | run | `ShellRun` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunbefore_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellruncallbackt_def === -->
 <a id="shellruncallbackt_def"></a>
@@ -74,6 +92,12 @@ class ShellRunBefore:
 ```python
 ShellRunCallbackT = typing.Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]
 ```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellruncallbackt_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunpopenstarted_def === -->
 <a id="shellrunpopenstarted_def"></a>
@@ -90,6 +114,12 @@ class ShellRunPOpenStarted:
 | Field | Type | Default | Since |
 |---|---|---|---|
 | p_open | `Popen` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunpopenstarted_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunretryattempt_def === -->
 <a id="shellrunretryattempt_def"></a>
@@ -106,6 +136,12 @@ class ShellRunRetryAttempt:
 | Field | Type | Default | Since |
 |---|---|---|---|
 | attempt | `int` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunretryattempt_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdoutput_def === -->
 <a id="shellrunstdoutput_def"></a>
@@ -124,6 +160,12 @@ class ShellRunStdOutput:
 |---|---|---|---|
 | is_stdout | `bool` | - | 0.3.0 |
 | content | `str` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunstdoutput_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdreaderror_def === -->
 <a id="shellrunstdreaderror_def"></a>
@@ -142,6 +184,12 @@ class ShellRunStdReadError:
 |---|---|---|---|
 | is_stdout | `bool` | - | 0.3.0 |
 | error | `BaseException` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunstdreaderror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext shellrunstdstarted_def === -->
 <a id="shellrunstdstarted_def"></a>
@@ -162,4 +210,10 @@ class ShellRunStdStarted:
 | is_stdout | `bool` | - | 0.3.0 |
 | console | `Console` | - | 0.3.0 |
 | log_path | `Path` | - | 0.3.0 |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunstdstarted_def === -->
