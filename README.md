@@ -14,7 +14,7 @@ Python library for CLIs that use interactive prompts, subprocess runs with [Rich
 
 - **ask**: Prompts (confirm, text, select list/dict, single and multiple choice) built on [questionary](https://questionary.readthedocs.io/), with Rich styling
 - **shell**: Run shell commands via `run`, `run_and_wait`, and `run_pool`; prefixed live output, optional log dirs, retries, and interrupt handling
-- **console**: Rich console and progress utilities
+- **console**: Rich console and progress utilities; `configure_logging(app)` wires a [Typer](https://typer.tiangolo.com/) app to Rich logging (handler, command decorator, optional secret hiding)
 - **shell_events**: Callbacks for run lifecycle (before/after, stdout/stderr) for custom handling
 - **AskShellSettings**: Paths and options (e.g. run log directory); plug into your config or env
 
