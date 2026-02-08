@@ -36,7 +36,7 @@ Use `question_patcher` to feed fixed responses to prompts, or `raise_on_question
 from ask_shell import ask
 from ask_shell.ask import question_patcher
 
-with question_patcher(responses=["yes", "myname"]):
+with question_patcher(responses=["y", "myname"]):
     assert ask.confirm("Run?") is True
     assert ask.text("Name:") == "myname"
 ```

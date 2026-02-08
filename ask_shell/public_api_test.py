@@ -10,6 +10,7 @@ import pytest
 from model_lib import fields
 from pydantic import ValidationError
 
+from ask_shell import ask
 from ask_shell._internal.events import (
     ShellRunAfter,
     ShellRunBefore,
@@ -23,6 +24,7 @@ from ask_shell._internal.models import (
     ShellRun,
     _mise_binary,
 )
+from ask_shell.ask import question_patcher
 from ask_shell.shell import (
     kill,
     run,
@@ -339,3 +341,9 @@ def test_mise_resolve(tmp_path):
         pytest.skip("mise binary not found")
     result = run_and_wait("terraform version", cwd=tmp_path)
     assert "not found" not in result.stdout_one_line
+
+
+def test_readme_example():
+    with question_patcher(responses=["y", "myname"]):
+        assert ask.confirm("Run?") is True
+        assert ask.text("Name:") == "myname"
