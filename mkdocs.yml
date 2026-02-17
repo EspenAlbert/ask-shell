@@ -16,9 +16,19 @@ nav:
   - ask_shell:
     - Overview: _root/index.md
     - AskShellSettings: _root/askshellsettings.md
-  - ask: ask/index.md
+  - ask:
+    - Overview: ask/index.md
+    - RaiseOnQuestionError: ask/raiseonquestionerror.md
+    - SelectOptions: ask/selectoptions.md
+    - question_patcher: ask/question_patcher.md
+    - raise_on_question: ask/raise_on_question.md
   - console: console/index.md
-  - shell: shell/index.md
+  - shell:
+    - Overview: shell/index.md
+    - ShellConfig: shell/shellconfig.md
+    - ShellError: shell/shellerror.md
+    - run: shell/run.md
+    - run_and_wait: shell/run_and_wait.md
   - shell_events: shell_events/index.md
 # === OK_EDIT: pkg-ext nav ===
 

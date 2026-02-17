@@ -8,12 +8,12 @@
 - [`KeyInput`](#keyinput_def)
 - [`NewHandlerChoice`](#newhandlerchoice_def)
 - [`PromptMatch`](#promptmatch_def)
-- [`RaiseOnQuestionError`](#raiseonquestionerror_def)
-- [`SelectOptions`](#selectoptions_def)
+- [RaiseOnQuestionError](./raiseonquestionerror.md)
+- [SelectOptions](./selectoptions.md)
 - [`confirm`](#confirm_def)
 - [`force_interactive`](#force_interactive_def)
-- [`question_patcher`](#question_patcher_def)
-- [`raise_on_question`](#raise_on_question_def)
+- [question_patcher](./question_patcher.md)
+- [raise_on_question](./raise_on_question.md)
 - [`select_dict`](#select_dict_def)
 - [`select_list`](#select_list_def)
 - [`select_list_choice`](#select_list_choice_def)
@@ -128,52 +128,6 @@ class PromptMatch:
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext promptmatch_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext raiseonquestionerror_def === -->
-<a id="raiseonquestionerror_def"></a>
-
-### exception: `RaiseOnQuestionError`
-- [source](../../ask_shell/_internal/interactive.py#L504)
-> **Since:** 0.3.0
-
-```python
-class RaiseOnQuestionError(Exception):
-    ...
-```
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext raiseonquestionerror_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext selectoptions_def === -->
-<a id="selectoptions_def"></a>
-
-### class: `SelectOptions`
-- [source](../../ask_shell/_internal/interactive.py#L140)
-> **Since:** 0.3.0
-
-```python
-class SelectOptions(BaseModel):
-    use_search_filter: bool | object = <object object>
-    use_shortcuts: bool | object = <object object>
-    use_jk_keys: bool | object = <object object>
-    new_handler_choice: NewHandlerChoice[~T] | None = None
-```
-
-| Field | Type | Default | Since |
-|---|---|---|---|
-| use_search_filter | `bool | object` | `<object object>` | 0.3.0 |
-| use_shortcuts | `bool | object` | `<object object>` | 0.3.0 |
-| use_jk_keys | `bool | object` | `<object object>` | 0.3.0 |
-| new_handler_choice | `NewHandlerChoice[~T] | None` | `None` | 0.3.0 |
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext selectoptions_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext confirm_def === -->
 <a id="confirm_def"></a>
 
@@ -214,65 +168,6 @@ class force_interactive:
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext force_interactive_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext question_patcher_def === -->
-<a id="question_patcher_def"></a>
-
-### class: `question_patcher`
-- [source](../../ask_shell/_internal/interactive.py#L397)
-> **Since:** 0.3.0
-
-```python
-class question_patcher(force_interactive):
-    settings: AskShellSettings = ...
-    responses: list[str] = ...
-    next_response: int = 0
-    dynamic_responses: list[PromptMatch] = ...
-```
-
-Context manager to patch the questionary.ask_question, useful for testing.
-
-Uses PlainTextOutput with a controlled buffer and direct unsafe_ask() calls
-to avoid I/O conflicts with Click's CliRunner. The CliRunner replaces
-sys.stdout/stderr with its own wrappers, and if we use DummyOutput or
-thread pools, prompt_toolkit may still write to closed streams.
-
-| Field | Type | Default | Since |
-|---|---|---|---|
-| settings | `AskShellSettings` | `...` | 0.3.0 |
-| responses | `list[str]` | `...` | 0.3.0 |
-| next_response | `int` | `0` | 0.3.0 |
-| dynamic_responses | `list[PromptMatch]` | `...` | 0.3.0 |
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext question_patcher_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext raise_on_question_def === -->
-<a id="raise_on_question_def"></a>
-
-### class: `raise_on_question`
-- [source](../../ask_shell/_internal/interactive.py#L510)
-> **Since:** 0.3.0
-
-```python
-class raise_on_question(force_interactive):
-    settings: AskShellSettings = ...
-    raise_error: Callable[[<class 'str'>], BaseException] = <class 'ask_shell._internal.interactive.RaiseOnQuestionError'>
-```
-
-| Field | Type | Default | Since |
-|---|---|---|---|
-| settings | `AskShellSettings` | `...` | 0.3.0 |
-| raise_error | `Callable[[<class 'str'>], BaseException]` | `<class 'ask_shell._internal.interactive.RaiseOnQuestionError'>` | 0.3.0 |
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext raise_on_question_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext select_dict_def === -->
 <a id="select_dict_def"></a>
 
