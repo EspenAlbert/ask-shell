@@ -27,8 +27,6 @@ nav:
     - Overview: shell/index.md
     - ShellConfig: shell/shellconfig.md
     - ShellError: shell/shellerror.md
-    - run: shell/run.md
-    - run_and_wait: shell/run_and_wait.md
   - shell_events: shell_events/index.md
 # === OK_EDIT: pkg-ext nav ===
 

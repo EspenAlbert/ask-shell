@@ -39,22 +39,6 @@ change_kind: base_class_added
 details: added base class 'Exception'
 group: ask
 ---
-name: run_and_wait
-ts: 2026-02-17 21:51:19.332203+00:00
-type: breaking_change
-auto_generated: true
-change_kind: param_type_changed
-details: 'param ''message_callbacks'' type: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None -> list[Callable[[ask_shell._internal.events.ShellRunBefore | ask_shell._internal.events.ShellRunPOpenStarted | ask_shell._internal.events.ShellRunStdStarted | ask_shell._internal.events.ShellRunStdReadError | ask_shell._internal.events.ShellRunStdOutput | ask_shell._internal.events.ShellRunRetryAttempt | ask_shell._internal.events.ShellRunAfter], bool]] | None'
-group: shell
----
-name: run
-ts: 2026-02-17 21:51:19.332207+00:00
-type: breaking_change
-auto_generated: true
-change_kind: param_type_changed
-details: 'param ''message_callbacks'' type: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None -> list[Callable[[ask_shell._internal.events.ShellRunBefore | ask_shell._internal.events.ShellRunPOpenStarted | ask_shell._internal.events.ShellRunStdStarted | ask_shell._internal.events.ShellRunStdReadError | ask_shell._internal.events.ShellRunStdOutput | ask_shell._internal.events.ShellRunRetryAttempt | ask_shell._internal.events.ShellRunAfter], bool]] | None'
-group: shell
----
 name: ShellConfig
 ts: 2026-02-17 21:51:19.332210+00:00
 type: additional_change
@@ -70,15 +54,6 @@ auto_generated: true
 change_kind: default_added
 details: 'field ''run_output_dir'' default added: None'
 field_name: run_output_dir
-group: shell
----
-name: ShellConfig
-ts: 2026-02-17 21:51:19.332214+00:00
-type: breaking_change
-auto_generated: true
-change_kind: param_type_changed
-details: 'field ''message_callbacks'' type: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]] -> list[Callable[[ask_shell._internal.events.ShellRunBefore | ask_shell._internal.events.ShellRunPOpenStarted | ask_shell._internal.events.ShellRunStdStarted | ask_shell._internal.events.ShellRunStdReadError | ask_shell._internal.events.ShellRunStdOutput | ask_shell._internal.events.ShellRunRetryAttempt | ask_shell._internal.events.ShellRunAfter], bool | None]]'
-field_name: message_callbacks
 group: shell
 ---
 name: ShellConfig
