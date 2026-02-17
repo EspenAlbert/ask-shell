@@ -16,6 +16,6 @@ class RaiseOnQuestionError(Exception):
 
 | Version | Change |
 |---------|--------|
-| unreleased | added base class 'Exception' |
+| 0.3.2 | added base class 'Exception' |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext raiseonquestionerror_changes === -->

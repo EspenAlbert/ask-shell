@@ -75,11 +75,11 @@ class ShellConfig(Entity):
 
 | Version | Change |
 |---------|--------|
-| unreleased | field 'print_prefix' default added: None |
-| unreleased | field 'is_binary_call' default added: None |
-| unreleased | field 'ansi_content' default added: None |
-| unreleased | field 'cwd' default added: None |
-| unreleased | field 'run_output_dir' default added: None |
-| unreleased | added base class 'Entity' |
+| 0.3.2 | field 'print_prefix' default added: None |
+| 0.3.2 | field 'is_binary_call' default added: None |
+| 0.3.2 | field 'ansi_content' default added: None |
+| 0.3.2 | field 'cwd' default added: None |
+| 0.3.2 | field 'run_output_dir' default added: None |
+| 0.3.2 | added base class 'Entity' |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellconfig_changes === -->

@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.3.1
+version: 0.3.2
 groups:
 - name: __ROOT__
   symbols:
@@ -8,13 +8,19 @@ groups:
     docstring: ''
     line_number: 93
     type: class
-    direct_bases:
+    mro_bases:
     - StaticSettings
+    - BaseSettings
+    - BaseModel
+    num_direct_bases: 1
     fields:
     - name: STATIC_DIR
       type_annotation: Path | None
       type_imports:
       - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       env_vars:
@@ -23,6 +29,9 @@ groups:
       type_annotation: Path | None
       type_imports:
       - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       env_vars:
@@ -123,6 +132,9 @@ groups:
       type_annotation: Path | None
       type_imports:
       - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Directory to store run logs. If not set, defaults to `cache_root/run_logs/YYYY-MM-DD`. You can also use `configure_run_logs_dir_if_unset` to set it dynamically.
@@ -148,8 +160,8 @@ groups:
     docstring: ''
     line_number: 106
     type: class
-    direct_bases:
-    - Generic
+    mro_bases: []
+    num_direct_bases: 1
     fields:
     - name: name
       type_annotation: str
@@ -182,7 +194,8 @@ groups:
     docstring: ''
     line_number: 316
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     init_signature:
       parameters:
       - name: self
@@ -200,8 +213,8 @@ groups:
     docstring: ''
     line_number: 100
     type: class
-    direct_bases:
-    - Generic
+    mro_bases: []
+    num_direct_bases: 1
     fields:
     - name: constructor
       type_annotation: Callable[[<class 'str'>], ~T]
@@ -218,7 +231,8 @@ groups:
     docstring: ''
     line_number: 338
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: response
       type_annotation: str | None
@@ -273,8 +287,10 @@ groups:
     docstring: ''
     line_number: 504
     type: exception
-    direct_bases:
+    mro_bases:
     - Exception
+    - BaseException
+    num_direct_bases: 1
     init_signature:
       parameters:
       - name: self
@@ -290,9 +306,9 @@ groups:
     docstring: ''
     line_number: 140
     type: class
-    direct_bases:
+    mro_bases:
     - BaseModel
-    - Generic
+    num_direct_bases: 2
     fields:
     - name: use_search_filter
       type_annotation: bool | object
@@ -321,6 +337,9 @@ groups:
     - name: new_handler_choice
       type_annotation: NewHandlerChoice[~T] | None
       type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
   - name: confirm
@@ -348,7 +367,8 @@ groups:
     docstring: ''
     line_number: 381
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: settings
       type_annotation: AskShellSettings
@@ -375,8 +395,9 @@ groups:
       '
     line_number: 397
     type: class
-    direct_bases:
+    mro_bases:
     - force_interactive
+    num_direct_bases: 1
     fields:
     - name: settings
       type_annotation: AskShellSettings
@@ -417,8 +438,9 @@ groups:
     docstring: ''
     line_number: 510
     type: class
-    direct_bases:
+    mro_bases:
     - force_interactive
+    num_direct_bases: 1
     fields:
     - name: settings
       type_annotation: AskShellSettings
@@ -633,8 +655,8 @@ groups:
     docstring: ''
     line_number: 148
     type: class
-    direct_bases:
-    - Protocol
+    mro_bases: []
+    num_direct_bases: 1
     init_signature:
       parameters:
       - name: self
@@ -882,7 +904,8 @@ groups:
     docstring: ''
     line_number: 153
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: description
       type_annotation: str
@@ -1011,7 +1034,8 @@ groups:
     docstring: ''
     line_number: 140
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: interrupt_message
       type_annotation: str
@@ -1533,8 +1557,11 @@ groups:
       '
     line_number: 127
     type: class
-    direct_bases:
+    mro_bases:
     - Entity
+    - _Model
+    - BaseModel
+    num_direct_bases: 1
     fields:
     - name: shell_input
       type_annotation: str
@@ -1593,6 +1620,9 @@ groups:
       type_annotation: Path
       type_imports:
       - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Set to Path.cwd() if not provided
@@ -1623,6 +1653,9 @@ groups:
     - name: print_prefix
       type_annotation: str
       type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Use cwd+binary_name+first_arg if not provided
@@ -1637,6 +1670,9 @@ groups:
     - name: ansi_content
       type_annotation: bool
       type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Inferred if not provided
@@ -1644,6 +1680,9 @@ groups:
       type_annotation: Path | None
       type_imports:
       - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Directory to store run logs, defaults to settings.run_logs /{XX}_{self.exec_name}
@@ -1685,6 +1724,9 @@ groups:
     - name: is_binary_call
       type_annotation: bool
       type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
       is_class_var: false
       is_computed: false
       description: Inferred if not provided
@@ -1711,8 +1753,10 @@ groups:
     docstring: ''
     line_number: 484
     type: exception
-    direct_bases:
+    mro_bases:
     - Exception
+    - BaseException
+    num_direct_bases: 1
     init_signature:
       parameters:
       - name: self
@@ -1736,7 +1780,8 @@ groups:
     docstring: "Stores dynamic behavior. Only created by this file never outside.\n\nArgs:\n    _start_flag: Future[ShellRun]: Flag that is set when the run has both p_open and stdout/stderr reading started. During multiple attempts, only the 1st attempt will call it.\n\n"
     line_number: 269
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: config
       type_annotation: ShellConfig
@@ -1766,7 +1811,8 @@ groups:
     docstring: ''
     line_number: 25
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: task_name
       type_annotation: str
@@ -1843,7 +1889,8 @@ groups:
     docstring: ''
     line_number: 49
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: run
       type_annotation: ShellRun
@@ -1863,7 +1910,8 @@ groups:
     docstring: ''
     line_number: 44
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: run
       type_annotation: ShellRun
@@ -1880,7 +1928,8 @@ groups:
     docstring: ''
     line_number: 28
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: p_open
       type_annotation: Popen
@@ -1893,7 +1942,8 @@ groups:
     docstring: ''
     line_number: 39
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: attempt
       type_annotation: int
@@ -1905,7 +1955,8 @@ groups:
     docstring: ''
     line_number: 22
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: is_stdout
       type_annotation: bool
@@ -1922,7 +1973,8 @@ groups:
     docstring: ''
     line_number: 33
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: is_stdout
       type_annotation: bool
@@ -1939,7 +1991,8 @@ groups:
     docstring: ''
     line_number: 15
     type: class
-    direct_bases: []
+    mro_bases: []
+    num_direct_bases: 0
     fields:
     - name: is_stdout
       type_annotation: bool
@@ -1958,4 +2011,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-01-24 21:49:55.920601+00:00
+dumped_at: 2026-02-17 22:00:30.735766+00:00

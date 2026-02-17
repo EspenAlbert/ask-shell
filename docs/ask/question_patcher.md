@@ -35,6 +35,6 @@ thread pools, prompt_toolkit may still write to closed streams.
 
 | Version | Change |
 |---------|--------|
-| unreleased | added base class 'force_interactive' |
+| 0.3.2 | added base class 'force_interactive' |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext question_patcher_changes === -->

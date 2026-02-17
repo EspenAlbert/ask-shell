@@ -69,9 +69,9 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| unreleased | field 'run_logs_dir' default added: None |
-| unreleased | field 'STATIC_DIR' default added: None |
-| unreleased | field 'CACHE_DIR' default added: None |
-| unreleased | added base class 'StaticSettings' |
+| 0.3.2 | field 'run_logs_dir' default added: None |
+| 0.3.2 | field 'STATIC_DIR' default added: None |
+| 0.3.2 | field 'CACHE_DIR' default added: None |
+| 0.3.2 | added base class 'StaticSettings' |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext askshellsettings_changes === -->

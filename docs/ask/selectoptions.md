@@ -28,7 +28,7 @@ class SelectOptions(BaseModel):
 
 | Version | Change |
 |---------|--------|
-| unreleased | field 'new_handler_choice' default added: None |
-| unreleased | added base class 'BaseModel' |
+| 0.3.2 | field 'new_handler_choice' default added: None |
+| 0.3.2 | added base class 'BaseModel' |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext selectoptions_changes === -->

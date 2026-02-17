@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.3.2 2026-02-17T22-00Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added base class 'StaticSettings'
+- `__ROOT__.AskShellSettings`: field 'CACHE_DIR' default added: None
+- `__ROOT__.AskShellSettings`: field 'STATIC_DIR' default added: None
+- `__ROOT__.AskShellSettings`: field 'run_logs_dir' default added: None
+
+### Ask
+- `ask.question_patcher`: added base class 'force_interactive'
+- `ask.SelectOptions`: added base class 'BaseModel'
+- `ask.SelectOptions`: field 'new_handler_choice' default added: None
+- `ask.raise_on_question`: added base class 'force_interactive'
+- `ask.RaiseOnQuestionError`: added base class 'Exception'
+
+### Shell
+- `shell.ShellConfig`: added base class 'Entity'
+- `shell.ShellConfig`: field 'run_output_dir' default added: None
+- `shell.ShellConfig`: field 'cwd' default added: None
+- `shell.ShellConfig`: field 'ansi_content' default added: None
+- `shell.ShellConfig`: field 'is_binary_call' default added: None
+- `shell.ShellConfig`: field 'print_prefix' default added: None
+- `shell.ShellError`: added base class 'Exception'
+
+
 ## 0.3.1 2026-01-24T21-49Z
 
 ### Other Changes
