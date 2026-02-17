@@ -1,0 +1,136 @@
+name: question_patcher
+ts: 2026-02-17 21:51:19.332167+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'force_interactive'
+group: ask
+---
+name: SelectOptions
+ts: 2026-02-17 21:51:19.332187+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'BaseModel'
+group: ask
+---
+name: SelectOptions
+ts: 2026-02-17 21:51:19.332192+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''new_handler_choice'' default added: None'
+field_name: new_handler_choice
+group: ask
+---
+name: raise_on_question
+ts: 2026-02-17 21:51:19.332194+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'force_interactive'
+group: ask
+---
+name: RaiseOnQuestionError
+ts: 2026-02-17 21:51:19.332197+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'Exception'
+group: ask
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332210+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'Entity'
+group: shell
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332212+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''run_output_dir'' default added: None'
+field_name: run_output_dir
+group: shell
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332216+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''cwd'' default added: None'
+field_name: cwd
+group: shell
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332218+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''ansi_content'' default added: None'
+field_name: ansi_content
+group: shell
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332220+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''is_binary_call'' default added: None'
+field_name: is_binary_call
+group: shell
+---
+name: ShellConfig
+ts: 2026-02-17 21:51:19.332222+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''print_prefix'' default added: None'
+field_name: print_prefix
+group: shell
+---
+name: ShellError
+ts: 2026-02-17 21:51:19.332224+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'Exception'
+group: shell
+---
+name: AskShellSettings
+ts: 2026-02-17 21:51:19.332227+00:00
+type: additional_change
+auto_generated: true
+change_kind: base_class_added
+details: added base class 'StaticSettings'
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-02-17 21:51:19.332229+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''CACHE_DIR'' default added: None'
+field_name: CACHE_DIR
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-02-17 21:51:19.332230+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''STATIC_DIR'' default added: None'
+field_name: STATIC_DIR
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-02-17 21:51:19.332232+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_added
+details: 'field ''run_logs_dir'' default added: None'
+field_name: run_logs_dir
+group: __ROOT__
