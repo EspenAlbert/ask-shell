@@ -217,7 +217,7 @@ groups:
     num_direct_bases: 1
     fields:
     - name: constructor
-      type_annotation: Callable[[<class 'str'>], ~T]
+      type_annotation: Callable[[str], ~T]
       type_imports: []
       is_class_var: false
       is_computed: false
@@ -452,7 +452,7 @@ groups:
       is_class_var: false
       is_computed: false
     - name: raise_error
-      type_annotation: Callable[[<class 'str'>], BaseException]
+      type_annotation: Callable[[str], BaseException]
       type_imports: []
       default:
         value_repr: <class 'ask_shell._internal.interactive.RaiseOnQuestionError'>
@@ -1184,7 +1184,7 @@ groups:
           is_factory: false
       - name: message_callbacks
         kind: keyword_only
-        type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None
+        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None
         type_imports: []
         default:
           value_repr: None
@@ -1221,7 +1221,7 @@ groups:
           is_factory: false
       - name: should_retry
         kind: keyword_only
-        type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None
+        type_annotation: Callable[[ShellRun], bool] | None
         type_imports: []
         default:
           value_repr: None
@@ -1356,7 +1356,7 @@ groups:
           is_factory: false
       - name: message_callbacks
         kind: keyword_only
-        type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool]] | None
+        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None
         type_imports: []
         default:
           value_repr: None
@@ -1393,7 +1393,7 @@ groups:
           is_factory: false
       - name: should_retry
         kind: keyword_only
-        type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] | None
+        type_annotation: Callable[[ShellRun], bool] | None
         type_imports: []
         default:
           value_repr: None
@@ -1643,7 +1643,7 @@ groups:
       is_class_var: false
       is_computed: false
     - name: should_retry
-      type_annotation: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool]
+      type_annotation: Callable[[ShellRun], bool]
       type_imports: []
       default:
         value_repr: <function always_retry>
@@ -1740,7 +1740,7 @@ groups:
       is_class_var: false
       is_computed: false
     - name: message_callbacks
-      type_annotation: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]]
+      type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]]
       type_imports: []
       default:
         value_repr: '...'
@@ -2011,4 +2011,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-02-25 07:15:17.082946+00:00
+dumped_at: 2026-02-26 07:18:17.251033+00:00
