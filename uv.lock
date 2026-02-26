@@ -22,7 +22,7 @@ wheels = [
 
 [[package]]
 name = "ask-shell"
-version = "0.3.2"
+version = "0.4.0"
 source = { editable = "." }
 dependencies = [
     { name = "model-lib", extra = ["toml"] },
@@ -517,7 +517,7 @@ wheels = [
 
 [[package]]
 name = "pkg-ext"
-version = "0.4.0"
+version = "0.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ask-shell" },
@@ -526,9 +526,9 @@ dependencies = [
     { name = "tomlkit" },
     { name = "zero-3rdparty" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/43/b4/2e413ae7e0fa7e289dc70a454641cc93006f3bce714139aac9ce49ae4cb8/pkg_ext-0.4.0.tar.gz", hash = "sha256:ff91f82573a3ae7cd6f107a7064a3cc5e51cbd798b9a21d9fce0f41611d01ff7", size = 77571, upload-time = "2026-02-24T23:40:00.514Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7c/57/a3601c95e3cf23b6b7253b4ad32ed369c7a0fe1c87bef9943938ec344d31/pkg_ext-0.4.2.tar.gz", hash = "sha256:4d7ea4e2a234888a7676c63862b23ffb08e95b49c6754a4a57e43f0a25d4bbbf", size = 78176, upload-time = "2026-02-25T18:58:56.287Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/49/dc1e42b27cb386fc355eacf24ce5bce4212306cdf4836c9453ced4367731/pkg_ext-0.4.0-py3-none-any.whl", hash = "sha256:89065e52e243a86e4bc7dbcce8b217ceec165f6bcba11b90ccec343a7c38da95", size = 112099, upload-time = "2026-02-24T23:39:58.956Z" },
+    { url = "https://files.pythonhosted.org/packages/35/43/18a56437b2e4482993a5467f5a3ed551ccf45b08fee0ea1ec5cb1465b466/pkg_ext-0.4.2-py3-none-any.whl", hash = "sha256:7a8d048a7885804a80daa00630fa84e0019e894f431f436249b70e7241285cd7", size = 112670, upload-time = "2026-02-25T18:58:54.554Z" },
 ]
 
 [[package]]

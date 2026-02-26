@@ -17,7 +17,7 @@ class ShellConfig(Entity):
     cwd: Path = None
     user_input: bool = False
     attempts: int = 1
-    should_retry: Callable[[<class 'ask_shell._internal.models.ShellRun'>], bool] = <function always_retry>
+    should_retry: Callable[[ShellRun], bool] = <function always_retry>
     print_prefix: str = None
     include_log_time: bool = False
     ansi_content: bool = None
@@ -28,7 +28,7 @@ class ShellConfig(Entity):
     terminal_width: int | None = 999
     is_binary_call: bool = None
     settings: AskShellSettings = ...
-    message_callbacks: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]] = ...
+    message_callbacks: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] = ...
 ```
 
 >>> ShellConfig("some_script").print_prefix

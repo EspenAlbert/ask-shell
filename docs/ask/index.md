@@ -81,13 +81,13 @@ class KeyInput:
 
 ```python
 class NewHandlerChoice:
-    constructor: Callable[[<class 'str'>], ~T]
+    constructor: Callable[[str], ~T]
     new_prompt: str
 ```
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| constructor | `Callable[[<class 'str'>], ~T]` | - | 0.3.0 |
+| constructor | `Callable[[str], ~T]` | - | 0.3.0 |
 | new_prompt | `str` | - | 0.3.0 |
 
 ### Changes

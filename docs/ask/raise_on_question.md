@@ -8,7 +8,7 @@
 ```python
 class raise_on_question(force_interactive):
     settings: AskShellSettings = ...
-    raise_error: Callable[[<class 'str'>], BaseException] = <class 'ask_shell._internal.interactive.RaiseOnQuestionError'>
+    raise_error: Callable[[str], BaseException] = <class 'ask_shell._internal.interactive.RaiseOnQuestionError'>
 ```
 <!-- === OK_EDIT: pkg-ext raise_on_question_def === -->
 
