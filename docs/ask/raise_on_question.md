@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext raise_on_question_def === -->
 ## class: raise_on_question
-- [source](../../ask_shell/_internal/interactive.py#L510)
+- [source](../../ask_shell/_internal/interactive.py#L511)
 > **Since:** 0.3.0
 
 ```python
