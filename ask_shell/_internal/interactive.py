@@ -472,6 +472,7 @@ class question_patcher(force_interactive):
         q.application.renderer.output = output
 
     def ask_question(self, q: Question, response_type: type[T]) -> T:
+        _ = response_type  # binds generic T for return type inference
         with create_pipe_input() as inp:
             q.application.input = inp
             input_response = self._next_response(q)
