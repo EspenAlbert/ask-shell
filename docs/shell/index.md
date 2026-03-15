@@ -4,6 +4,7 @@
 <!-- === OK_EDIT: pkg-ext header === -->
 
 <!-- === DO_NOT_EDIT: pkg-ext symbols === -->
+- [`AbortRetryError`](#abortretryerror_def)
 - [ShellConfig](./shellconfig.md)
 - [ShellError](./shellerror.md)
 - [`ShellRun`](#shellrun_def)
@@ -57,7 +58,7 @@ Args:
 <a id="handle_interrupt_wait_def"></a>
 
 ### class: `handle_interrupt_wait`
-- [source](../../ask_shell/_internal/_run.py#L140)
+- [source](../../ask_shell/_internal/_run.py#L141)
 > **Since:** 0.3.0
 
 ```python
@@ -81,7 +82,7 @@ class handle_interrupt_wait:
 <a id="kill_def"></a>
 
 ### function: `kill`
-- [source](../../ask_shell/_internal/_run.py#L72)
+- [source](../../ask_shell/_internal/_run.py#L73)
 > **Since:** 0.3.0
 
 ```python
@@ -101,7 +102,7 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 <a id="kill_all_runs_def"></a>
 
 ### function: `kill_all_runs`
-- [source](../../ask_shell/_internal/_run.py#L105)
+- [source](../../ask_shell/_internal/_run.py#L106)
 > **Since:** 0.3.0
 
 ```python
@@ -119,7 +120,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L545)
+- [source](../../ask_shell/_internal/_run.py#L567)
 > **Since:** 0.3.0
 
 ```python
@@ -173,7 +174,7 @@ class run_pool:
 <a id="stop_runs_and_pool_def"></a>
 
 ### function: `stop_runs_and_pool`
-- [source](../../ask_shell/_internal/_run.py#L132)
+- [source](../../ask_shell/_internal/_run.py#L133)
 > **Since:** 0.3.0
 
 ```python
@@ -191,7 +192,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L552)
+- [source](../../ask_shell/_internal/_run.py#L574)
 > **Since:** 0.3.0
 
 ```python
@@ -205,3 +206,23 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext wait_on_ok_errors_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext abortretryerror_def === -->
+<a id="abortretryerror_def"></a>
+
+### exception: `AbortRetryError`
+- [source](../../ask_shell/_internal/models.py#L520)
+> **Since:** unreleased
+
+```python
+class AbortRetryError(Exception):
+    ...
+```
+
+Raise from should_retry to stop retrying with a custom error.
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext abortretryerror_def === -->

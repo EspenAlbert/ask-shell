@@ -54,6 +54,7 @@ groups:
   - _internal._run.run_error
   - _internal._run.stop_runs_and_pool
   - _internal._run.wait_on_ok_errors
+  - _internal.models.AbortRetryError
   - _internal.models.ShellConfig
   - _internal.models.ShellError
   - _internal.models.ShellRun

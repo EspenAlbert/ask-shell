@@ -13,7 +13,6 @@ from ask_shell._internal.models import ShellError as _ShellError
 from ask_shell._internal.models import ShellRun as _ShellRun
 from ask_shell._internal.run_pool import run_pool as _run_pool
 
-AbortRetryError = _AbortRetryError
 handle_interrupt_wait = _handle_interrupt_wait
 kill = _kill
 kill_all_runs = _kill_all_runs
@@ -22,6 +21,7 @@ run_and_wait = _run_and_wait
 run_error = _run_error
 stop_runs_and_pool = _stop_runs_and_pool
 wait_on_ok_errors = _wait_on_ok_errors
+AbortRetryError = _AbortRetryError
 ShellConfig = _ShellConfig
 ShellError = _ShellError
 ShellRun = _ShellRun
