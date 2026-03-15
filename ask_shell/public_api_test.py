@@ -19,6 +19,7 @@ from ask_shell._internal.events import (
     ShellRunStdStarted,
 )
 from ask_shell._internal.models import (
+    AbortRetryError,
     ShellConfig,
     ShellError,
     ShellRun,
@@ -160,6 +161,26 @@ def test_multi_attempts_retry_call_true(tmp_path):
         )
     )
     assert "attempt in script: 3/3" in result.stdout
+
+
+def test_abort_retry_error_stops_retries(tmp_path):
+    script_path = tmp_path / "attempt.py"
+    script_path.write_text(_attempt_script)
+
+    def abort_on_first_failure(run: ShellRun) -> bool:
+        raise AbortRetryError(f"permanent: {run.stderr[:50]}")
+
+    with pytest.raises(ShellError) as exc:
+        run_and_wait(
+            ShellConfig(
+                shell_input=f"{PYTHON_EXEC} {script_path}",
+                attempts=4,
+                should_retry=abort_on_first_failure,
+            )
+        )
+    assert isinstance(exc.value.base_error, AbortRetryError)
+    assert "permanent:" in str(exc.value.base_error)
+    assert "attempt in script: 1/3" in exc.value.stdout
 
 
 _parse_json_stdout = """\

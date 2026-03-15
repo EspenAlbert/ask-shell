@@ -40,6 +40,7 @@ from ask_shell._internal.events import (
     ShellRunStdStarted,
 )
 from ask_shell._internal.models import (
+    AbortRetryError,
     RunIncompleteError,
     ShellConfig,
     ShellRun,
@@ -370,6 +371,40 @@ def _attempt_run(
         _runs.pop(key, None)
 
 
+def _eval_should_retry(config: ShellConfig, result: ShellRun) -> bool:
+    """Evaluate should_retry, raising AbortRetryError through if the callback raises it."""
+    try:
+        return config.should_retry(result)
+    except AbortRetryError:
+        raise
+    except Exception as e:
+        logger.warning(f"should_retry callback failed: {e!r}")
+        return False
+
+
+def _run_attempts(shell_run: ShellRun, output_dir: Path) -> BaseException | None:
+    config = shell_run.config
+    queue = shell_run._queue
+    for attempt in range(1, config.attempts + 1):
+        if attempt > 1:
+            queue.put_nowait(ShellRunRetryAttempt(attempt=attempt))
+            logger.warning(f"Retrying run {shell_run} attempt {attempt} of {config.attempts}")
+        attempt_log_prefix = config.run_log_stem(attempt)
+        result = _attempt_run(shell_run, output_dir, attempt_log_prefix)
+        match result:
+            case ShellRun() if result.clean_complete:
+                return None
+            case ShellRun():
+                try:
+                    if not _eval_should_retry(config, result):
+                        return None
+                except AbortRetryError as abort:
+                    return abort
+            case BaseException():
+                return result
+    return None
+
+
 def _execute_run(shell_run: ShellRun) -> ShellRun:
     """
     Principles:
@@ -406,20 +441,7 @@ def _execute_run(shell_run: ShellRun) -> ShellRun:
     with _run_completer(shell_run, consumer_future):
         output_dir = config.run_output_dir_resolved()
         output_dir.mkdir(parents=True, exist_ok=True)
-        error: BaseException | None = None
-        for attempt in range(1, config.attempts + 1):
-            if attempt > 1:
-                queue.put_nowait(ShellRunRetryAttempt(attempt=attempt))
-                logger.warning(f"Retrying run {shell_run} attempt {attempt} of {config.attempts}")
-            attempt_log_prefix = config.run_log_stem(attempt)
-
-            result = _attempt_run(shell_run, output_dir, attempt_log_prefix)
-            match result:
-                case ShellRun() if result.clean_complete or not config.should_retry(result):
-                    break
-                case BaseException():
-                    error = result
-                    break
+        error = _run_attempts(shell_run, output_dir)
         queue.put_nowait(ShellRunAfter(run=shell_run, error=error))
         shell_run._complete(error=error, queue_consumer=consumer_future)
         return shell_run
