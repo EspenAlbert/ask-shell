@@ -12,9 +12,13 @@ The exception propagates as `ShellError.base_error`.
 import sys
 
 import pytest
-
-from ask_shell._internal.models import AbortRetryError, ShellConfig, ShellError, ShellRun
-from ask_shell.shell import run_and_wait
+from ask_shell.shell import (
+    AbortRetryError,
+    ShellConfig,
+    ShellError,
+    ShellRun,
+    run_and_wait,
+)
 
 PYTHON_EXEC = sys.executable
 
@@ -25,7 +29,7 @@ def should_retry_check(run: ShellRun) -> bool:
     raise AbortRetryError(f"permanent: {run.stderr[:100]}")
 
 
-script = f"""\
+script = """\
 import sys
 sys.stderr.write("permanent error")
 sys.exit(1)
@@ -52,8 +56,7 @@ import sys
 from pathlib import Path
 from tempfile import mkdtemp
 
-from ask_shell._internal.models import AbortRetryError, ShellConfig, ShellRun
-from ask_shell.shell import run_and_wait
+from ask_shell.shell import AbortRetryError, ShellConfig, ShellRun, run_and_wait
 
 PYTHON_EXEC = sys.executable
 tmp = Path(mkdtemp())
