@@ -517,6 +517,10 @@ class RunIncompleteError(Exception):
         self.killed = killed
 
 
+class AbortRetryError(Exception):
+    """Raise from should_retry to stop retrying with a custom error."""
+
+
 class EmptyOutputError(Exception):
     def __init__(self, run: ShellRun, stream: Literal["stdout", "stderr"] = "stdout"):
         self.run = run

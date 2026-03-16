@@ -7,6 +7,7 @@ from ask_shell._internal._run import run_and_wait as _run_and_wait
 from ask_shell._internal._run import run_error as _run_error
 from ask_shell._internal._run import stop_runs_and_pool as _stop_runs_and_pool
 from ask_shell._internal._run import wait_on_ok_errors as _wait_on_ok_errors
+from ask_shell._internal.models import AbortRetryError as _AbortRetryError
 from ask_shell._internal.models import ShellConfig as _ShellConfig
 from ask_shell._internal.models import ShellError as _ShellError
 from ask_shell._internal.models import ShellRun as _ShellRun
@@ -20,6 +21,7 @@ run_and_wait = _run_and_wait
 run_error = _run_error
 stop_runs_and_pool = _stop_runs_and_pool
 wait_on_ok_errors = _wait_on_ok_errors
+AbortRetryError = _AbortRetryError
 ShellConfig = _ShellConfig
 ShellError = _ShellError
 ShellRun = _ShellRun

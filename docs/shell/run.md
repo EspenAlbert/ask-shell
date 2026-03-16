@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext run_def === -->
 ## function: run
-- [source](../../ask_shell/_internal/_run.py#L428)
+- [source](../../ask_shell/_internal/_run.py#L450)
 > **Since:** 0.3.0
 
 ```python
