@@ -12,6 +12,7 @@ The exception propagates as `ShellError.base_error`.
 import sys
 
 import pytest
+
 from ask_shell.shell import (
     AbortRetryError,
     ShellConfig,
