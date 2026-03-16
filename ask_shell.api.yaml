@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.4.0
+version: 0.5.0
 groups:
 - name: __ROOT__
   symbols:
@@ -285,7 +285,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 504
+    line_number: 505
     type: exception
     mro_bases:
     - Exception
@@ -436,7 +436,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 510
+    line_number: 511
     type: class
     mro_bases:
     - force_interactive
@@ -1032,7 +1032,7 @@ groups:
   - name: handle_interrupt_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 140
+    line_number: 141
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -1053,7 +1053,7 @@ groups:
   - name: kill
     module_path: _internal._run
     docstring: https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
-    line_number: 72
+    line_number: 73
     type: function
     signature:
       parameters:
@@ -1087,7 +1087,7 @@ groups:
   - name: kill_all_runs
     module_path: _internal._run
     docstring: ''
-    line_number: 105
+    line_number: 106
     type: function
     signature:
       parameters:
@@ -1123,7 +1123,7 @@ groups:
   - name: run
     module_path: _internal._run
     docstring: ''
-    line_number: 428
+    line_number: 450
     type: function
     signature:
       parameters:
@@ -1288,7 +1288,7 @@ groups:
   - name: run_and_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 486
+    line_number: 508
     type: function
     signature:
       parameters:
@@ -1460,7 +1460,7 @@ groups:
   - name: run_error
     module_path: _internal._run
     docstring: ''
-    line_number: 545
+    line_number: 567
     type: function
     signature:
       parameters:
@@ -1481,7 +1481,7 @@ groups:
   - name: stop_runs_and_pool
     module_path: _internal._run
     docstring: ''
-    line_number: 132
+    line_number: 133
     type: function
     signature:
       parameters:
@@ -1503,7 +1503,7 @@ groups:
   - name: wait_on_ok_errors
     module_path: _internal._run
     docstring: ''
-    line_number: 552
+    line_number: 574
     type: function
     signature:
       parameters:
@@ -1530,6 +1530,27 @@ groups:
       return_type_imports:
       - ask_shell._internal.models.ShellRun
       - ask_shell._internal.models.ShellRun
+  - name: AbortRetryError
+    module_path: _internal.models
+    docstring: Raise from should_retry to stop retrying with a custom error.
+    line_number: 520
+    type: exception
+    mro_bases:
+    - Exception
+    - BaseException
+    num_direct_bases: 1
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_only
+        type_imports: []
+      - name: args
+        kind: var_positional
+        type_imports: []
+      - name: kwargs
+        kind: var_keyword
+        type_imports: []
+      return_type_imports: []
   - name: ShellConfig
     module_path: _internal.models
     docstring: '
@@ -2011,4 +2032,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-02-26 07:18:17.251033+00:00
+dumped_at: 2026-03-16 07:37:00.967865+00:00

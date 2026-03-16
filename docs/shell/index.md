@@ -212,7 +212,7 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 ### exception: `AbortRetryError`
 - [source](../../ask_shell/_internal/models.py#L520)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
-> **Since:** unreleased
+> **Since:** 0.5.0
 
 ```python
 class AbortRetryError(Exception):
@@ -225,5 +225,5 @@ Raise from should_retry to stop retrying with a custom error.
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.5.0 | Made public |
 <!-- === OK_EDIT: pkg-ext abortretryerror_def === -->

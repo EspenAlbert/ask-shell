@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 2026-03-16T07-37Z
+
+### Shell
+- New exception `AbortRetryError`
+
+
 ## 0.4.0 2026-02-25T07-15Z
 
 ### Shell
