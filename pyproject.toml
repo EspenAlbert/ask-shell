@@ -36,6 +36,12 @@ tag_prefix = "v"
 max_bump_type = "minor"
 # === OK_EDIT: path-sync pkg-ext ===
 
+[tool.pkg-ext.groups.shell]
+examples_include = [
+  "AbortRetryError",
+]
+
+
 # === DO_NOT_EDIT: path-sync ruff ===
 [tool.ruff]
 line-length = 120

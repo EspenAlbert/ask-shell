@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext shellerror_def === -->
 ## exception: ShellError
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/models.py#L484)
+- [source](../../ask_shell/_internal/models.py#L484)
 > **Since:** 0.3.0
 
 ```python

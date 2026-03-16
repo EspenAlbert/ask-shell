@@ -23,7 +23,7 @@
 <a id="outputcallbackt_def"></a>
 
 ### type_alias: `OutputCallbackT`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py)
+- [source](../../ask_shell/_internal/events.py)
 > **Since:** 0.3.0
 
 ```python
@@ -40,7 +40,7 @@ OutputCallbackT = typing.Callable[[str], bool | None]
 <a id="shellrunafter_def"></a>
 
 ### class: `ShellRunAfter`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L49)
+- [source](../../ask_shell/_internal/events.py#L49)
 > **Since:** 0.3.0
 
 ```python
@@ -64,7 +64,7 @@ class ShellRunAfter:
 <a id="shellrunbefore_def"></a>
 
 ### class: `ShellRunBefore`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L44)
+- [source](../../ask_shell/_internal/events.py#L44)
 > **Since:** 0.3.0
 
 ```python
@@ -86,7 +86,7 @@ class ShellRunBefore:
 <a id="shellruncallbackt_def"></a>
 
 ### type_alias: `ShellRunCallbackT`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py)
+- [source](../../ask_shell/_internal/events.py)
 > **Since:** 0.3.0
 
 ```python
@@ -103,7 +103,7 @@ ShellRunCallbackT = typing.Callable[[typing.Union[ask_shell._internal.events.She
 <a id="shellrunpopenstarted_def"></a>
 
 ### class: `ShellRunPOpenStarted`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L28)
+- [source](../../ask_shell/_internal/events.py#L28)
 > **Since:** 0.3.0
 
 ```python
@@ -125,7 +125,7 @@ class ShellRunPOpenStarted:
 <a id="shellrunretryattempt_def"></a>
 
 ### class: `ShellRunRetryAttempt`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L39)
+- [source](../../ask_shell/_internal/events.py#L39)
 > **Since:** 0.3.0
 
 ```python
@@ -147,7 +147,7 @@ class ShellRunRetryAttempt:
 <a id="shellrunstdoutput_def"></a>
 
 ### class: `ShellRunStdOutput`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L22)
+- [source](../../ask_shell/_internal/events.py#L22)
 > **Since:** 0.3.0
 
 ```python
@@ -171,7 +171,7 @@ class ShellRunStdOutput:
 <a id="shellrunstdreaderror_def"></a>
 
 ### class: `ShellRunStdReadError`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L33)
+- [source](../../ask_shell/_internal/events.py#L33)
 > **Since:** 0.3.0
 
 ```python
@@ -195,7 +195,7 @@ class ShellRunStdReadError:
 <a id="shellrunstdstarted_def"></a>
 
 ### class: `ShellRunStdStarted`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/events.py#L15)
+- [source](../../ask_shell/_internal/events.py#L15)
 > **Since:** 0.3.0
 
 ```python

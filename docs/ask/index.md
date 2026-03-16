@@ -30,7 +30,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L106)
+- [source](../../ask_shell/_internal/interactive.py#L106)
 > **Since:** 0.3.0
 
 ```python
@@ -58,7 +58,7 @@ class ChoiceTyped:
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L316)
+- [source](../../ask_shell/_internal/interactive.py#L316)
 > **Since:** 0.3.0
 
 ```python
@@ -76,7 +76,7 @@ class KeyInput:
 <a id="newhandlerchoice_def"></a>
 
 ### class: `NewHandlerChoice`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L100)
+- [source](../../ask_shell/_internal/interactive.py#L100)
 > **Since:** 0.3.0
 
 ```python
@@ -100,7 +100,7 @@ class NewHandlerChoice:
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L338)
+- [source](../../ask_shell/_internal/interactive.py#L338)
 > **Since:** 0.3.0
 
 ```python
@@ -132,7 +132,7 @@ class PromptMatch:
 <a id="confirm_def"></a>
 
 ### function: `confirm`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L81)
+- [source](../../ask_shell/_internal/interactive.py#L81)
 > **Since:** 0.3.0
 
 ```python
@@ -150,7 +150,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L381)
+- [source](../../ask_shell/_internal/interactive.py#L381)
 > **Since:** 0.3.0
 
 ```python
@@ -172,7 +172,7 @@ class force_interactive:
 <a id="select_dict_def"></a>
 
 ### function: `select_dict`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L261)
+- [source](../../ask_shell/_internal/interactive.py#L261)
 > **Since:** 0.3.0
 
 ```python
@@ -190,7 +190,7 @@ def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None
 <a id="select_list_def"></a>
 
 ### function: `select_list`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L277)
+- [source](../../ask_shell/_internal/interactive.py#L277)
 > **Since:** 0.3.0
 
 ```python
@@ -208,7 +208,7 @@ def select_list(prompt_text: str, choices: list[str], *, default: str | None = N
 <a id="select_list_choice_def"></a>
 
 ### function: `select_list_choice`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L302)
+- [source](../../ask_shell/_internal/interactive.py#L302)
 > **Since:** 0.3.0
 
 ```python
@@ -226,7 +226,7 @@ def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, defa
 <a id="select_list_multiple_def"></a>
 
 ### function: `select_list_multiple`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L230)
+- [source](../../ask_shell/_internal/interactive.py#L230)
 > **Since:** 0.3.0
 
 ```python
@@ -244,7 +244,7 @@ def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[
 <a id="select_list_multiple_choices_def"></a>
 
 ### function: `select_list_multiple_choices`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L246)
+- [source](../../ask_shell/_internal/interactive.py#L246)
 > **Since:** 0.3.0
 
 ```python
@@ -262,7 +262,7 @@ def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]
 <a id="text_def"></a>
 
 ### function: `text`
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L129)
+- [source](../../ask_shell/_internal/interactive.py#L129)
 > **Since:** 0.3.0
 
 ```python

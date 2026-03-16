@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext raiseonquestionerror_def === -->
 ## exception: RaiseOnQuestionError
-- [source](https://github.com/EspenAlbert/ask-shell/blob/main/ask_shell/_internal/interactive.py#L505)
+- [source](../../ask_shell/_internal/interactive.py#L505)
 > **Since:** 0.3.0
 
 ```python
