@@ -40,7 +40,7 @@ with TemporaryDirectory() as tmp:
     elapsed = time.monotonic() - start
     print(result.stdout)
     #> ok on attempt 4
-    print(f"waited at least 0.7s: {elapsed >= 0.7}")
+    print(f"waited at least 0.7s: {elapsed >= 0.7}")  # 0.1+0.2+0.4
     #> waited at least 0.7s: True
     print(f"waited less than 2s: {elapsed < 2}")
     #> waited less than 2s: True
