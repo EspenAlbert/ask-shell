@@ -1,0 +1,3 @@
+ts: 2026-03-17 20:25:21.130919+00:00
+type: chore
+description: support new fields on ShellConfig to support retries
