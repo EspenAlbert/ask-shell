@@ -1,3 +1,86 @@
 ts: 2026-03-17 20:25:21.130919+00:00
 type: chore
 description: support new fields on ShellConfig to support retries
+---
+name: ''
+ts: 2026-03-17 20:25:49.365186+00:00
+type: fix
+author: Espen Albert
+ignored: true
+message: 'fix(test): Update ruff_ignore settings in test_examples to include I001'
+short_sha: 41cb07
+---
+name: ShellConfig
+ts: 2026-03-17 20:25:49.802449+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''retry_initial_wait'' (default: 5)'
+field_name: retry_initial_wait
+group: shell
+---
+name: ShellConfig
+ts: 2026-03-17 20:25:49.802461+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''retry_jitter'' (default: 5)'
+field_name: retry_jitter
+group: shell
+---
+name: ShellConfig
+ts: 2026-03-17 20:25:49.802464+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''retry_max_wait'' (default: 60)'
+field_name: retry_max_wait
+group: shell
+---
+name: run_and_wait
+ts: 2026-03-17 20:25:49.802471+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_initial_wait'' (default: None)'
+group: shell
+---
+name: run_and_wait
+ts: 2026-03-17 20:25:49.802471+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_max_wait'' (default: None)'
+group: shell
+---
+name: run_and_wait
+ts: 2026-03-17 20:25:49.802471+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_jitter'' (default: None)'
+group: shell
+---
+name: run
+ts: 2026-03-17 20:25:49.802477+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_initial_wait'' (default: None)'
+group: shell
+---
+name: run
+ts: 2026-03-17 20:25:49.802477+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_max_wait'' (default: None)'
+group: shell
+---
+name: run
+ts: 2026-03-17 20:25:49.802477+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''retry_jitter'' (default: None)'
+group: shell
