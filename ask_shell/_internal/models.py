@@ -151,6 +151,9 @@ class ShellConfig(Entity):
     # retry args
     attempts: int = 1
     should_retry: Callable[[ShellRun], bool] = always_retry
+    retry_initial_wait: float = Field(default=5, description="Seconds before first retry, only used when attempts > 1")
+    retry_max_wait: float = Field(default=60, description="Cap on wait between retries")
+    retry_jitter: float = Field(default=5, description="Max random jitter added to wait")
 
     # logging/output
     print_prefix: str = Field(default=None, description="Use cwd+binary_name+first_arg if not provided")  # type: ignore

@@ -13,6 +13,7 @@ from __future__ import annotations
 import atexit
 import logging
 import os
+import random
 import signal
 import subprocess
 import sys
@@ -382,11 +383,20 @@ def _eval_should_retry(config: ShellConfig, result: ShellRun) -> bool:
         return False
 
 
+def _backoff_wait(attempt: int, config: ShellConfig) -> float:
+    """wait = min(initial * 2^(attempt-2), max_wait) + uniform(0, jitter)"""
+    base = min(config.retry_initial_wait * 2 ** (attempt - 2), config.retry_max_wait)
+    return base + random.uniform(0, config.retry_jitter)
+
+
 def _run_attempts(shell_run: ShellRun, output_dir: Path) -> BaseException | None:
     config = shell_run.config
     queue = shell_run._queue
     for attempt in range(1, config.attempts + 1):
         if attempt > 1:
+            wait_seconds = _backoff_wait(attempt, config)
+            logger.info(f"Backoff {wait_seconds:.2f}s before attempt {attempt}/{config.attempts}")
+            time.sleep(wait_seconds)
             queue.put_nowait(ShellRunRetryAttempt(attempt=attempt))
             logger.warning(f"Retrying run {shell_run} attempt {attempt} of {config.attempts}")
         attempt_log_prefix = config.run_log_stem(attempt)
@@ -459,6 +469,9 @@ def run(
     is_binary_call: bool | None = None,
     message_callbacks: list[Callable[[ShellRunEventT], bool]] | None = None,
     print_prefix: str | None = None,
+    retry_initial_wait: float | None = None,
+    retry_jitter: float | None = None,
+    retry_max_wait: float | None = None,
     run_log_stem_prefix: str | None = None,
     run_output_dir: Path | None | None = None,
     settings: AskShellSettings | None = None,
@@ -483,6 +496,9 @@ def run(
         is_binary_call=is_binary_call,
         message_callbacks=message_callbacks,
         print_prefix=print_prefix,
+        retry_initial_wait=retry_initial_wait,
+        retry_jitter=retry_jitter,
+        retry_max_wait=retry_max_wait,
         run_log_stem_prefix=run_log_stem_prefix,
         run_output_dir=run_output_dir,
         settings=settings,
@@ -518,6 +534,9 @@ def run_and_wait(
     is_binary_call: bool | None = None,
     message_callbacks: list[Callable[[ShellRunEventT], bool]] | None = None,
     print_prefix: str | None = None,
+    retry_initial_wait: float | None = None,
+    retry_jitter: float | None = None,
+    retry_max_wait: float | None = None,
     run_log_stem_prefix: str | None = None,
     run_output_dir: Path | None | None = None,
     settings: AskShellSettings | None = None,
@@ -542,6 +561,9 @@ def run_and_wait(
         is_binary_call=is_binary_call,
         message_callbacks=message_callbacks,
         print_prefix=print_prefix,
+        retry_initial_wait=retry_initial_wait,
+        retry_jitter=retry_jitter,
+        retry_max_wait=retry_max_wait,
         run_log_stem_prefix=run_log_stem_prefix,
         run_output_dir=run_output_dir,
         settings=settings,

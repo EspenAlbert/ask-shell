@@ -5,6 +5,7 @@ import sys
 import time
 from json import loads
 from os import getenv
+from unittest.mock import patch
 
 import pytest
 from model_lib import fields
@@ -362,6 +363,51 @@ def test_mise_resolve(tmp_path):
         pytest.skip("mise binary not found")
     result = run_and_wait("terraform version", cwd=tmp_path)
     assert "not found" not in result.stdout_one_line
+
+
+def test_backoff_wait_values(tmp_path):
+    script_path = tmp_path / "attempt.py"
+    script_path.write_text(_attempt_script)
+    sleep_values: list[float] = []
+    original_sleep = time.sleep
+
+    def mock_sleep(seconds):
+        sleep_values.append(seconds)
+        original_sleep(0.01)
+
+    with patch.object(time, time.sleep.__name__, side_effect=mock_sleep):
+        result = run_and_wait(
+            f"{PYTHON_EXEC} {script_path}",
+            attempts=4,
+            retry_initial_wait=2,
+            retry_max_wait=10,
+            retry_jitter=0,
+        )
+    assert result.clean_complete
+    assert sleep_values == [2, 4]
+
+
+def test_backoff_respects_max_wait(tmp_path):
+    script_path = tmp_path / "fail.py"
+    script_path.write_text("raise SystemExit(1)\n")
+    sleep_values: list[float] = []
+    original_sleep = time.sleep
+
+    def mock_sleep(seconds):
+        sleep_values.append(seconds)
+        original_sleep(0.01)
+
+    with patch.object(time, time.sleep.__name__, side_effect=mock_sleep):
+        with pytest.raises(ShellError):
+            run_and_wait(
+                f"{PYTHON_EXEC} {script_path}",
+                attempts=5,
+                retry_initial_wait=2,
+                retry_max_wait=5,
+                retry_jitter=0,
+                skip_binary_check=True,
+            )
+    assert sleep_values == [2, 4, 5, 5]
 
 
 def test_readme_example():

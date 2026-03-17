@@ -18,6 +18,9 @@ class ShellConfig(Entity):
     user_input: bool = False
     attempts: int = 1
     should_retry: Callable[[ShellRun], bool] = <function always_retry>
+    retry_initial_wait: float = 5
+    retry_max_wait: float = 60
+    retry_jitter: float = 5
     print_prefix: str = None
     include_log_time: bool = False
     ansi_content: bool = None
@@ -75,6 +78,9 @@ class ShellConfig(Entity):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'retry_max_wait' (default: 60) |
+| unreleased | added optional field 'retry_jitter' (default: 5) |
+| unreleased | added optional field 'retry_initial_wait' (default: 5) |
 | 0.4.0 | field 'message_callbacks' type: list[Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]] -> list[Callable[[ask_shell._internal.events.ShellRunBefore | ask_shell._internal.events.ShellRunPOpenStarted | ask_shell._internal.events.ShellRunStdStarted | ask_shell._internal.events.ShellRunStdReadError | ask_shell._internal.events.ShellRunStdOutput | ask_shell._internal.events.ShellRunRetryAttempt | ask_shell._internal.events.ShellRunAfter], bool | None]] |
 | 0.3.2 | field 'print_prefix' default added: None |
 | 0.3.2 | field 'is_binary_call' default added: None |
