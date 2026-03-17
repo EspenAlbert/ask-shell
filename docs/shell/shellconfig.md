@@ -18,6 +18,9 @@ class ShellConfig(Entity):
     user_input: bool = False
     attempts: int = 1
     should_retry: Callable[[ShellRun], bool] = <function always_retry>
+    retry_initial_wait: float = 5
+    retry_max_wait: float = 60
+    retry_jitter: float = 5
     print_prefix: str = None
     include_log_time: bool = False
     ansi_content: bool = None

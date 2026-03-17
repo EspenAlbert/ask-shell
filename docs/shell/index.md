@@ -27,7 +27,7 @@
 <a id="shellrun_def"></a>
 
 ### class: `ShellRun`
-- [source](../../ask_shell/_internal/models.py#L269)
+- [source](../../ask_shell/_internal/models.py#L272)
 > **Since:** 0.3.0
 
 ```python
@@ -58,7 +58,7 @@ Args:
 <a id="handle_interrupt_wait_def"></a>
 
 ### class: `handle_interrupt_wait`
-- [source](../../ask_shell/_internal/_run.py#L141)
+- [source](../../ask_shell/_internal/_run.py#L142)
 > **Since:** 0.3.0
 
 ```python
@@ -82,7 +82,7 @@ class handle_interrupt_wait:
 <a id="kill_def"></a>
 
 ### function: `kill`
-- [source](../../ask_shell/_internal/_run.py#L73)
+- [source](../../ask_shell/_internal/_run.py#L74)
 > **Since:** 0.3.0
 
 ```python
@@ -102,7 +102,7 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 <a id="kill_all_runs_def"></a>
 
 ### function: `kill_all_runs`
-- [source](../../ask_shell/_internal/_run.py#L106)
+- [source](../../ask_shell/_internal/_run.py#L107)
 > **Since:** 0.3.0
 
 ```python
@@ -120,7 +120,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L567)
+- [source](../../ask_shell/_internal/_run.py#L589)
 > **Since:** 0.3.0
 
 ```python
@@ -174,7 +174,7 @@ class run_pool:
 <a id="stop_runs_and_pool_def"></a>
 
 ### function: `stop_runs_and_pool`
-- [source](../../ask_shell/_internal/_run.py#L133)
+- [source](../../ask_shell/_internal/_run.py#L134)
 > **Since:** 0.3.0
 
 ```python
@@ -192,7 +192,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L574)
+- [source](../../ask_shell/_internal/_run.py#L596)
 > **Since:** 0.3.0
 
 ```python
@@ -210,7 +210,7 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 <a id="abortretryerror_def"></a>
 
 ### exception: `AbortRetryError`
-- [source](../../ask_shell/_internal/models.py#L520)
+- [source](../../ask_shell/_internal/models.py#L523)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
 > **Since:** 0.5.0
 
