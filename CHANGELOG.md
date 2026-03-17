@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.1 2026-03-17T20-46Z
+
+### Shell
+- `shell.ShellConfig`: added optional field 'retry_initial_wait' (default: 5)
+- `shell.ShellConfig`: added optional field 'retry_jitter' (default: 5)
+- `shell.ShellConfig`: added optional field 'retry_max_wait' (default: 60)
+- `shell.run`: added optional param 'retry_initial_wait' (default: None)
+- `shell.run`: added optional param 'retry_jitter' (default: None)
+- `shell.run`: added optional param 'retry_max_wait' (default: None)
+- `shell.run_and_wait`: added optional param 'retry_initial_wait' (default: None)
+- `shell.run_and_wait`: added optional param 'retry_jitter' (default: None)
+- `shell.run_and_wait`: added optional param 'retry_max_wait' (default: None)
+
+### Other Changes
+- Chore: support new fields on ShellConfig to support retries
+
+
 ## 0.5.0 2026-03-16T07-37Z
 
 ### Shell
