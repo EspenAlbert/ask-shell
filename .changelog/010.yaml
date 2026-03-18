@@ -1,0 +1,7 @@
+name: console
+ts: 2026-03-18 07:44:00.342408+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(console): Treat zero exit code exceptions as success in progress tracking'
+message: 'fix(console): Treat zero exit code exceptions as success in progress tracking'
+short_sha: fe4ffb
