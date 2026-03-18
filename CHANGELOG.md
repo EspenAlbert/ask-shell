@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.2 2026-03-18T09-29Z
+
+### Console
+- fix(console): Treat zero exit code exceptions as success in progress tracking [fe4ffb](https://github.com/EspenAlbert/ask-shell/commit/fe4ffb)
+
+
 ## 0.5.1 2026-03-17T20-46Z
 
 ### Shell

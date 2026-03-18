@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.5.1
+version: 0.5.2
 groups:
 - name: __ROOT__
   symbols:
@@ -902,7 +902,7 @@ groups:
   - name: new_task
     module_path: _internal.rich_progress
     docstring: ''
-    line_number: 153
+    line_number: 162
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -2101,4 +2101,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-03-17 20:46:22.749115+00:00
+dumped_at: 2026-03-18 09:29:04.806914+00:00

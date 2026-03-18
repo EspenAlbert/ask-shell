@@ -5,3 +5,8 @@ author: Espen Albert
 changelog_message: 'fix(console): Treat zero exit code exceptions as success in progress tracking'
 message: 'fix(console): Treat zero exit code exceptions as success in progress tracking'
 short_sha: fe4ffb
+---
+name: 0.5.2
+ts: 2026-03-18 09:29:04.883721+00:00
+type: release
+old_version: 0.5.1
