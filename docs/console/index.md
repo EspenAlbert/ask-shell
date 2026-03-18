@@ -130,7 +130,7 @@ def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | 
 <a id="new_task_def"></a>
 
 ### class: `new_task`
-- [source](../../ask_shell/_internal/rich_progress.py#L153)
+- [source](../../ask_shell/_internal/rich_progress.py#L162)
 > **Since:** 0.3.0
 
 ```python
