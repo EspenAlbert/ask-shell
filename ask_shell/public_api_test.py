@@ -116,7 +116,9 @@ def test_multiple_attempts(tmp_path):
     """error might look weird due to flushing"""
     script_path = tmp_path / "attempt.py"
     script_path.write_text(_attempt_script)
-    result = run_and_wait(ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=3))
+    result = run_and_wait(
+        ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=3, retry_initial_wait=0, retry_jitter=0)
+    )
     assert result.clean_complete
 
 
@@ -124,7 +126,9 @@ def test_not_enough_attempts(tmp_path):
     script_path = tmp_path / "attempt.py"
     script_path.write_text(_attempt_script)
     with pytest.raises(ShellError) as exc:
-        run_and_wait(ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=2))
+        run_and_wait(
+            ShellConfig(shell_input=f"{PYTHON_EXEC} {script_path}", attempts=2, retry_initial_wait=0, retry_jitter=0)
+        )
     assert "attempt in script: 2/3" in exc.value.stdout
     assert exc.value.exit_code == 1
 
@@ -142,6 +146,8 @@ def test_multi_attempts_retry_call_false(tmp_path):
                 shell_input=f"{PYTHON_EXEC} {script_path}",
                 attempts=4,
                 should_retry=never_retry,
+                retry_initial_wait=0,
+                retry_jitter=0,
             )
         )
     assert "attempt in script: 1/3" in exc.value.stdout
@@ -159,6 +165,8 @@ def test_multi_attempts_retry_call_true(tmp_path):
             shell_input=f"{PYTHON_EXEC} {script_path}",
             attempts=4,
             should_retry=retry_if_attempt,
+            retry_initial_wait=0,
+            retry_jitter=0,
         )
     )
     assert "attempt in script: 3/3" in result.stdout
@@ -177,6 +185,8 @@ def test_abort_retry_error_stops_retries(tmp_path):
                 shell_input=f"{PYTHON_EXEC} {script_path}",
                 attempts=4,
                 should_retry=abort_on_first_failure,
+                retry_initial_wait=0,
+                retry_jitter=0,
             )
         )
     assert isinstance(exc.value.base_error, AbortRetryError)
