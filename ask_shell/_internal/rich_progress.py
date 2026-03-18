@@ -31,6 +31,15 @@ def transient_progress() -> Progress:
     )
 
 
+def _is_clean_exit(exc: BaseException | None) -> bool:
+    if exc is None:
+        return True
+    if isinstance(exc, SystemExit) and exc.code in (None, 0):
+        return True
+    exit_code = getattr(exc, "exit_code", None)
+    return exit_code == 0
+
+
 def log_task_done(
     task: new_task,
     *,
@@ -206,5 +215,6 @@ class new_task:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.complete()  # Ensure we mark it as complete
-        self.manager.remove_task(self, error=exc_val)
+        self.complete()
+        error = exc_val if not _is_clean_exit(exc_val) else None
+        self.manager.remove_task(self, error=error)
