@@ -33,15 +33,15 @@ with TemporaryDirectory() as tmp:
     result = run_and_wait(
         f"{sys.executable} {script_path}",
         attempts=4,
-        retry_initial_wait=0.1,
-        retry_max_wait=10,
+        retry_initial_wait=0.01,
+        retry_max_wait=1,
         retry_jitter=0,
     )
     elapsed = time.monotonic() - start
     print(result.stdout)
     #> ok on attempt 4
-    print(f"waited at least 0.7s: {elapsed >= 0.7}")  # 0.1+0.2+0.4
-    #> waited at least 0.7s: True
-    print(f"waited less than 2s: {elapsed < 2}")
-    #> waited less than 2s: True
+    print(f"waited at least 0.07s: {elapsed >= 0.07}")  # 0.01 + 0.02 + 0.04
+    #> waited at least 0.07s: True
+    print(f"waited less than 1s: {elapsed < 1}")
+    #> waited less than 1s: True
 ```

@@ -87,6 +87,9 @@ result = run_and_wait(
         shell_input=f"{PYTHON_EXEC} {tmp / 'run.py'}",
         attempts=3,
         should_retry=should_retry_transient,
+        retry_initial_wait=0.01,
+        retry_max_wait=0.1,
+        retry_jitter=0,
     )
 )
 print(result.stdout)
