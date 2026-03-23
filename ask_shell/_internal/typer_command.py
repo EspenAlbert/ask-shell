@@ -88,6 +88,42 @@ def track_progress_decorator(
     return decorator
 
 
+def _wrap_typer_tree_commands(
+    app: typer.Typer,
+    *,
+    settings: AskShellSettings,
+    log_path_prefix: str,
+    skip_except_hook: bool,
+    use_app_name_command_for_logs: bool,
+    render_rich_error_on_sys_exit: bool,
+) -> None:
+    for command in app.registered_commands:
+        command.callback = track_progress_decorator(
+            skip_except_hook=skip_except_hook,
+            settings=settings,
+            use_app_name_command_for_logs=use_app_name_command_for_logs,
+            app_name=log_path_prefix,
+            command_name=command.name or command.callback.__name__,  # type: ignore
+            skip_rich_exception=not render_rich_error_on_sys_exit,
+        )(
+            command.callback  # type: ignore
+        )
+    for group in app.registered_groups:
+        nested = group.typer_instance
+        if nested is None:
+            continue
+        segment = group.name or nested.info.name or "group"
+        child_prefix = f"{log_path_prefix}/{segment}"
+        _wrap_typer_tree_commands(
+            nested,
+            settings=settings,
+            log_path_prefix=child_prefix,
+            skip_except_hook=skip_except_hook,
+            use_app_name_command_for_logs=use_app_name_command_for_logs,
+            render_rich_error_on_sys_exit=render_rich_error_on_sys_exit,
+        )
+
+
 def remove_secrets(message: str, secrets: list[str]) -> str:
     for secret in secrets:
         message = message.replace(secret, "***")
@@ -141,18 +177,15 @@ def configure_logging(
     render_rich_error_on_sys_exit: bool = False,
 ) -> logging.Handler:
     settings = settings or AskShellSettings.from_env()
-    app_name = app.info.name or "typer_app"
-    for command in app.registered_commands:
-        command.callback = track_progress_decorator(
-            skip_except_hook=skip_except_hook,
-            settings=settings,
-            use_app_name_command_for_logs=use_app_name_command_for_logs,
-            app_name=app_name,
-            command_name=command.name or command.callback.__name__,  # type: ignore
-            skip_rich_exception=not render_rich_error_on_sys_exit,
-        )(
-            command.callback  # type: ignore
-        )
+    root_prefix = app.info.name or "typer_app"
+    _wrap_typer_tree_commands(
+        app,
+        settings=settings,
+        log_path_prefix=root_prefix,
+        skip_except_hook=skip_except_hook,
+        use_app_name_command_for_logs=use_app_name_command_for_logs,
+        render_rich_error_on_sys_exit=render_rich_error_on_sys_exit,
+    )
     handler = RichHandler(rich_tracebacks=False, level=settings.log_level, console=get_live_console())
     logging.basicConfig(
         level=settings.log_level,
