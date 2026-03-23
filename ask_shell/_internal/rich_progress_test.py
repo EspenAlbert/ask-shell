@@ -1,5 +1,7 @@
 import logging
 
+import pytest
+
 from ask_shell._internal.rich_live import get_live, pause_live
 from ask_shell._internal.rich_progress import (
     get_default_progress_manager,
@@ -70,3 +72,22 @@ def test_task_should_update_progress_with_logging(capture_console):
     assert "Test Task" in out
     assert "20%" in out
     assert "60%" in out
+
+
+def test_task_context_system_exit_zero_logs_success(caplog):
+    caplog.set_level(logging.INFO)
+    with pytest.raises(SystemExit):
+        with new_task("se0", total=1):
+            raise SystemExit(0)
+    assert "✅" in caplog.text
+
+
+def test_task_context_exception_with_exit_code_attr_zero_logs_success(caplog):
+    class QuietExit(Exception):
+        exit_code = 0
+
+    caplog.set_level(logging.INFO)
+    with pytest.raises(QuietExit):
+        with new_task("qe0", total=1):
+            raise QuietExit()
+    assert "✅" in caplog.text
