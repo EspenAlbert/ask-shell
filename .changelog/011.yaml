@@ -5,3 +5,8 @@ author: Espen Albert
 changelog_message: 'fix: also wrap logging for sub apps'
 message: 'fix: also wrap logging for sub apps'
 short_sha: a411a8
+---
+name: 0.5.3
+ts: 2026-03-23 21:43:10.405536+00:00
+type: release
+old_version: 0.5.2

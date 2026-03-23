@@ -2,7 +2,7 @@
 
 [project]
 name = "ask-shell"
-version = "0.5.2"
+version = "0.5.3"
 description = "CLIs with prompts, shell runs, and testable flows"
 requires-python = ">=3.13"
 license = "MIT"

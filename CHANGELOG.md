@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.3 2026-03-23T21-43Z
+
+### Console
+- fix: also wrap logging for sub apps [a411a8](https://github.com/EspenAlbert/ask-shell/commit/a411a8)
+
+
 ## 0.5.2 2026-03-18T09-29Z
 
 ### Console

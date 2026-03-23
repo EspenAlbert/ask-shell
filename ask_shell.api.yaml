@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.5.2
+version: 0.5.3
 groups:
 - name: __ROOT__
   symbols:
@@ -972,7 +972,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 133
+    line_number: 169
     type: function
     signature:
       parameters:
@@ -2101,4 +2101,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-03-18 09:29:04.806914+00:00
+dumped_at: 2026-03-23 21:43:10.330012+00:00
