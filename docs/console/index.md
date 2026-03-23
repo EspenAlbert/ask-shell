@@ -58,7 +58,7 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 <a id="configure_logging_def"></a>
 
 ### function: `configure_logging`
-- [source](../../ask_shell/_internal/typer_command.py#L133)
+- [source](../../ask_shell/_internal/typer_command.py#L169)
 > **Since:** 0.3.0
 
 ```python

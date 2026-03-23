@@ -1,0 +1,7 @@
+name: console
+ts: 2026-03-23 21:41:45.646042+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix: also wrap logging for sub apps'
+message: 'fix: also wrap logging for sub apps'
+short_sha: a411a8
