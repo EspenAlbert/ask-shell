@@ -1,0 +1,34 @@
+name: shell
+ts: 2026-04-10 12:31:55.594365+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(shell): Prevent run_pool deadlock on zero-submit and support pool_thread_count'
+message: 'fix(shell): Prevent run_pool deadlock on zero-submit and support pool_thread_count'
+short_sha: '569118'
+---
+name: AskShellSettings
+ts: 2026-04-10 12:33:12.794902+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_changed
+details: 'field ''thread_count'' default: 50 -> 100'
+field_name: thread_count
+group: __ROOT__
+---
+name: run_pool
+ts: 2026-04-10 12:33:12.794915+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''pool_thread_count'' (default: None)'
+field_name: pool_thread_count
+group: shell
+---
+name: run_pool
+ts: 2026-04-10 12:33:12.794924+00:00
+type: breaking_change
+auto_generated: true
+change_kind: default_removed
+details: 'field ''pool'' default removed (was: ...)'
+field_name: pool
+group: shell

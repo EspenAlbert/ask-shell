@@ -12,7 +12,7 @@ class AskShellSettings(StaticSettings):
     SKIP_APP_NAME: bool = False
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
-    thread_count: int = 50
+    thread_count: int = 100
     thread_pool_full_wait_time_seconds: float = 5
     search_enabled_after_choices: int = 7
     global_callback_strings: list[str] = ...
@@ -69,6 +69,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | field 'thread_count' default: 50 -> 100 |
 | 0.3.2 | field 'run_logs_dir' default added: None |
 | 0.3.2 | field 'STATIC_DIR' default added: None |
 | 0.3.2 | field 'CACHE_DIR' default added: None |
