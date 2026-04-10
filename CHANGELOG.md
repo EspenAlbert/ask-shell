@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0 2026-04-10T12-44Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: field 'thread_count' default: 50 -> 100
+
+### Shell
+- BREAKING `shell.run_pool`: field 'pool' default removed (was: ...)
+- fix(shell): Prevent run_pool deadlock on zero-submit and support pool_thread_count [569118](https://github.com/EspenAlbert/ask-shell/commit/569118)
+- `shell.run_pool`: added optional field 'pool_thread_count' (default: None)
+
+
 ## 0.5.3 2026-03-23T21-43Z
 
 ### Console

@@ -6,7 +6,7 @@ from ask_shell import shell_events
 from ask_shell import ask
 from ask_shell.settings import AskShellSettings
 
-VERSION = "0.5.3"
+VERSION = "0.6.0"
 __all__ = [
     "shell",
     "console",

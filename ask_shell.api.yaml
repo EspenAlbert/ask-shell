@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.5.3
+version: 0.6.0
 groups:
 - name: __ROOT__
   symbols:
@@ -72,7 +72,7 @@ groups:
       type_annotation: int
       type_imports: []
       default:
-        value_repr: '50'
+        value_repr: '100'
         is_factory: false
       is_class_var: false
       is_computed: false
@@ -1899,7 +1899,7 @@ groups:
   - name: run_pool
     module_path: _internal.run_pool
     docstring: ''
-    line_number: 25
+    line_number: 28
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -1933,6 +1933,14 @@ groups:
         is_factory: false
       is_class_var: false
       is_computed: false
+    - name: pool_thread_count
+      type_annotation: int | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
     - name: sleep_time
       type_annotation: float
       type_imports: []
@@ -1962,9 +1970,6 @@ groups:
       type_annotation: ThreadPoolExecutor
       type_imports:
       - concurrent.futures.thread.ThreadPoolExecutor
-      default:
-        value_repr: '...'
-        is_factory: true
       is_class_var: false
       is_computed: false
 - name: shell_events
@@ -2101,4 +2106,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-03-23 21:43:10.330012+00:00
+dumped_at: 2026-04-10 12:44:48.658077+00:00

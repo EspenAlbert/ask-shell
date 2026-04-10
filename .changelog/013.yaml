@@ -32,3 +32,8 @@ change_kind: default_removed
 details: 'field ''pool'' default removed (was: ...)'
 field_name: pool
 group: shell
+---
+name: 0.6.0
+ts: 2026-04-10 12:44:48.736875+00:00
+type: release
+old_version: 0.5.3

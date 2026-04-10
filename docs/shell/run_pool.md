@@ -38,7 +38,7 @@ class run_pool:
 
 | Version | Change |
 |---------|--------|
-| unreleased | field 'pool' default removed (was: ...) |
-| unreleased | added optional field 'pool_thread_count' (default: None) |
+| 0.6.0 | field 'pool' default removed (was: ...) |
+| 0.6.0 | added optional field 'pool_thread_count' (default: None) |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext run_pool_changes === -->

@@ -69,7 +69,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| unreleased | field 'thread_count' default: 50 -> 100 |
+| 0.6.0 | field 'thread_count' default: 50 -> 100 |
 | 0.3.2 | field 'run_logs_dir' default added: None |
 | 0.3.2 | field 'STATIC_DIR' default added: None |
 | 0.3.2 | field 'CACHE_DIR' default added: None |
