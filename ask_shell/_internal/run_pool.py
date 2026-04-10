@@ -53,28 +53,26 @@ class run_pool:
             self.pool = ThreadPoolExecutor(max_workers=self.pool_thread_count)
             self._owns_pool = True
             self._pool_max_workers = self.pool_thread_count
-            global_max_runs = max_run_count_for_workers()
+            # dedicated pool: each concurrent submit reserves 1 run slot on the global pool
             runs_needed = self.max_concurrent_submits
-            assert runs_needed < global_max_runs, (
-                f"Concurrent submits ({runs_needed}) exceeds global pool capacity ({global_max_runs} concurrent runs). "
-                f"Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} or decrease `max_concurrent_submits`."
-            )
-            self._max_run_count_with_this_pool = global_max_runs - runs_needed
+            runs_available = max_run_count_for_workers()
             logger.debug(
                 f"run_pool '{self.task_name}': dedicated pool with {self.pool_thread_count} workers, "
-                f"global pool reserves {runs_needed}/{global_max_runs} run slots"
+                f"global pool reserves {runs_needed}/{runs_available} run slots"
             )
         else:
             self.pool = get_pool()
             self._pool_max_workers = self.pool._max_workers
-            max_run_count = max_run_count_for_workers(self._pool_max_workers)
-            workers_required_if_full = self.max_concurrent_submits * self.threads_used_per_submit
-            run_count_used_by_this_pool = ceil(workers_required_if_full / THREADS_PER_RUN)
-            assert run_count_used_by_this_pool < max_run_count, (
-                f"Run count used by this pool ({run_count_used_by_this_pool}) exceeds max run count ({max_run_count}). "
-                f"Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} or decrease `max_concurrent_submits`."
-            )
-            self._max_run_count_with_this_pool = max_run_count - run_count_used_by_this_pool
+            # shared pool: submits + their shell runs share the same threads
+            workers_at_full_load = self.max_concurrent_submits * self.threads_used_per_submit
+            runs_needed = ceil(workers_at_full_load / THREADS_PER_RUN)
+            runs_available = max_run_count_for_workers(self._pool_max_workers)
+
+        assert runs_needed < runs_available, (
+            f"Run slots needed ({runs_needed}) exceed capacity ({runs_available}). "
+            f"Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} or decrease `max_concurrent_submits`."
+        )
+        self._max_run_count_with_this_pool = runs_available - runs_needed
 
     def _on_submit_done(self):
         """Callback to be called when a submit is done. This is used to decrement the current submit count."""
