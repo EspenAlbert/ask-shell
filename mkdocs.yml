@@ -29,6 +29,7 @@ nav:
     - ShellError: shell/shellerror.md
     - run: shell/run.md
     - run_and_wait: shell/run_and_wait.md
+    - run_pool: shell/run_pool.md
     - Examples:
       - AbortRetryError: examples/shell/AbortRetryError.md
   - shell_events: shell_events/index.md

@@ -1,8 +1,10 @@
+import logging
 import time
 from concurrent.futures import Future, ThreadPoolExecutor
+from concurrent.futures import wait as futures_wait
 from dataclasses import dataclass, field
 from math import ceil
-from threading import Event, RLock
+from threading import RLock
 from typing import Any, Callable, Protocol, TypeVar
 
 from ask_shell._internal._run import (
@@ -15,6 +17,7 @@ from ask_shell._internal._run import (
 from ask_shell._internal.rich_progress import new_task
 from ask_shell.settings import AskShellSettings
 
+logger = logging.getLogger(__name__)
 T_co = TypeVar("T_co", covariant=True)
 
 
@@ -30,60 +33,72 @@ class run_pool:
     threads_used_per_submit: int = (
         THREADS_PER_RUN + 1
     )  # If you are using `run` or `run_and_wait` this should be `THREADS_PER_RUN` + extra threads for your own tasks
+    pool_thread_count: int | None = None
     sleep_time: float = 1
     sleep_callback: Callable[[], Any] | None = None
     exit_wait_timeout: float | None = (
         None  # If set, will wait for the pool to finish before exiting the context manager
     )
 
-    pool: ThreadPoolExecutor = field(init=False, default_factory=get_pool)
+    pool: ThreadPoolExecutor = field(init=False)
+    _owns_pool: bool = field(init=False, default=False)
     _pool_max_workers: int = field(init=False)
     _max_run_count_with_this_pool: int = field(init=False)
     _lock: RLock = field(init=False, default_factory=RLock)
-    _current_submit_count: int = field(init=False, default=0)
+    _pending_count: int = field(init=False, default=0)
     _task: new_task | None = field(init=False, default=None)
-    _event: Event = field(init=False, default_factory=Event)
+    _futures: list[Future] = field(init=False, default_factory=list)
 
     def __post_init__(self):
-        self._pool_max_workers = self.pool._max_workers
-        max_run_count = max_run_count_for_workers(self._pool_max_workers)
-        workers_required_if_full = self.max_concurrent_submits * self.threads_used_per_submit
-        run_count_used_by_this_pool = ceil(workers_required_if_full / THREADS_PER_RUN)
-        assert run_count_used_by_this_pool < max_run_count, (
-            f"Run count used by this pool ({run_count_used_by_this_pool}) exceeds max run count ({max_run_count}). Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} environment variable or decrease `max_concurrent_submits` parameter."
-        )
-        self._max_run_count_with_this_pool = max_run_count - run_count_used_by_this_pool
+        if self.pool_thread_count is not None:
+            self.pool = ThreadPoolExecutor(max_workers=self.pool_thread_count)
+            self._owns_pool = True
+            self._pool_max_workers = self.pool_thread_count
+            # dedicated pool: each concurrent submit reserves 1 run slot on the global pool
+            runs_needed = self.max_concurrent_submits
+            runs_available = max_run_count_for_workers()
+            logger.debug(
+                f"run_pool '{self.task_name}': dedicated pool with {self.pool_thread_count} workers, "
+                f"global pool reserves {runs_needed}/{runs_available} run slots"
+            )
+        else:
+            self.pool = get_pool()
+            self._pool_max_workers = self.pool._max_workers
+            # shared pool: submits + their shell runs share the same threads
+            workers_at_full_load = self.max_concurrent_submits * self.threads_used_per_submit
+            runs_needed = ceil(workers_at_full_load / THREADS_PER_RUN)
+            runs_available = max_run_count_for_workers(self._pool_max_workers)
 
-    def _on_submit_done(self):
-        """Callback to be called when a submit is done. This is used to decrement the current submit count."""
+        assert runs_needed < runs_available, (
+            f"Run slots needed ({runs_needed}) exceed capacity ({runs_available}). "
+            f"Adjust {AskShellSettings.ENV_NAME_THREAD_COUNT} or decrease `max_concurrent_submits`."
+        )
+        self._max_run_count_with_this_pool = runs_available - runs_needed
+
+    def _on_submit_done(self, _future: Future):
         with self._lock:
-            self._current_submit_count -= 1
+            self._pending_count -= 1
             if task := self._task:
                 task.update(advance=1)
-            if self._current_submit_count == 0:
-                self._event.set()
 
     def submit(self, fn: SubmitFunc[T_co], /, *args, **kwargs) -> Future[T_co]:
-        """Submit a task to the pool. Might block if the pool is full."""
-
-        # problem: There is a bit of lag from submit until the run is actually started,
+        """Submit a task to the pool. Blocks if max_concurrent_submits are already in flight."""
         with self._lock:
-            self._current_submit_count += 1
-            if self._current_submit_count == 1:
-                self._event = Event()  # reset the event when the first submit is made
+            self._pending_count += 1
         with handle_interrupt_wait(interrupt_message=f"run_pool submit for {self.task_name}"):
-            while self._current_submit_count >= self.max_concurrent_submits:
+            while self._pending_count > self.max_concurrent_submits:
                 if self.sleep_callback:
                     self.sleep_callback()
                 time.sleep(self.sleep_time)
-        # in case more runs are already submitted
         wait_if_many_runs(
             max_run_count=self._max_run_count_with_this_pool,
             sleep_time=self.sleep_time,
             sleep_callback=self.sleep_callback,
         )
         future = self.pool.submit(fn, *args, **kwargs)
-        future.add_done_callback(lambda _: self._on_submit_done())
+        future.add_done_callback(self._on_submit_done)
+        with self._lock:
+            self._futures.append(future)
         return future
 
     def __enter__(self):
@@ -92,9 +107,15 @@ class run_pool:
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> None:
-        # no cleanup necessary, the pool will be cleaned up automatically due to atexit call
-        with handle_interrupt_wait(interrupt_message=f"interrupt in `run_pool` exit method for {self.task_name}"):
-            self._event.wait(self.exit_wait_timeout)
+        with self._lock:
+            futures = list(self._futures)
+        if futures:
+            with handle_interrupt_wait(interrupt_message=f"interrupt in `run_pool` exit method for {self.task_name}"):
+                futures_wait(futures, timeout=self.exit_wait_timeout)
+            with self._lock:
+                self._futures.clear()
 
+        if self._owns_pool:
+            self.pool.shutdown(wait=True)
         if task := self._task:
             task.__exit__(exc_type, exc_value, traceback)

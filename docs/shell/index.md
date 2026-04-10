@@ -14,7 +14,7 @@
 - [run](./run.md)
 - [run_and_wait](./run_and_wait.md)
 - [`run_error`](#run_error_def)
-- [`run_pool`](#run_pool_def)
+- [run_pool](./run_pool.md)
 - [`stop_runs_and_pool`](#stop_runs_and_pool_def)
 - [`wait_on_ok_errors`](#wait_on_ok_errors_def)
 <!-- === OK_EDIT: pkg-ext symbols === -->
@@ -134,42 +134,6 @@ def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext run_error_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext run_pool_def === -->
-<a id="run_pool_def"></a>
-
-### class: `run_pool`
-- [source](../../ask_shell/_internal/run_pool.py#L25)
-> **Since:** 0.3.0
-
-```python
-class run_pool:
-    task_name: str
-    total: int = 0
-    max_concurrent_submits: int = 4
-    threads_used_per_submit: int = 5
-    sleep_time: float = 1
-    sleep_callback: Callable[[], Any] | None = None
-    exit_wait_timeout: float | None = None
-    pool: ThreadPoolExecutor = ...
-```
-
-| Field | Type | Default | Since |
-|---|---|---|---|
-| task_name | `str` | - | 0.3.0 |
-| total | `int` | `0` | 0.3.0 |
-| max_concurrent_submits | `int` | `4` | 0.3.0 |
-| threads_used_per_submit | `int` | `5` | 0.3.0 |
-| sleep_time | `float` | `1` | 0.3.0 |
-| sleep_callback | `Callable[[], Any] | None` | `None` | 0.3.0 |
-| exit_wait_timeout | `float | None` | `None` | 0.3.0 |
-| pool | `ThreadPoolExecutor` | `...` | 0.3.0 |
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext run_pool_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext stop_runs_and_pool_def === -->
 <a id="stop_runs_and_pool_def"></a>
 
