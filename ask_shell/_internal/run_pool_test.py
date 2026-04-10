@@ -1,61 +1,118 @@
-import logging
-import os
-import time
+from concurrent.futures import Future, ThreadPoolExecutor
+from threading import Thread
+from unittest.mock import MagicMock, patch
 
-import pytest
-
-from ask_shell._internal._run import max_run_count_for_workers, run_and_wait
+from ask_shell._internal._run import get_pool, max_run_count_for_workers, wait_if_many_runs
+from ask_shell._internal.rich_progress import new_task
 from ask_shell._internal.run_pool import run_pool
 
-logger = logging.getLogger(__name__)
+_module = run_pool.__module__
 
 
-@pytest.mark.skipif(os.environ.get("SLOW", "") == "", reason="needs os.environ[SLOW]")
-def test_running_enough_scripts_to_wait(settings, capture_console):
-    submit_tasks = max_run_count_for_workers(settings.thread_count)
+def test_run_pool_dedicated_pool():
+    with patch(f"{_module}.{max_run_count_for_workers.__name__}", return_value=10):
+        rp = run_pool(task_name="test", pool_thread_count=8, max_concurrent_submits=2)
 
-    submit_task_sleep_time = 1
-
-    def run_sleep_command(i: int) -> str:
-        result = run_and_wait(f"sleep {submit_task_sleep_time} && echo {i}")
-        return result.stdout_one_line
-
-    log_calls = 0
-
-    def log_sleeping():
-        nonlocal log_calls
-        log_calls += 1
-        logger.info(f"Waiting for threads to finish before starting new tasks, sleeping call {log_calls}")
-
-    with run_pool(
-        task_name="Test Submit should block",
-        total=10,
-        sleep_time=0.1,
-        sleep_callback=log_sleeping,
-    ) as pool:
-        start_time = time.monotonic()
-        runs = [
-            pool.submit(run_sleep_command, i) for i in range(submit_tasks)
-        ]  # should block since some thread counts are reserved for the `run_pool`
-        assert time.monotonic() - start_time > submit_task_sleep_time, (
-            "Should have waited for some tasks to finish before starting new ones"
-        )
-        results = [future.result() for future in runs]
-        assert len(results) == submit_tasks, "All tasks should have completed"
-    output = capture_console.end_capture()
-    assert "Test Submit should block" in output, "Task name should be in the output"
+    assert rp._owns_pool
+    assert rp._pool_max_workers == 8
+    assert rp._max_run_count_with_this_pool == 8  # global_max_runs(10) - runs_needed(2)
+    rp.pool.shutdown(wait=False)
 
 
-@pytest.mark.skipif(os.environ.get("SLOW", "") == "", reason="needs os.environ[SLOW]")
-def test_run_pool_multiple_usages(capture_console):
-    with run_pool(task_name="First Pool", total=5) as pool1:
-        for i in range(5):
-            pool1.submit(lambda x: x, i)
+def test_run_pool_shared_pool():
+    mock_pool = MagicMock(spec=ThreadPoolExecutor)
+    mock_pool._max_workers = 20
+    with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
+        rp = run_pool(task_name="test", max_concurrent_submits=2, threads_used_per_submit=4)
 
-    with run_pool(task_name="Second Pool", total=3) as pool2:
-        for i in range(3):
-            pool2.submit(lambda x: x, i)
+    assert not rp._owns_pool
+    assert rp._pool_max_workers == 20
+    # max_run_count_for_workers(20) = 20 // 4 = 5
+    # workers_required_if_full = 2 * 4 = 8, ceil(8/4) = 2
+    assert rp._max_run_count_with_this_pool == 3  # 5 - 2
 
-    output = capture_console.end_capture()
-    assert "First Pool" in output, "First pool task name should be in the output"
-    assert "Second Pool" in output, "Second pool task name should be in the output"
+
+def test_run_pool_exit_shuts_down_owned_pool():
+    with patch(f"{_module}.{max_run_count_for_workers.__name__}", return_value=10):
+        rp = run_pool(task_name="test", pool_thread_count=8, max_concurrent_submits=2)
+
+    real_pool = rp.pool
+    mock_pool = MagicMock(spec=ThreadPoolExecutor)
+    rp.pool = mock_pool
+    real_pool.shutdown(wait=False)
+
+    mock_task = MagicMock(spec=new_task)
+    rp._task = mock_task
+    rp._event.set()
+
+    rp.__exit__(None, None, None)
+
+    mock_pool.shutdown.assert_called_once_with(wait=True)
+    mock_task.__exit__.assert_called_once_with(None, None, None)
+
+
+def test_run_pool_exit_no_submits_does_not_block():
+    """__exit__ returns immediately when no tasks were submitted."""
+    mock_pool = MagicMock(spec=ThreadPoolExecutor)
+    mock_pool._max_workers = 20
+    with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
+        rp = run_pool(task_name="no-submits", max_concurrent_submits=2, threads_used_per_submit=4)
+
+    mock_task = MagicMock(spec=new_task)
+    rp._task = mock_task
+
+    completed = False
+
+    def call_exit():
+        nonlocal completed
+        rp.__exit__(None, None, None)
+        completed = True
+
+    t = Thread(target=call_exit)
+    t.start()
+    t.join(timeout=2)
+    assert completed, "__exit__ blocked despite no submits"
+
+
+def test_run_pool_max_concurrent_submits_one():
+    """max_concurrent_submits=1 must not deadlock on the first submit."""
+    results: list[str] = []
+
+    def task_fn():
+        results.append("done")
+        return "ok"
+
+    mock_pool = MagicMock(spec=ThreadPoolExecutor)
+    mock_pool._max_workers = 20
+    mock_pool.submit = MagicMock(side_effect=lambda fn, *a, **kw: _immediate_future(fn, *a, **kw))
+
+    with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
+        rp = run_pool(task_name="single", total=1, max_concurrent_submits=1, threads_used_per_submit=4, sleep_time=0.01)
+
+    completed = False
+
+    def do_submit():
+        nonlocal completed
+        mock_task = MagicMock(spec=new_task)
+        rp._task = mock_task
+        with patch(f"{_module}.{wait_if_many_runs.__name__}"):
+            rp.submit(task_fn)
+        rp.__exit__(None, None, None)
+        completed = True
+
+    t = Thread(target=do_submit)
+    t.start()
+    t.join(timeout=5)
+    assert completed, "submit() with max_concurrent_submits=1 deadlocked"
+    assert results == ["done"]
+
+
+def _immediate_future(fn, *args, **kwargs):
+    """Run fn synchronously and return a resolved Future with done callbacks."""
+    fut = Future()
+    try:
+        result = fn(*args, **kwargs)
+        fut.set_result(result)
+    except Exception as e:
+        fut.set_exception(e)
+    return fut
