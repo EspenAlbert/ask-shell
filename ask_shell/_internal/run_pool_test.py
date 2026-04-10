@@ -111,6 +111,41 @@ def test_run_pool_submit_and_exit():
     assert results == ["done"]
 
 
+def test_run_pool_multiple_submits_and_exit():
+    """Multiple submit() calls accumulate futures and __exit__ waits for all."""
+    results: list[int] = []
+
+    def task_fn(index: int):
+        results.append(index)
+        return index
+
+    mock_pool = MagicMock(spec=ThreadPoolExecutor)
+    mock_pool._max_workers = 20
+    mock_pool.submit = MagicMock(side_effect=lambda fn, *a, **kw: _immediate_future(fn, *a, **kw))
+
+    with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
+        rp = run_pool(task_name="multi", total=3, max_concurrent_submits=3, threads_used_per_submit=4, sleep_time=0.01)
+
+    completed = False
+
+    def do_submits():
+        nonlocal completed
+        mock_task = MagicMock(spec=new_task)
+        rp._task = mock_task
+        with patch(f"{_module}.{wait_if_many_runs.__name__}"):
+            for i in range(3):
+                rp.submit(task_fn, i)
+        assert len(rp._futures) == 3
+        rp.__exit__(None, None, None)
+        completed = True
+
+    t = Thread(target=do_submits)
+    t.start()
+    t.join(timeout=5)
+    assert completed, "multiple submit() + __exit__ deadlocked"
+    assert sorted(results) == [0, 1, 2]
+
+
 def _immediate_future(fn, *args, **kwargs):
     """Run fn synchronously and return a resolved Future with done callbacks."""
     fut = Future()

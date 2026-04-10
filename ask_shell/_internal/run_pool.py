@@ -112,6 +112,8 @@ class run_pool:
         if futures:
             with handle_interrupt_wait(interrupt_message=f"interrupt in `run_pool` exit method for {self.task_name}"):
                 futures_wait(futures, timeout=self.exit_wait_timeout)
+            with self._lock:
+                self._futures.clear()
 
         if self._owns_pool:
             self.pool.shutdown(wait=True)
