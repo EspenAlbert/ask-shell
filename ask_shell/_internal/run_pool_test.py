@@ -43,7 +43,10 @@ def test_run_pool_exit_shuts_down_owned_pool():
 
     mock_task = MagicMock(spec=new_task)
     rp._task = mock_task
-    rp._event.set()
+
+    done_future = Future()
+    done_future.set_result("ok")
+    rp._futures.append(done_future)
 
     rp.__exit__(None, None, None)
 
@@ -74,8 +77,8 @@ def test_run_pool_exit_no_submits_does_not_block():
     assert completed, "__exit__ blocked despite no submits"
 
 
-def test_run_pool_max_concurrent_submits_one():
-    """max_concurrent_submits=1 must not deadlock on the first submit."""
+def test_run_pool_submit_and_exit():
+    """submit() stores futures and __exit__ waits on them."""
     results: list[str] = []
 
     def task_fn():
@@ -97,13 +100,14 @@ def test_run_pool_max_concurrent_submits_one():
         rp._task = mock_task
         with patch(f"{_module}.{wait_if_many_runs.__name__}"):
             rp.submit(task_fn)
+        assert len(rp._futures) == 1
         rp.__exit__(None, None, None)
         completed = True
 
     t = Thread(target=do_submit)
     t.start()
     t.join(timeout=5)
-    assert completed, "submit() with max_concurrent_submits=1 deadlocked"
+    assert completed, "submit() + __exit__ deadlocked"
     assert results == ["done"]
 
 

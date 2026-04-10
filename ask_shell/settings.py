@@ -102,7 +102,7 @@ class AskShellSettings(StaticSettings):
     )
     ENV_NAME_THREAD_COUNT: ClassVar[str] = f"{ENV_PREFIX}THREAD_COUNT"
     thread_count: int = Field(
-        default=50,
+        default=100,
         alias=ENV_NAME_THREAD_COUNT,
         description="Thread count for ask-shell pool",
     )
