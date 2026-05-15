@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.7.0 2026-05-15T13-30Z
+
+### __Root__
+- New class `ShellRunSummary`
+- `__ROOT__.AskShellSettings`: added optional field 'shell_run_summary' (default: <ShellRunSummary.ALL: 'all'>)
+
+### Shell
+- `shell.ShellConfig`: added optional field 'mute_shell_summary' (default: False)
+- `shell.run`: added optional param 'mute_shell_summary' (default: None)
+- `shell.run_and_wait`: added optional param 'mute_shell_summary' (default: None)
+
+
 ## 0.6.0 2026-04-10T12-44Z
 
 ### __Root__

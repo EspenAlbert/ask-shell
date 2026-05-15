@@ -1,12 +1,12 @@
 pkg_import_name: ask_shell
-version: 0.6.0
+version: 0.7.0
 groups:
 - name: __ROOT__
   symbols:
   - name: AskShellSettings
     module_path: settings
     docstring: ''
-    line_number: 93
+    line_number: 99
     type: class
     mro_bases:
     - StaticSettings
@@ -153,6 +153,41 @@ groups:
       env_vars:
       - ask_shell_run_logs_clean
       - run_logs_clean
+    - name: shell_run_summary
+      type_annotation: ShellRunSummary
+      type_imports:
+      - ask_shell.settings.ShellRunSummary
+      default:
+        value_repr: '<ShellRunSummary.ALL: ''all''>'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - ask_shell_shell_run_summary
+      - shell_run_summary
+  - name: ShellRunSummary
+    module_path: settings
+    docstring: ''
+    line_number: 94
+    type: class
+    mro_bases:
+    - StrEnum
+    - str
+    - ReprEnum
+    - Enum
+    num_direct_bases: 1
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: args
+        kind: var_positional
+        type_imports: []
+      - name: kwds
+        kind: var_keyword
+        type_imports: []
+      return_type_imports: []
 - name: ask
   symbols:
   - name: ChoiceTyped
@@ -902,7 +937,7 @@ groups:
   - name: new_task
     module_path: _internal.rich_progress
     docstring: ''
-    line_number: 162
+    line_number: 168
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -1303,13 +1338,20 @@ groups:
         default:
           value_repr: None
           is_factory: false
+      - name: mute_shell_summary
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
       return_annotation: ShellRun
       return_type_imports:
       - ask_shell._internal.models.ShellRun
   - name: run_and_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 524
+    line_number: 526
     type: function
     signature:
       parameters:
@@ -1496,13 +1538,20 @@ groups:
         default:
           value_repr: None
           is_factory: false
+      - name: mute_shell_summary
+        kind: keyword_only
+        type_annotation: bool | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
       return_annotation: ShellRun
       return_type_imports:
       - ask_shell._internal.models.ShellRun
   - name: run_error
     module_path: _internal._run
     docstring: ''
-    line_number: 589
+    line_number: 593
     type: function
     signature:
       parameters:
@@ -1545,7 +1594,7 @@ groups:
   - name: wait_on_ok_errors
     module_path: _internal._run
     docstring: ''
-    line_number: 596
+    line_number: 600
     type: function
     signature:
       parameters:
@@ -1575,7 +1624,7 @@ groups:
   - name: AbortRetryError
     module_path: _internal.models
     docstring: Raise from should_retry to stop retrying with a custom error.
-    line_number: 523
+    line_number: 526
     type: exception
     mro_bases:
     - Exception
@@ -1803,6 +1852,15 @@ groups:
       is_class_var: false
       is_computed: false
       description: Skip transitive std out/err output, useful for large outputs that are not needed in the logs when running parallel scripts
+    - name: mute_shell_summary
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Skip shell summary logging useful when you want to ✅ or ❌ in the logs
     - name: terminal_width
       type_annotation: int | None
       type_imports: []
@@ -1841,7 +1899,7 @@ groups:
   - name: ShellError
     module_path: _internal.models
     docstring: ''
-    line_number: 487
+    line_number: 490
     type: exception
     mro_bases:
     - Exception
@@ -1868,7 +1926,7 @@ groups:
   - name: ShellRun
     module_path: _internal.models
     docstring: "Stores dynamic behavior. Only created by this file never outside.\n\nArgs:\n    _start_flag: Future[ShellRun]: Flag that is set when the run has both p_open and stdout/stderr reading started. During multiple attempts, only the 1st attempt will call it.\n\n"
-    line_number: 272
+    line_number: 275
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -2106,4 +2164,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-04-10 12:44:48.658077+00:00
+dumped_at: 2026-05-15 13:30:44.661815+00:00

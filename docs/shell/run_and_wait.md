@@ -16,7 +16,7 @@ def run_and_wait(script: ShellConfig | str, timeout: float | None = None, *, all
 
 | Version | Change |
 |---------|--------|
-| unreleased | added optional param 'mute_shell_summary' (default: None) |
+| 0.7.0 | added optional param 'mute_shell_summary' (default: None) |
 | 0.5.1 | added optional param 'retry_max_wait' (default: None) |
 | 0.5.1 | added optional param 'retry_jitter' (default: None) |
 | 0.5.1 | added optional param 'retry_initial_wait' (default: None) |

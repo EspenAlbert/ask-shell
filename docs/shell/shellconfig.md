@@ -79,7 +79,7 @@ class ShellConfig(Entity):
 
 | Version | Change |
 |---------|--------|
-| unreleased | added optional field 'mute_shell_summary' (default: False) |
+| 0.7.0 | added optional field 'mute_shell_summary' (default: False) |
 | 0.5.1 | added optional field 'retry_max_wait' (default: 60) |
 | 0.5.1 | added optional field 'retry_jitter' (default: 5) |
 | 0.5.1 | added optional field 'retry_initial_wait' (default: 5) |

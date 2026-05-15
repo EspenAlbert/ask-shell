@@ -15,7 +15,7 @@
 
 ### class: `ShellRunSummary`
 - [source](../../ask_shell/settings.py#L94)
-> **Since:** unreleased
+> **Since:** 0.7.0
 
 ```python
 class ShellRunSummary(StrEnum):
@@ -26,5 +26,5 @@ class ShellRunSummary(StrEnum):
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.7.0 | Made public |
 <!-- === OK_EDIT: pkg-ext shellrunsummary_def === -->
