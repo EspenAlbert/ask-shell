@@ -8,8 +8,11 @@ from ask_shell._internal.models import (
     ShellRun,
 )
 from ask_shell._internal.rich_live import get_live
+from ask_shell._internal.rich_progress import log_task_done
 from ask_shell._internal.rich_run_state import _RunState
 from ask_shell.settings import ShellRunSummary
+
+_module = _RunState.__module__
 
 
 def test_run_with_output_is_logged_to_console(settings, capture_console, caplog):
@@ -90,7 +93,7 @@ def test_skip_progress_output(settings, capture_console):
         (ShellRunSummary.ALL, 0, True),
     ],
 )
-@patch("ask_shell._internal.rich_run_state.log_task_done")
+@patch(f"{_module}.{log_task_done.__name__}")
 def test_remove_run_respects_shell_run_summary(mock_log_done, settings, summary, exit_code, expect_log):
     cfg = ShellConfig(
         shell_input='echo "x"',
@@ -109,7 +112,7 @@ def test_remove_run_respects_shell_run_summary(mock_log_done, settings, summary,
         mock_log_done.assert_not_called()
 
 
-@patch("ask_shell._internal.rich_run_state.log_task_done")
+@patch(f"{_module}.{log_task_done.__name__}")
 def test_remove_run_mute_shell_summary_skips_log(mock_log_done, settings):
     cfg = ShellConfig(
         shell_input='echo "x"',
@@ -124,3 +127,22 @@ def test_remove_run_mute_shell_summary_skips_log(mock_log_done, settings):
     state.add_run(run)
     state.remove_run(run, error=None)
     mock_log_done.assert_not_called()
+
+
+@patch(f"{_module}.{log_task_done.__name__}")
+def test_remove_run_allow_non_zero_exit_uses_soft_failure(mock_log_done, settings):
+    cfg = ShellConfig(
+        shell_input='echo "x"',
+        settings=settings,
+        allow_non_zero_exit=True,
+    )
+    run = ShellRun(config=cfg)
+    proc = Mock(spec=["returncode"])
+    proc.returncode = 1
+    run.p_open = proc
+    state = _RunState()
+    state.add_run(run)
+    state.remove_run(run, error=None)
+    mock_log_done.assert_called_once()
+    _, kwargs = mock_log_done.call_args
+    assert kwargs["soft_failure"]
