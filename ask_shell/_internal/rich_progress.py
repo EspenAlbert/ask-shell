@@ -47,10 +47,16 @@ def log_task_done(
     error: BaseException | None = None,
     description_override: str | None = None,
     extra_parts: list[str] | None = None,
+    soft_failure: bool = False,
 ):
     exit_comji = "❌" if force_error or error is not None else "✅"
     description = description_override or task.description
-    log_call = logger.info if exit_comji == "✅" else logger.error
+    if exit_comji == "✅":
+        log_call = logger.info
+    elif soft_failure:
+        log_call = logger.warning
+    else:
+        log_call = logger.error
     message_parts = [f"{exit_comji} {description}"]
     if rich_task := task._rich_task:
         if finish_time := rich_task.finished_time:

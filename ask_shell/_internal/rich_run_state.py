@@ -21,6 +21,7 @@ from ask_shell._internal.models import (
     ShellRunEventT,
 )
 from ask_shell._internal.rich_progress import ProgressManager, log_task_done, new_task
+from ask_shell.settings import ShellRunSummary
 
 
 def _deque_default() -> deque[str]:
@@ -144,6 +145,10 @@ class _RunState:
             task.update(stderr=run_info.stderr_str)
         task.__exit__(None, None, None)
         run = run_info.run
+        if run.config.mute_shell_summary:
+            return
+        if run.config.settings.shell_run_summary == ShellRunSummary.ERRORS_ONLY and run.clean_complete:
+            return
         log_task_done(
             task,
             force_error=not run.clean_complete,
@@ -151,4 +156,5 @@ class _RunState:
             extra_parts=[
                 "" if run.current_attempt == 1 else f"attempt {run.current_attempt}",
             ],
+            soft_failure=run.config.allow_non_zero_exit and not run.clean_complete,
         )
