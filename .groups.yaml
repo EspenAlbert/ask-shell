@@ -5,6 +5,7 @@ groups:
   - settings
   owned_refs:
   - settings.AskShellSettings
+  - settings.ShellRunSummary
 - name: ask
   owned_modules:
   - _internal.interactive

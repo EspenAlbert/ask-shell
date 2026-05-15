@@ -1,0 +1,42 @@
+name: ShellRunSummary
+ts: 2026-05-15 13:24:34.831384+00:00
+type: make_public
+details: created in settings.py
+full_path: settings.ShellRunSummary
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-05-15 13:24:35.322058+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''shell_run_summary'' (default: <ShellRunSummary.ALL: ''all''>)'
+field_name: shell_run_summary
+group: __ROOT__
+---
+name: ShellConfig
+ts: 2026-05-15 13:24:35.322069+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''mute_shell_summary'' (default: False)'
+field_name: mute_shell_summary
+group: shell
+---
+name: run
+ts: 2026-05-15 13:24:35.322077+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''mute_shell_summary'' (default: None)'
+field_name: mute_shell_summary
+group: shell
+---
+name: run_and_wait
+ts: 2026-05-15 13:24:35.322079+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''mute_shell_summary'' (default: None)'
+field_name: mute_shell_summary
+group: shell

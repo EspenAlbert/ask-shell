@@ -1,6 +1,7 @@
 import logging
 import os
 from datetime import datetime, timedelta
+from enum import StrEnum
 from functools import cached_property, lru_cache
 from pathlib import Path
 from pydoc import locate
@@ -90,6 +91,11 @@ LogLevelIgnoredCase: TypeAlias = Annotated[
 ]
 
 
+class ShellRunSummary(StrEnum):
+    ALL = "all"
+    ERRORS_ONLY = "errors_only"
+
+
 class AskShellSettings(StaticSettings):
     model_config = ConfigDict(populate_by_name=True)  # type: ignore
     log_level: LogLevelIgnoredCase = "UNSET"
@@ -135,6 +141,11 @@ class AskShellSettings(StaticSettings):
         default="yesterday",
         description="Runs once If `run_logs_dir` is not set. Can be 'yesterday' or a date string like '2023-01-01'. Will clean all logs up until the specified date but not that date itself.",
         alias=f"{ENV_PREFIX}RUN_LOGS_CLEAN",
+    )
+    ENV_NAME_SHELL_RUN_SUMMARY: ClassVar[str] = f"{ENV_PREFIX}SHELL_RUN_SUMMARY"
+    shell_run_summary: ShellRunSummary = Field(
+        default=ShellRunSummary.ALL,
+        alias=ENV_NAME_SHELL_RUN_SUMMARY,
     )
 
     @model_validator(mode="after")

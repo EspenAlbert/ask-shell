@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext askshellsettings_def === -->
 ## class: AskShellSettings
-- [source](../../ask_shell/settings.py#L93)
+- [source](../../ask_shell/settings.py#L99)
 > **Since:** 0.3.0
 
 ```python
@@ -19,6 +19,7 @@ class AskShellSettings(StaticSettings):
     remove_os_secrets: bool = ...
     run_logs_dir: Path | None = None
     run_logs_clean: str = 'yesterday'
+    shell_run_summary: ShellRunSummary = <ShellRunSummary.ALL: 'all'>
 ```
 <!-- === OK_EDIT: pkg-ext askshellsettings_def === -->
 
@@ -69,6 +70,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'shell_run_summary' (default: <ShellRunSummary.ALL: 'all'>) |
 | 0.6.0 | field 'thread_count' default: 50 -> 100 |
 | 0.3.2 | field 'run_logs_dir' default added: None |
 | 0.3.2 | field 'STATIC_DIR' default added: None |

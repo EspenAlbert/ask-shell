@@ -27,7 +27,7 @@
 <a id="shellrun_def"></a>
 
 ### class: `ShellRun`
-- [source](../../ask_shell/_internal/models.py#L272)
+- [source](../../ask_shell/_internal/models.py#L275)
 > **Since:** 0.3.0
 
 ```python
@@ -120,7 +120,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L589)
+- [source](../../ask_shell/_internal/_run.py#L593)
 > **Since:** 0.3.0
 
 ```python
@@ -156,7 +156,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L596)
+- [source](../../ask_shell/_internal/_run.py#L600)
 > **Since:** 0.3.0
 
 ```python
@@ -174,7 +174,7 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 <a id="abortretryerror_def"></a>
 
 ### exception: `AbortRetryError`
-- [source](../../ask_shell/_internal/models.py#L523)
+- [source](../../ask_shell/_internal/models.py#L526)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
 > **Since:** 0.5.0
 

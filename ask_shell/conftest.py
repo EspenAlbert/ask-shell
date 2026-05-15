@@ -79,7 +79,7 @@ def capture_console() -> Console:  # type: ignore
 
 
 def create_run_mocked_config(user_input: bool = False) -> ShellRun:
-    """avoid ShellConfig validation erro"""
+    mock_settings = AskShellSettings.for_testing(global_callback_strings=[], remove_os_secrets=False)
     return ShellRun(
         config=Mock(
             spec=ShellConfig,
@@ -88,5 +88,8 @@ def create_run_mocked_config(user_input: bool = False) -> ShellRun:
             print_prefix="Mocked Run",
             shell_input="echo 'Mocked Run Output'",
             skip_progress_output=False,
+            mute_shell_summary=False,
+            allow_non_zero_exit=False,
+            settings=mock_settings,
         )
     )

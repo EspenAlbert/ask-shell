@@ -172,6 +172,9 @@ class ShellConfig(Entity):
         default=False,
         description="Skip transitive std out/err output, useful for large outputs that are not needed in the logs when running parallel scripts",
     )
+    mute_shell_summary: bool = Field(
+        default=False, description="Skip shell summary logging useful when you want to ✅ or ❌ in the logs"
+    )
     terminal_width: int | None = 999
 
     # advanced settings
