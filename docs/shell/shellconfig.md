@@ -28,6 +28,7 @@ class ShellConfig(Entity):
     run_log_stem_prefix: str = ''
     skip_html_log_files: bool = False
     skip_progress_output: bool = False
+    mute_shell_summary: bool = False
     terminal_width: int | None = 999
     is_binary_call: bool = None
     settings: AskShellSettings = ...
@@ -78,6 +79,7 @@ class ShellConfig(Entity):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'mute_shell_summary' (default: False) |
 | 0.5.1 | added optional field 'retry_max_wait' (default: 60) |
 | 0.5.1 | added optional field 'retry_jitter' (default: 5) |
 | 0.5.1 | added optional field 'retry_initial_wait' (default: 5) |
