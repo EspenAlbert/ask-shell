@@ -10,7 +10,7 @@ from rich.text import Text
 
 from ask_shell import console as ask_console
 from ask_shell.console import RemoveLivePart, interactive_shell
-from ask_shell.shell_events import ShellRunStdOutput
+from ask_shell.shell_events import ShellRunCallbackT, ShellRunStdOutput
 
 logger = logging.getLogger(__name__)
 
@@ -163,12 +163,15 @@ class PlanStreamHandler:
 def _resource_addr(data: dict) -> str | None:
     hook = data.get("hook") or {}
     resource = hook.get("resource") or {}
-    addr = resource.get("addr")
-    return addr if isinstance(addr, str) else None
+    match resource.get("addr"):
+        case str(addr):
+            return addr
+        case _:
+            return None
 
 
-def plan_stream_callback(handler: PlanStreamHandler):
-    def callback(message) -> bool:
+def plan_stream_callback(handler: PlanStreamHandler) -> ShellRunCallbackT:
+    def callback(message: object) -> bool:
         match message:
             case ShellRunStdOutput(is_stdout=True, content=content):
                 handler.feed_line(content)

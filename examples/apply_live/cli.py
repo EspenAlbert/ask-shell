@@ -5,9 +5,9 @@ from pathlib import Path
 
 import typer
 
+from apply_live.stream_handler import PlanStreamHandler, plan_stream_callback
 from ask_shell import console
 from ask_shell.shell import run_and_wait
-from apply_live.stream_handler import PlanStreamHandler, plan_stream_callback
 
 logger = logging.getLogger(__name__)
 
