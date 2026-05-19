@@ -41,6 +41,11 @@ examples_include = [
   "AbortRetryError",
 ]
 
+[tool.pkg-ext.groups.console]
+examples_include = [
+  "add_renderable",
+]
+
 
 # === DO_NOT_EDIT: path-sync ruff ===
 [tool.ruff]
@@ -58,6 +63,9 @@ target-version = "py313"
 extend-ignore = ["E501", "UP006", "UP007", "UP035", "UP040", "UP046", "UP047"]
 extend-select = ["Q", "RUF100", "C90", "UP", "I", "T", "FURB"]
 # === OK_EDIT: path-sync ruff ===
+
+[tool.ruff.lint.isort]
+known-first-party = ["ask_shell"]
 
 # === DO_NOT_EDIT: path-sync pytest ===
 [tool.pytest.ini_options]

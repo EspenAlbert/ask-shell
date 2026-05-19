@@ -1,0 +1,40 @@
+name: run
+ts: 2026-05-19 09:57:42.377983+00:00
+type: breaking_change
+auto_generated: true
+change_kind: param_type_changed
+details: 'param ''message_callbacks'' type: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None -> list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None'
+field_name: message_callbacks
+group: shell
+---
+name: run_and_wait
+ts: 2026-05-19 09:57:42.378001+00:00
+type: breaking_change
+auto_generated: true
+change_kind: param_type_changed
+details: 'param ''message_callbacks'' type: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None -> list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None'
+field_name: message_callbacks
+group: shell
+---
+name: resolve_terminal_dimensions
+ts: 2026-05-19 10:33:13.554374+00:00
+type: keep_private
+full_path: _internal._run_env.resolve_terminal_dimensions
+---
+name: AskShellSettings
+ts: 2026-05-19 10:33:13.999068+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''terminal_height'' (default: 40)'
+field_name: terminal_height
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-05-19 10:33:13.999077+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''terminal_width'' (default: 120)'
+field_name: terminal_width
+group: __ROOT__

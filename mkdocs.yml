@@ -22,7 +22,10 @@ nav:
     - SelectOptions: ask/selectoptions.md
     - question_patcher: ask/question_patcher.md
     - raise_on_question: ask/raise_on_question.md
-  - console: console/index.md
+  - console:
+    - Overview: console/index.md
+    - Examples:
+      - add_renderable: examples/console/add_renderable.md
   - shell:
     - Overview: shell/index.md
     - ShellConfig: shell/shellconfig.md

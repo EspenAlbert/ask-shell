@@ -34,6 +34,7 @@ from zero_3rdparty.future import add_done_callback, add_error_logging, chain_fut
 from ask_shell._internal.events import (
     ShellRunAfter,
     ShellRunBefore,
+    ShellRunCallbackT,
     ShellRunPOpenStarted,
     ShellRunRetryAttempt,
     ShellRunStdOutput,
@@ -45,7 +46,6 @@ from ask_shell._internal.models import (
     RunIncompleteError,
     ShellConfig,
     ShellRun,
-    ShellRunEventT,
     ShellRunQueueT,
 )
 from ask_shell.settings import AskShellSettings, _global_settings
@@ -467,7 +467,7 @@ def run(
     env: dict[str, str] | None = None,
     extra_popen_kwargs: dict | None = None,
     is_binary_call: bool | None = None,
-    message_callbacks: list[Callable[[ShellRunEventT], bool]] | None = None,
+    message_callbacks: list[ShellRunCallbackT] | None = None,
     print_prefix: str | None = None,
     retry_initial_wait: float | None = None,
     retry_jitter: float | None = None,
@@ -534,7 +534,7 @@ def run_and_wait(
     env: dict[str, str] | None = None,
     extra_popen_kwargs: dict | None = None,
     is_binary_call: bool | None = None,
-    message_callbacks: list[Callable[[ShellRunEventT], bool]] | None = None,
+    message_callbacks: list[ShellRunCallbackT] | None = None,
     print_prefix: str | None = None,
     retry_initial_wait: float | None = None,
     retry_jitter: float | None = None,

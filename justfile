@@ -80,3 +80,6 @@ vulture:
 # === OK_EDIT: path-sync vulture ===
 
 # Custom recipes below
+
+apply-live:
+  PYTHONPATH=examples uv run python -m apply_live.cli

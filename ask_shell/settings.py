@@ -147,6 +147,10 @@ class AskShellSettings(StaticSettings):
         default=ShellRunSummary.ALL,
         alias=ENV_NAME_SHELL_RUN_SUMMARY,
     )
+    ENV_NAME_TERMINAL_WIDTH: ClassVar[str] = f"{ENV_PREFIX}TERMINAL_WIDTH"
+    terminal_width: int = Field(default=120, alias=ENV_NAME_TERMINAL_WIDTH)
+    ENV_NAME_TERMINAL_HEIGHT: ClassVar[str] = f"{ENV_PREFIX}TERMINAL_HEIGHT"
+    terminal_height: int = Field(default=40, alias=ENV_NAME_TERMINAL_HEIGHT)
 
     @model_validator(mode="after")
     def ensure_vars_set(self) -> Self:

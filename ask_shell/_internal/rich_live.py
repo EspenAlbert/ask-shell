@@ -13,6 +13,8 @@ from rich.style import Style
 from zero_3rdparty.error import error_and_traceback
 from zero_3rdparty.id_creator import simple_id
 
+from ask_shell._internal._run_env import resolve_terminal_dimensions
+
 _live: Live | None = None
 _lock = RLock()
 
@@ -61,13 +63,20 @@ def _console_hook(func: Callable) -> Callable:
     return wrapper
 
 
+def _live_console() -> Console:
+    width, height = resolve_terminal_dimensions()
+    if width is not None and height is not None:
+        return Console(width=width, height=height)
+    return Console()
+
+
 def get_live() -> Live:
     global _live
     if _live is not None:
         return _live
     with _lock:
         if _live is None:
-            _live = Live(transient=True)
+            _live = Live(transient=True, console=_live_console())
             live_render = _live._live_render
             old_console = live_render.__rich_console__
             live_render.__rich_console__ = _console_hook(old_console)
