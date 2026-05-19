@@ -138,6 +138,7 @@ When the console is not interactive, Rich's `Live.process_renderables` does not 
 GitHub Actions streams a step's log by line. A long shell command whose only signal is an `add_renderable` panel produces no stdout, so the step appears stalled until it exits. Mitigations, in order of impact:
 
 - **Set `PYTHONUNBUFFERED=1`** in the workflow `env`. Without it, Python falls back to block buffering when stdout is not a TTY and short bursts of output may sit in the buffer for minutes.
+- **Terminal width in CI**: when `interactive_shell()` is false, ask-shell uses `ASK_SHELL_TERMINAL_WIDTH` and `ASK_SHELL_TERMINAL_HEIGHT` (defaults `120` and `40`) for the shared Rich console. Rich ignores a lone `width`; both must be set.
 - **Mirror the dynamic state into `print_to_live` or `logger.info`** on a heartbeat (every few seconds). The renderable still drives the local UX; the heartbeat keeps the CI stream alive. The apply-live demo uses `logger.info("refresh: N complete, M in progress (…)")` when `interactive_shell()` is false.
 - **Set `log_updates=True` on `new_task`** when you want every `task.update(...)` call to emit a log line.
 - **Set `include_log_time=True` on `ShellConfig`** so each captured shell line carries a `[hh:mm:ss]` prefix. Stalls become easier to spot in CI output.

@@ -35,3 +35,12 @@ def interactive_shell() -> bool:
         logger.debug(f"Interactive shell not available: {non_interactive_reason}")
         return False
     return True
+
+
+def resolve_terminal_dimensions(
+    settings: AskShellSettings | None = None,
+) -> tuple[int | None, int | None]:
+    if interactive_shell():
+        return None, None
+    settings = settings or AskShellSettings.from_env()
+    return settings.terminal_width, settings.terminal_height
