@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.7.0
+version: 0.8.0
 groups:
 - name: __ROOT__
   symbols:
@@ -165,6 +165,28 @@ groups:
       env_vars:
       - ask_shell_shell_run_summary
       - shell_run_summary
+    - name: terminal_width
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '120'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - ask_shell_terminal_width
+      - terminal_width
+    - name: terminal_height
+      type_annotation: int
+      type_imports: []
+      default:
+        value_repr: '40'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      env_vars:
+      - ask_shell_terminal_height
+      - terminal_height
   - name: ShellRunSummary
     module_path: settings
     docstring: ''
@@ -688,7 +710,7 @@ groups:
   - name: RemoveLivePart
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 148
+    line_number: 157
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -707,7 +729,7 @@ groups:
   - name: add_renderable
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 152
+    line_number: 161
     type: function
     signature:
       parameters:
@@ -737,7 +759,7 @@ groups:
   - name: get_live_console
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 170
+    line_number: 179
     type: function
     signature:
       parameters: []
@@ -747,7 +769,7 @@ groups:
   - name: log_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 210
+    line_number: 219
     type: function
     signature:
       parameters:
@@ -825,7 +847,7 @@ groups:
   - name: print_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 174
+    line_number: 183
     type: function
     signature:
       parameters:
@@ -1219,7 +1241,7 @@ groups:
           is_factory: false
       - name: message_callbacks
         kind: keyword_only
-        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None
+        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None
         type_imports: []
         default:
           value_repr: None
@@ -1419,7 +1441,7 @@ groups:
           is_factory: false
       - name: message_callbacks
         kind: keyword_only
-        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None
+        type_annotation: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None
         type_imports: []
         default:
           value_repr: None
@@ -2164,4 +2186,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-05-15 13:30:44.661815+00:00
+dumped_at: 2026-05-19 10:48:45.921692+00:00

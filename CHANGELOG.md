@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.8.0 2026-05-19T10-48Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added optional field 'terminal_height' (default: 40)
+- `__ROOT__.AskShellSettings`: added optional field 'terminal_width' (default: 120)
+
+### Shell
+- BREAKING `shell.run`: param 'message_callbacks' type: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None -> list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None
+- BREAKING `shell.run_and_wait`: param 'message_callbacks' type: list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool]] | None -> list[Callable[[ShellRunBefore | ShellRunPOpenStarted | ShellRunStdStarted | ShellRunStdReadError | ShellRunStdOutput | ShellRunRetryAttempt | ShellRunAfter], bool | None]] | None
+
+
 ## 0.7.0 2026-05-15T13-30Z
 
 ### __Root__
