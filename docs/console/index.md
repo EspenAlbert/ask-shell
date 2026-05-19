@@ -22,7 +22,7 @@
 <a id="removelivepart_def"></a>
 
 ### class: `RemoveLivePart`
-- [source](../../ask_shell/_internal/rich_live.py#L148)
+- [source](../../ask_shell/_internal/rich_live.py#L157)
 > **Since:** 0.3.0
 
 ```python
@@ -40,7 +40,7 @@ class RemoveLivePart:
 <a id="add_renderable_def"></a>
 
 ### function: `add_renderable`
-- [source](../../ask_shell/_internal/rich_live.py#L152)
+- [source](../../ask_shell/_internal/rich_live.py#L161)
 - [Example: Mount a dynamic Rich renderable in ask-shell's live region with add_renderable, plus an apply-live demo with CI heartbeats](../examples/console/add_renderable.md)
 > **Since:** 0.3.0
 
@@ -77,7 +77,7 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 <a id="get_live_console_def"></a>
 
 ### function: `get_live_console`
-- [source](../../ask_shell/_internal/rich_live.py#L170)
+- [source](../../ask_shell/_internal/rich_live.py#L179)
 > **Since:** 0.3.0
 
 ```python
@@ -113,7 +113,7 @@ def interactive_shell() -> bool:
 <a id="log_to_live_def"></a>
 
 ### function: `log_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L210)
+- [source](../../ask_shell/_internal/rich_live.py#L219)
 > **Since:** 0.3.0
 
 ```python
@@ -167,7 +167,7 @@ class new_task:
 <a id="print_to_live_def"></a>
 
 ### function: `print_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L174)
+- [source](../../ask_shell/_internal/rich_live.py#L183)
 > **Since:** 0.3.0
 
 ```python

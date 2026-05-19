@@ -20,6 +20,8 @@ class AskShellSettings(StaticSettings):
     run_logs_dir: Path | None = None
     run_logs_clean: str = 'yesterday'
     shell_run_summary: ShellRunSummary = <ShellRunSummary.ALL: 'all'>
+    terminal_width: int = 120
+    terminal_height: int = 40
 ```
 <!-- === OK_EDIT: pkg-ext askshellsettings_def === -->
 
@@ -70,6 +72,8 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'terminal_width' (default: 120) |
+| unreleased | added optional field 'terminal_height' (default: 40) |
 | 0.7.0 | added optional field 'shell_run_summary' (default: <ShellRunSummary.ALL: 'all'>) |
 | 0.6.0 | field 'thread_count' default: 50 -> 100 |
 | 0.3.2 | field 'run_logs_dir' default added: None |
