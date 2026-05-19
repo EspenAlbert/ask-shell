@@ -107,3 +107,12 @@ docs = [
   "mkdocs-material>=9.5",
 ]
 # === OK_EDIT: path-sync docs ===
+# === DO_NOT_EDIT: path-sync wheel ===
+[tool.hatch.build.targets.wheel]
+exclude = [
+  "*_examples.py",
+  "*_test.py",
+  "conftest.py",
+  "*_test/",
+]
+# === OK_EDIT: path-sync wheel ===
