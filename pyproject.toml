@@ -41,6 +41,11 @@ examples_include = [
   "AbortRetryError",
 ]
 
+[tool.pkg-ext.groups.console]
+examples_include = [
+  "add_renderable",
+]
+
 
 # === DO_NOT_EDIT: path-sync ruff ===
 [tool.ruff]

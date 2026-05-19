@@ -41,6 +41,7 @@ class RemoveLivePart:
 
 ### function: `add_renderable`
 - [source](../../ask_shell/_internal/rich_live.py#L152)
+- [Example: Mount a dynamic Rich renderable in ask-shell's live region with add_renderable, plus an apply-live demo with CI heartbeats](../examples/console/add_renderable.md)
 > **Since:** 0.3.0
 
 ```python
