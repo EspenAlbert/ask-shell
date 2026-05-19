@@ -3,7 +3,13 @@ from pathlib import Path
 import pytest
 from pytest_examples import CodeExample, EvalExample, find_examples
 
-EXAMPLES_DIR = Path(__file__).parent.parent / "docs" / "examples"
+PACKAGE_ROOT = Path(__file__).parent.parent
+EXAMPLES_DIR = PACKAGE_ROOT / "docs" / "examples"
+
+
+@pytest.fixture(autouse=True)
+def _examples_package_cwd(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.chdir(PACKAGE_ROOT)
 
 
 @pytest.mark.parametrize("example", find_examples(EXAMPLES_DIR), ids=str)
