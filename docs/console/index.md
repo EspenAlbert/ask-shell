@@ -7,6 +7,7 @@
 - [`RemoveLivePart`](#removelivepart_def)
 - [`add_renderable`](#add_renderable_def)
 - [`configure_logging`](#configure_logging_def)
+- [`disable_interactive_shell`](#disable_interactive_shell_def)
 - [`get_live_console`](#get_live_console_def)
 - [`interactive_shell`](#interactive_shell_def)
 - [`log_to_live`](#log_to_live_def)
@@ -95,7 +96,7 @@ def get_live_console() -> Console:
 <a id="interactive_shell_def"></a>
 
 ### function: `interactive_shell`
-- [source](../../ask_shell/_internal/_run_env.py#L27)
+- [source](../../ask_shell/_internal/_run_env.py#L28)
 > **Since:** 0.3.0
 
 ```python
@@ -181,3 +182,23 @@ def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style 
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext print_to_live_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext disable_interactive_shell_def === -->
+<a id="disable_interactive_shell_def"></a>
+
+### function: `disable_interactive_shell`
+- [source](../../ask_shell/_internal/_run_env.py#L47)
+> **Since:** unreleased
+
+```python
+def disable_interactive_shell() -> None:
+    ...
+```
+
+Force non-interactive mode for the remainder of this process.
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext disable_interactive_shell_def === -->

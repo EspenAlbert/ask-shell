@@ -33,6 +33,7 @@ groups:
   - _internal.rich_progress
   - _internal.typer_command
   owned_refs:
+  - _internal._run_env.disable_interactive_shell
   - _internal._run_env.interactive_shell
   - _internal.rich_live.RemoveLivePart
   - _internal.rich_live.add_renderable

@@ -8,10 +8,24 @@ from ask_shell.settings import AskShellSettings
 
 
 @pytest.fixture(autouse=True)
-def _clear_interactive_cache():
+def _clear_interactive_cache(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.delenv(AskShellSettings.ENV_NAME_DISABLE_INTERACTIVE_SHELL, raising=False)
+    monkeypatch.delenv(AskShellSettings.ENV_NAME_FORCE_INTERACTIVE_SHELL, raising=False)
     interactive_shell.cache_clear()
     yield
+    monkeypatch.delenv(AskShellSettings.ENV_NAME_DISABLE_INTERACTIVE_SHELL, raising=False)
+    monkeypatch.delenv(AskShellSettings.ENV_NAME_FORCE_INTERACTIVE_SHELL, raising=False)
     interactive_shell.cache_clear()
+
+
+def test_disable_interactive_shell_forces_non_interactive(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_FORCE_INTERACTIVE_SHELL, "true")
+    interactive_shell.cache_clear()
+    assert interactive_shell()
+
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_DISABLE_INTERACTIVE_SHELL, "true")
+    interactive_shell.cache_clear()
+    assert not interactive_shell()
 
 
 def test_resolve_terminal_dimensions_interactive():

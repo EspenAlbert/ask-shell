@@ -12,6 +12,7 @@ class AskShellSettings(StaticSettings):
     SKIP_APP_NAME: bool = False
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
+    disable_interactive_shell: bool = False
     thread_count: int = 100
     thread_pool_full_wait_time_seconds: float = 5
     search_enabled_after_choices: int = 7
@@ -72,6 +73,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'disable_interactive_shell' (default: False) |
 | 0.8.0 | added optional field 'terminal_width' (default: 120) |
 | 0.8.0 | added optional field 'terminal_height' (default: 40) |
 | 0.7.0 | added optional field 'shell_run_summary' (default: <ShellRunSummary.ALL: 'all'>) |
