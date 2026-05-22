@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.8.0
+version: 0.9.0
 groups:
 - name: __ROOT__
   symbols:
@@ -68,6 +68,18 @@ groups:
       env_vars:
       - ask_shell_force_interactive_shell
       - force_interactive_shell
+    - name: disable_interactive_shell
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Force non-interactive mode for long-running servers and automation
+      env_vars:
+      - ask_shell_disable_interactive_shell
+      - disable_interactive_shell
     - name: thread_count
       type_annotation: int
       type_imports: []
@@ -698,10 +710,19 @@ groups:
       return_type_imports: []
 - name: console
   symbols:
+  - name: disable_interactive_shell
+    module_path: _internal._run_env
+    docstring: Force non-interactive mode for the remainder of this process.
+    line_number: 47
+    type: function
+    signature:
+      parameters: []
+      return_annotation: None
+      return_type_imports: []
   - name: interactive_shell
     module_path: _internal._run_env
     docstring: ''
-    line_number: 27
+    line_number: 28
     type: function
     signature:
       parameters: []
@@ -2186,4 +2207,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-05-19 10:48:45.921692+00:00
+dumped_at: 2026-05-22 13:15:26.575842+00:00

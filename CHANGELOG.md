@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0 2026-05-22T13-15Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added optional field 'disable_interactive_shell' (default: False)
+
+### Console
+- New function `disable_interactive_shell`
+
+
 ## 0.8.0 2026-05-19T10-48Z
 
 ### __Root__

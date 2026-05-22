@@ -187,7 +187,7 @@ def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style 
 
 ### function: `disable_interactive_shell`
 - [source](../../ask_shell/_internal/_run_env.py#L47)
-> **Since:** unreleased
+> **Since:** 0.9.0
 
 ```python
 def disable_interactive_shell() -> None:
@@ -200,5 +200,5 @@ Force non-interactive mode for the remainder of this process.
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.9.0 | Made public |
 <!-- === OK_EDIT: pkg-ext disable_interactive_shell_def === -->
