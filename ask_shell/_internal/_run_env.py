@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 from functools import lru_cache
 from os import getenv
@@ -26,7 +27,13 @@ def _not_interactive_reason() -> str:
 
 @lru_cache
 def interactive_shell() -> bool:
-    if AskShellSettings.from_env().force_interactive_shell:
+    settings = AskShellSettings.from_env()
+    if settings.disable_interactive_shell:
+        logger.debug(
+            f"Interactive shell disabled by environment variable {settings.ENV_NAME_DISABLE_INTERACTIVE_SHELL}"
+        )
+        return False
+    if settings.force_interactive_shell:
         logger.debug(
             f"Interactive shell forced by environment variable {_global_settings.ENV_NAME_FORCE_INTERACTIVE_SHELL}"
         )
@@ -35,6 +42,12 @@ def interactive_shell() -> bool:
         logger.debug(f"Interactive shell not available: {non_interactive_reason}")
         return False
     return True
+
+
+def disable_interactive_shell() -> None:
+    """Force non-interactive mode for the remainder of this process."""
+    os.environ[AskShellSettings.ENV_NAME_DISABLE_INTERACTIVE_SHELL] = "true"
+    interactive_shell.cache_clear()
 
 
 def resolve_terminal_dimensions(

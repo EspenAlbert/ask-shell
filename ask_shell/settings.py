@@ -106,6 +106,12 @@ class AskShellSettings(StaticSettings):
         alias=ENV_NAME_FORCE_INTERACTIVE_SHELL,
         description="Useful for testing",
     )
+    ENV_NAME_DISABLE_INTERACTIVE_SHELL: ClassVar[str] = f"{ENV_PREFIX}DISABLE_INTERACTIVE_SHELL"
+    disable_interactive_shell: bool = Field(
+        default=False,
+        alias=ENV_NAME_DISABLE_INTERACTIVE_SHELL,
+        description="Force non-interactive mode for long-running servers and automation",
+    )
     ENV_NAME_THREAD_COUNT: ClassVar[str] = f"{ENV_PREFIX}THREAD_COUNT"
     thread_count: int = Field(
         default=100,
