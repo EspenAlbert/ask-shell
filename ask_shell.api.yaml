@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.9.0
+version: 0.9.1
 groups:
 - name: __ROOT__
   symbols:
@@ -1201,7 +1201,7 @@ groups:
   - name: run
     module_path: _internal._run
     docstring: ''
-    line_number: 460
+    line_number: 451
     type: function
     signature:
       parameters:
@@ -1394,7 +1394,7 @@ groups:
   - name: run_and_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 526
+    line_number: 517
     type: function
     signature:
       parameters:
@@ -1594,7 +1594,7 @@ groups:
   - name: run_error
     module_path: _internal._run
     docstring: ''
-    line_number: 593
+    line_number: 584
     type: function
     signature:
       parameters:
@@ -1637,7 +1637,7 @@ groups:
   - name: wait_on_ok_errors
     module_path: _internal._run
     docstring: ''
-    line_number: 600
+    line_number: 591
     type: function
     signature:
       parameters:
@@ -2207,4 +2207,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-05-22 13:15:26.575842+00:00
+dumped_at: 2026-05-29 10:46:42.794159+00:00

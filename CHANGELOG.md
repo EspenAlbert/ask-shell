@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.1 2026-05-29T10-46Z
+
+### Shell
+- fix(shell): Preserve verbatim stdout in log files and ShellRun.stdout [fd183d](https://github.com/EspenAlbert/ask-shell/commit/fd183d)
+
+
 ## 0.9.0 2026-05-22T13-15Z
 
 ### __Root__

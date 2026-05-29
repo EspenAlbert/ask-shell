@@ -15,3 +15,8 @@ group: ''
 ignored: true
 message: 'fix(shell): Strip ANSI from log files while preserving line structure'
 short_sha: 178a3e
+---
+name: 0.9.1
+ts: 2026-05-29 10:46:42.860238+00:00
+type: release
+old_version: 0.9.0
