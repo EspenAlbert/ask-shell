@@ -443,14 +443,14 @@ class ShellRun:
         stream: Literal["stdout", "stderr"] = "stdout",
     ) -> OutputT:
         """Raises EmptyOutputError if the output is empty."""
-        stream_content = self.stdout_one_line if stream == "stdout" else self.stderr_one_line
-        if not stream_content:
+        content = self.stdout if stream == "stdout" else self.stderr
+        if not content:
             raise EmptyOutputError(self, stream=stream)
-        elif output_t is list:
-            return parse.parse_list(stream_content, output_format)  # type: ignore
-        elif output_t is dict:
-            return parse.parse_dict(stream_content, output_format)  # type: ignore
-        return parse.parse_model(stream_content, t=output_t, format=output_format)
+        if output_t is list:
+            return parse.parse_list(content, output_format)  # type: ignore
+        if output_t is dict:
+            return parse.parse_dict(content, output_format)  # type: ignore
+        return parse.parse_model(content, t=output_t, format=output_format)
 
     @property
     def stderr(self) -> str:

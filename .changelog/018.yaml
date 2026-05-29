@@ -1,0 +1,17 @@
+name: shell
+ts: 2026-05-29 10:44:55.250512+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(shell): Preserve verbatim stdout in log files and ShellRun.stdout'
+group: shell
+message: 'fix(shell): Preserve verbatim stdout in log files and ShellRun.stdout'
+short_sha: fd183d
+---
+name: ''
+ts: 2026-05-29 10:45:00.098257+00:00
+type: fix
+author: Espen Albert
+group: ''
+ignored: true
+message: 'fix(shell): Strip ANSI from log files while preserving line structure'
+short_sha: 178a3e
