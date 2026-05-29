@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import atexit
+import io
 import logging
 import os
 import random
@@ -25,9 +26,7 @@ from pathlib import Path
 from typing import IO, Any, Callable
 
 from model_lib import fields
-from rich.ansi import AnsiDecoder
 from rich.console import Console
-from rich.errors import MarkupError
 from zero_3rdparty.error import as_str_traceback
 from zero_3rdparty.future import add_done_callback, add_error_logging, chain_future
 
@@ -231,40 +230,25 @@ def _read_until_complete(
     config: ShellConfig,
     is_stdout: bool,
 ):
-    with output_path.open("w") as f:
-        console = Console(
-            file=f,
-            record=True,
-            log_path=False,
-            soft_wrap=True,
-            log_time=config.include_log_time,
-            width=config.terminal_width,
-            markup=config.ansi_content,
-        )
-        on_console_ready(console)
-        old_write = f.write
+    record_console = Console(
+        file=io.StringIO(),
+        record=True,
+        log_path=False,
+        log_time=config.include_log_time,
+        width=config.terminal_width,
+        markup=config.ansi_content,
+    )
+    on_console_ready(record_console)
 
-        def write_hook(text: str):
-            # choosing to line.strip() as the writing to console will add padding depending on console width
-            text_no_extras = [line.strip() for line in text.splitlines()]
-            return old_write("\n".join(text_no_extras))
+    with output_path.open("w") as log_file:
 
-        decoder = AnsiDecoder()
+        def emit_line(line: str):
+            log_file.write(line)
+            record_console.print(line, end="", overflow="ignore", crop=False, soft_wrap=False)
+            on_line(line)
 
-        def write_hook_ansi(text: str):
-            try:
-                plain_text = "\n".join(decoder.decode_line(line).plain.strip() for line in text.splitlines())
-            except MarkupError:
-                return old_write(text)
-            return old_write(plain_text)
-
-        f.write = write_hook_ansi if config.ansi_content else write_hook
         if config.user_input:
             out_stream = sys.stdout if is_stdout else sys.stderr
-
-            def _on_line(line: str):
-                console.log(line, end="")
-                on_line(line)
 
             def _on_char(char: str):
                 out_stream.write(char)
@@ -272,13 +256,12 @@ def _read_until_complete(
 
             _stream_one_character_at_a_time(
                 stream,
-                on_line=_on_line,
+                on_line=emit_line,
                 on_char=_on_char,
             )
         else:
             for line in iter(stream.readline, ""):
-                console.log(line, end="")
-                on_line(line)
+                emit_line(line)
 
 
 def _run(

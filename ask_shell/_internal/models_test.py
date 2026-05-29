@@ -52,3 +52,19 @@ def test_parse_output_list(tmp_path):
 def test_parse_output_raise_output_error_on_empty(tmp_path):
     with pytest.raises(EmptyOutputError, match="No output in stdout for"):
         run_and_wait(ShellConfig(shell_input="echo ''", cwd=tmp_path)).parse_output(dict)
+
+
+def test_stdout_verbatim_long_json(tmp_path):
+    script_path = tmp_path / "emit_json.py"
+    script_path.write_text('import json\nprint(json.dumps({"key": "x" * 3000}))\n')
+    run = run_and_wait(
+        ShellConfig(shell_input=f"python3 {script_path}", cwd=tmp_path, skip_binary_check=True),
+    )
+    assert "x" * 3000 in run.stdout
+    assert run.stdout.count("\n") <= 1
+    assert run.parse_output(dict) == {"key": "x" * 3000}
+
+
+def test_stdout_preserves_multiline(tmp_path):
+    run = run_and_wait(ShellConfig(shell_input="printf 'line1\\nline2\\n'", cwd=tmp_path))
+    assert run.stdout.splitlines() == ["line1", "line2"]
