@@ -120,7 +120,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L593)
+- [source](../../ask_shell/_internal/_run.py#L584)
 > **Since:** 0.3.0
 
 ```python
@@ -156,7 +156,7 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L600)
+- [source](../../ask_shell/_internal/_run.py#L591)
 > **Since:** 0.3.0
 
 ```python
