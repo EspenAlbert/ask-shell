@@ -26,6 +26,7 @@ from pathlib import Path
 from typing import IO, Any, Callable
 
 from model_lib import fields
+from rich.ansi import AnsiDecoder
 from rich.console import Console
 from zero_3rdparty.error import as_str_traceback
 from zero_3rdparty.future import add_done_callback, add_error_logging, chain_future
@@ -222,6 +223,12 @@ def _stream_one_character_at_a_time(stream: IO[str], on_line: Callable[[str], No
         on_line(buffer)
 
 
+def _log_line(line: str, *, ansi_content: bool, decoder: AnsiDecoder) -> str:
+    if not ansi_content:
+        return line
+    return decoder.decode_line(line).plain
+
+
 def _read_until_complete(
     stream: IO[str],
     output_path: Path,
@@ -239,11 +246,12 @@ def _read_until_complete(
         markup=config.ansi_content,
     )
     on_console_ready(record_console)
+    ansi_decoder = AnsiDecoder()
 
     with output_path.open("w") as log_file:
 
         def emit_line(line: str):
-            log_file.write(line)
+            log_file.write(_log_line(line, ansi_content=config.ansi_content, decoder=ansi_decoder))
             record_console.print(line, end="", overflow="ignore", crop=False, soft_wrap=False)
             on_line(line)
 

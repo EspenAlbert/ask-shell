@@ -343,7 +343,7 @@ def test_break_of_match_statement_breaks_loop():
 def test_ansi_content(tf_dir):
     output = run_and_wait("terraform init", cwd=tf_dir, ansi_content=True)
     assert "Terraform has been successfully initialized!" in output.stdout
-    assert "\x1b[" in output.stdout
+    assert "\x1b[" not in output.stdout
 
 
 def test_message_callbacks():
