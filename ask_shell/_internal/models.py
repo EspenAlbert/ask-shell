@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextvars
 import logging
 import os
 import platform
@@ -293,6 +294,7 @@ class ShellRun:
     _stderr_log_path: Path | None = field(init=False, default=None)
     _queue: ShellRunQueueT = field(init=False, default_factory=ClosableQueue)
     _lock: RLock = field(init=False, default_factory=RLock)
+    _callback_context: contextvars.Context = field(default_factory=contextvars.copy_context, init=False)
 
     @property
     def has_started(self) -> bool:

@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext run_and_wait_def === -->
 ## function: run_and_wait
-- [source](../../ask_shell/_internal/_run.py#L517)
+- [source](../../ask_shell/_internal/_run.py#L519)
 > **Since:** 0.3.0
 
 ```python

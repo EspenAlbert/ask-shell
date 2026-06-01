@@ -415,10 +415,12 @@ def _execute_run(shell_run: ShellRun) -> ShellRun:
     config = shell_run.config
     queue = shell_run._queue
 
+    ctx = shell_run._callback_context
+
     def queue_consumer():
         for message in queue:
             try:
-                shell_run._on_event(message)
+                ctx.run(shell_run._on_event, message)
             except BaseException as e:
                 logger.warning(f"Error processing message '{type(message).__name__}' for {shell_run}: {e!r}")
                 logger.exception(e)
