@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.9.1
+version: 0.10.0
 groups:
 - name: __ROOT__
   symbols:
@@ -728,10 +728,67 @@ groups:
       parameters: []
       return_annotation: bool
       return_type_imports: []
+  - name: LivePrintContext
+    module_path: _internal.live_print_context
+    docstring: ''
+    line_number: 9
+    type: class
+    mro_bases: []
+    num_direct_bases: 0
+    fields:
+    - name: prefix
+      type_annotation: str
+      type_imports: []
+      default:
+        value_repr: ''''''
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: suppress
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: get_live_print_context
+    module_path: _internal.live_print_context
+    docstring: ''
+    line_number: 18
+    type: function
+    signature:
+      parameters: []
+      return_annotation: LivePrintContext | None
+      return_type_imports:
+      - ask_shell._internal.live_print_context.LivePrintContext
+  - name: live_print_scope
+    module_path: _internal.live_print_context
+    docstring: ''
+    line_number: 22
+    type: function
+    signature:
+      parameters:
+      - name: prefix
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
+      - name: suppress
+        kind: keyword_only
+        type_annotation: bool
+        type_imports: []
+        default:
+          value_repr: 'False'
+          is_factory: false
+      return_annotation: Iterator[None]
+      return_type_imports: []
   - name: RemoveLivePart
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 157
+    line_number: 158
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -750,7 +807,7 @@ groups:
   - name: add_renderable
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 161
+    line_number: 162
     type: function
     signature:
       parameters:
@@ -780,7 +837,7 @@ groups:
   - name: get_live_console
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 179
+    line_number: 180
     type: function
     signature:
       parameters: []
@@ -790,7 +847,7 @@ groups:
   - name: log_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 219
+    line_number: 234
     type: function
     signature:
       parameters:
@@ -868,7 +925,7 @@ groups:
   - name: print_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 183
+    line_number: 195
     type: function
     signature:
       parameters:
@@ -2000,7 +2057,7 @@ groups:
   - name: run_pool
     module_path: _internal.run_pool
     docstring: ''
-    line_number: 28
+    line_number: 29
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -2207,4 +2264,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-05-29 10:46:42.794159+00:00
+dumped_at: 2026-06-01 12:38:42.085471+00:00

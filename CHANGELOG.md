@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.10.0 2026-06-01T12-38Z
+
+### Console
+- New function `get_live_print_context`
+- New function `live_print_scope`
+- New class `LivePrintContext`
+
+
 ## 0.9.1 2026-05-29T10-46Z
 
 ### Shell

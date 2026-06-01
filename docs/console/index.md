@@ -210,7 +210,7 @@ Force non-interactive mode for the remainder of this process.
 
 ### class: `LivePrintContext`
 - [source](../../ask_shell/_internal/live_print_context.py#L9)
-> **Since:** unreleased
+> **Since:** 0.10.0
 
 ```python
 class LivePrintContext:
@@ -220,21 +220,21 @@ class LivePrintContext:
 
 | Field | Type | Default | Since |
 |---|---|---|---|
-| prefix | `str` | `''` | unreleased |
-| suppress | `bool` | `False` | unreleased |
+| prefix | `str` | `''` | 0.10.0 |
+| suppress | `bool` | `False` | 0.10.0 |
 
 ### Changes
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.10.0 | Made public |
 <!-- === OK_EDIT: pkg-ext liveprintcontext_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext get_live_print_context_def === -->
 <a id="get_live_print_context_def"></a>
 
 ### function: `get_live_print_context`
 - [source](../../ask_shell/_internal/live_print_context.py#L18)
-> **Since:** unreleased
+> **Since:** 0.10.0
 
 ```python
 def get_live_print_context() -> LivePrintContext | None:
@@ -245,7 +245,7 @@ def get_live_print_context() -> LivePrintContext | None:
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.10.0 | Made public |
 <!-- === OK_EDIT: pkg-ext get_live_print_context_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext live_print_scope_def === -->
 <a id="live_print_scope_def"></a>
@@ -253,7 +253,7 @@ def get_live_print_context() -> LivePrintContext | None:
 ### function: `live_print_scope`
 - [source](../../ask_shell/_internal/live_print_context.py#L22)
 - [Example: Prefix or suppress live-console scroll lines per scope, including across run_pool workers](../examples/console/live_print_scope.md)
-> **Since:** unreleased
+> **Since:** 0.10.0
 
 ```python
 def live_print_scope(*, prefix: str = '', suppress: bool = False) -> Iterator[None]:
@@ -264,5 +264,5 @@ def live_print_scope(*, prefix: str = '', suppress: bool = False) -> Iterator[No
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.10.0 | Made public |
 <!-- === OK_EDIT: pkg-ext live_print_scope_def === -->
