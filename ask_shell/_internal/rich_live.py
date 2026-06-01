@@ -14,6 +14,7 @@ from zero_3rdparty.error import error_and_traceback
 from zero_3rdparty.id_creator import simple_id
 
 from ask_shell._internal._run_env import resolve_terminal_dimensions
+from ask_shell._internal.live_print_context import get_live_print_context
 
 _live: Live | None = None
 _lock = RLock()
@@ -180,6 +181,17 @@ def get_live_console() -> Console:
     return get_live().console
 
 
+def _objects_for_live_print(*objects: Any) -> tuple[Any, ...] | None:
+    ctx = get_live_print_context()
+    if ctx is None:
+        return objects
+    if ctx.suppress:
+        return None
+    if ctx.prefix:
+        return (ctx.prefix, *objects)
+    return objects
+
+
 def print_to_live(
     *objects: Any,
     sep: str = " ",
@@ -197,8 +209,11 @@ def print_to_live(
     soft_wrap: bool | None = None,
     new_line_start: bool = False,
 ):
+    live_objects = _objects_for_live_print(*objects)
+    if live_objects is None:
+        return
     get_live_console().print(
-        *objects,
+        *live_objects,
         sep=sep,
         end=end,
         style=style,
@@ -228,8 +243,11 @@ def log_to_live(
     log_locals: bool = False,
     _stack_offset: int = 1,
 ) -> None:
+    live_objects = _objects_for_live_print(*objects)
+    if live_objects is None:
+        return
     get_live_console().log(
-        *objects,
+        *live_objects,
         sep=sep,
         end=end,
         style=style,
