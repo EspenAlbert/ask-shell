@@ -1,3 +1,4 @@
+import contextvars
 import logging
 import time
 from concurrent.futures import Future, ThreadPoolExecutor
@@ -95,7 +96,8 @@ class run_pool:
             sleep_time=self.sleep_time,
             sleep_callback=self.sleep_callback,
         )
-        future = self.pool.submit(fn, *args, **kwargs)
+        ctx = contextvars.copy_context()
+        future = self.pool.submit(ctx.run, fn, *args, **kwargs)
         future.add_done_callback(self._on_submit_done)
         with self._lock:
             self._futures.append(future)

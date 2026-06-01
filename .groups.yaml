@@ -29,12 +29,16 @@ groups:
 - name: console
   owned_modules:
   - _internal._run_env
+  - _internal.live_print_context
   - _internal.rich_live
   - _internal.rich_progress
   - _internal.typer_command
   owned_refs:
   - _internal._run_env.disable_interactive_shell
   - _internal._run_env.interactive_shell
+  - _internal.live_print_context.LivePrintContext
+  - _internal.live_print_context.get_live_print_context
+  - _internal.live_print_context.live_print_scope
   - _internal.rich_live.RemoveLivePart
   - _internal.rich_live.add_renderable
   - _internal.rich_live.get_live_console

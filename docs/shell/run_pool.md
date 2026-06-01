@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext run_pool_def === -->
 ## class: run_pool
-- [source](../../ask_shell/_internal/run_pool.py#L28)
+- [source](../../ask_shell/_internal/run_pool.py#L29)
 > **Since:** 0.3.0
 
 ```python

@@ -4,12 +4,15 @@
 <!-- === OK_EDIT: pkg-ext header === -->
 
 <!-- === DO_NOT_EDIT: pkg-ext symbols === -->
+- [`LivePrintContext`](#liveprintcontext_def)
 - [`RemoveLivePart`](#removelivepart_def)
 - [`add_renderable`](#add_renderable_def)
 - [`configure_logging`](#configure_logging_def)
 - [`disable_interactive_shell`](#disable_interactive_shell_def)
 - [`get_live_console`](#get_live_console_def)
+- [`get_live_print_context`](#get_live_print_context_def)
 - [`interactive_shell`](#interactive_shell_def)
+- [`live_print_scope`](#live_print_scope_def)
 - [`log_to_live`](#log_to_live_def)
 - [`new_task`](#new_task_def)
 - [`print_to_live`](#print_to_live_def)
@@ -23,7 +26,7 @@
 <a id="removelivepart_def"></a>
 
 ### class: `RemoveLivePart`
-- [source](../../ask_shell/_internal/rich_live.py#L157)
+- [source](../../ask_shell/_internal/rich_live.py#L158)
 > **Since:** 0.3.0
 
 ```python
@@ -41,7 +44,7 @@ class RemoveLivePart:
 <a id="add_renderable_def"></a>
 
 ### function: `add_renderable`
-- [source](../../ask_shell/_internal/rich_live.py#L161)
+- [source](../../ask_shell/_internal/rich_live.py#L162)
 - [Example: Mount a dynamic Rich renderable in ask-shell's live region with add_renderable, plus an apply-live demo with CI heartbeats](../examples/console/add_renderable.md)
 > **Since:** 0.3.0
 
@@ -78,7 +81,7 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 <a id="get_live_console_def"></a>
 
 ### function: `get_live_console`
-- [source](../../ask_shell/_internal/rich_live.py#L179)
+- [source](../../ask_shell/_internal/rich_live.py#L180)
 > **Since:** 0.3.0
 
 ```python
@@ -114,7 +117,7 @@ def interactive_shell() -> bool:
 <a id="log_to_live_def"></a>
 
 ### function: `log_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L219)
+- [source](../../ask_shell/_internal/rich_live.py#L234)
 > **Since:** 0.3.0
 
 ```python
@@ -168,7 +171,7 @@ class new_task:
 <a id="print_to_live_def"></a>
 
 ### function: `print_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L183)
+- [source](../../ask_shell/_internal/rich_live.py#L195)
 > **Since:** 0.3.0
 
 ```python
@@ -202,3 +205,64 @@ Force non-interactive mode for the remainder of this process.
 |---------|--------|
 | 0.9.0 | Made public |
 <!-- === OK_EDIT: pkg-ext disable_interactive_shell_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext liveprintcontext_def === -->
+<a id="liveprintcontext_def"></a>
+
+### class: `LivePrintContext`
+- [source](../../ask_shell/_internal/live_print_context.py#L9)
+> **Since:** unreleased
+
+```python
+class LivePrintContext:
+    prefix: str = ''
+    suppress: bool = False
+```
+
+| Field | Type | Default | Since |
+|---|---|---|---|
+| prefix | `str` | `''` | unreleased |
+| suppress | `bool` | `False` | unreleased |
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext liveprintcontext_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext get_live_print_context_def === -->
+<a id="get_live_print_context_def"></a>
+
+### function: `get_live_print_context`
+- [source](../../ask_shell/_internal/live_print_context.py#L18)
+> **Since:** unreleased
+
+```python
+def get_live_print_context() -> LivePrintContext | None:
+    ...
+```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext get_live_print_context_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext live_print_scope_def === -->
+<a id="live_print_scope_def"></a>
+
+### function: `live_print_scope`
+- [source](../../ask_shell/_internal/live_print_context.py#L22)
+- [Example: Prefix or suppress live-console scroll lines per scope, including across run_pool workers](../examples/console/live_print_scope.md)
+> **Since:** unreleased
+
+```python
+def live_print_scope(*, prefix: str = '', suppress: bool = False) -> Iterator[None]:
+    ...
+```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext live_print_scope_def === -->

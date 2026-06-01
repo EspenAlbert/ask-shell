@@ -26,6 +26,7 @@ nav:
     - Overview: console/index.md
     - Examples:
       - add_renderable: examples/console/add_renderable.md
+      - live_print_scope: examples/console/live_print_scope.md
   - shell:
     - Overview: shell/index.md
     - ShellConfig: shell/shellconfig.md

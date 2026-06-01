@@ -1,8 +1,9 @@
 from concurrent.futures import Future, ThreadPoolExecutor
-from threading import Thread
+from threading import Barrier, Thread
 from unittest.mock import MagicMock, patch
 
 from ask_shell._internal._run import get_pool, max_run_count_for_workers, wait_if_many_runs
+from ask_shell._internal.live_print_context import get_live_print_context, live_print_scope
 from ask_shell._internal.rich_progress import new_task
 from ask_shell._internal.run_pool import run_pool
 
@@ -87,7 +88,7 @@ def test_run_pool_submit_and_exit():
 
     mock_pool = MagicMock(spec=ThreadPoolExecutor)
     mock_pool._max_workers = 20
-    mock_pool.submit = MagicMock(side_effect=lambda fn, *a, **kw: _immediate_future(fn, *a, **kw))
+    mock_pool.submit = MagicMock(side_effect=_submit_via_context_run)
 
     with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
         rp = run_pool(task_name="single", total=1, max_concurrent_submits=1, threads_used_per_submit=4, sleep_time=0.01)
@@ -121,7 +122,7 @@ def test_run_pool_multiple_submits_and_exit():
 
     mock_pool = MagicMock(spec=ThreadPoolExecutor)
     mock_pool._max_workers = 20
-    mock_pool.submit = MagicMock(side_effect=lambda fn, *a, **kw: _immediate_future(fn, *a, **kw))
+    mock_pool.submit = MagicMock(side_effect=_submit_via_context_run)
 
     with patch(f"{_module}.{get_pool.__name__}", return_value=mock_pool):
         rp = run_pool(task_name="multi", total=3, max_concurrent_submits=3, threads_used_per_submit=4, sleep_time=0.01)
@@ -146,8 +147,30 @@ def test_run_pool_multiple_submits_and_exit():
     assert sorted(results) == [0, 1, 2]
 
 
-def _immediate_future(fn, *args, **kwargs):
-    """Run fn synchronously and return a resolved Future with done callbacks."""
+def test_run_pool_submit_copies_context() -> None:
+    results: list[str] = []
+    barrier = Barrier(2)
+
+    def _read_prefix() -> None:
+        barrier.wait()
+        ctx = get_live_print_context()
+        results.append(ctx.prefix if ctx else "")
+
+    with run_pool("test", total=2, pool_thread_count=2, max_concurrent_submits=2) as pool:
+        with live_print_scope(prefix="a"):
+            f_a = pool.submit(_read_prefix)
+        with live_print_scope(prefix="b"):
+            f_b = pool.submit(_read_prefix)
+        f_a.result()
+        f_b.result()
+    assert sorted(results) == ["a", "b"]
+
+
+def _submit_via_context_run(run_fn, fn, /, *args, **kwargs):
+    return _immediate_future(run_fn, fn, *args, **kwargs)
+
+
+def _immediate_future(fn, /, *args, **kwargs):
     fut = Future()
     try:
         result = fn(*args, **kwargs)

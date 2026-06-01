@@ -44,6 +44,7 @@ examples_include = [
 [tool.pkg-ext.groups.console]
 examples_include = [
   "add_renderable",
+  "live_print_scope",
 ]
 
 
