@@ -5,7 +5,7 @@ description: Prefix or suppress live-console scroll lines per scope, including a
 
 `live_print_scope` stores per-scope metadata in a [`contextvars`](https://docs.python.org/3/library/contextvars.html) `ContextVar`. [`print_to_live`](../../console/index.md#print_to_live_def) and [`log_to_live`](../../console/index.md#log_to_live_def) read the active scope: they prepend `prefix` to each line and skip output when `suppress` is true.
 
-Use it when parallel work (for example tfdo multi-directory orchestration) needs tagged scroll lines without editing every `print_to_live` call site. Pair it with [`run_pool`](../../shell/run_pool.md): `submit` copies the submitter's context into the worker thread.
+Use it when parallel work (for example tfdo multi-directory orchestration) needs tagged scroll lines without editing every `print_to_live` call site. Pair it with [`run_pool`](../../shell/run_pool.md): `submit` copies the submitter's context into the worker thread. With [`run_and_wait`](../../shell/index.md), `message_callbacks` see the scope active when the run was created.
 
 ## Read the active scope
 
@@ -74,3 +74,32 @@ with run_pool("demo", total=2, pool_thread_count=2, max_concurrent_submits=2) as
 print(sorted(results))
 #> ['a', 'b']
 ```
+
+## Context with run_and_wait and message_callbacks
+
+`ShellRun` snapshots the active context when `run` / `run_and_wait` creates it. The queue consumer runs `message_callbacks` inside that snapshot, so handlers see the same `live_print_scope` as the caller even though dispatch runs on a pool thread.
+
+```python
+from ask_shell._internal._run import run_and_wait
+from ask_shell._internal.events import ShellRunStdOutput
+from ask_shell.console import get_live_print_context, live_print_scope
+
+seen: list[str | None] = []
+
+
+def on_stdout(message):
+    match message:
+        case ShellRunStdOutput(is_stdout=True):
+            ctx = get_live_print_context()
+            seen.append(ctx.prefix if ctx else None)
+    return False
+
+
+with live_print_scope(prefix="[dir] "):
+    run_and_wait("echo ok", message_callbacks=[on_stdout])
+
+print(seen)
+#> ['[dir] ']
+```
+
+The snapshot is fixed for the life of that `ShellRun`; changing `live_print_scope` after `run_and_wait` returns does not affect callbacks for an in-flight run. Retries reuse the same snapshot.
