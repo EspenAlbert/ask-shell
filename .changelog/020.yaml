@@ -1,0 +1,8 @@
+name: shell
+ts: 2026-06-01 15:20:08.795987+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix: Propagates live_print_scope to shell message_callbacks'
+group: shell
+message: 'fix: Propagates live_print_scope to shell message_callbacks'
+short_sha: 6c245d

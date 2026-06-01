@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext shellerror_def === -->
 ## exception: ShellError
-- [source](../../ask_shell/_internal/models.py#L490)
+- [source](../../ask_shell/_internal/models.py#L492)
 > **Since:** 0.3.0
 
 ```python
