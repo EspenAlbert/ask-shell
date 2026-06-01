@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.10.0
+version: 0.10.1
 groups:
 - name: __ROOT__
   symbols:
@@ -1258,7 +1258,7 @@ groups:
   - name: run
     module_path: _internal._run
     docstring: ''
-    line_number: 451
+    line_number: 453
     type: function
     signature:
       parameters:
@@ -1451,7 +1451,7 @@ groups:
   - name: run_and_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 517
+    line_number: 519
     type: function
     signature:
       parameters:
@@ -1651,7 +1651,7 @@ groups:
   - name: run_error
     module_path: _internal._run
     docstring: ''
-    line_number: 584
+    line_number: 586
     type: function
     signature:
       parameters:
@@ -1694,7 +1694,7 @@ groups:
   - name: wait_on_ok_errors
     module_path: _internal._run
     docstring: ''
-    line_number: 591
+    line_number: 593
     type: function
     signature:
       parameters:
@@ -1724,7 +1724,7 @@ groups:
   - name: AbortRetryError
     module_path: _internal.models
     docstring: Raise from should_retry to stop retrying with a custom error.
-    line_number: 526
+    line_number: 528
     type: exception
     mro_bases:
     - Exception
@@ -1767,7 +1767,7 @@ groups:
       ''override''
 
       '
-    line_number: 127
+    line_number: 128
     type: class
     mro_bases:
     - Entity
@@ -1999,7 +1999,7 @@ groups:
   - name: ShellError
     module_path: _internal.models
     docstring: ''
-    line_number: 490
+    line_number: 492
     type: exception
     mro_bases:
     - Exception
@@ -2026,7 +2026,7 @@ groups:
   - name: ShellRun
     module_path: _internal.models
     docstring: "Stores dynamic behavior. Only created by this file never outside.\n\nArgs:\n    _start_flag: Future[ShellRun]: Flag that is set when the run has both p_open and stdout/stderr reading started. During multiple attempts, only the 1st attempt will call it.\n\n"
-    line_number: 275
+    line_number: 276
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -2264,4 +2264,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-06-01 12:38:42.085471+00:00
+dumped_at: 2026-06-01 15:51:02.857952+00:00

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1 2026-06-01T15-51Z
+
+### Shell
+- fix: Propagates live_print_scope to shell message_callbacks [6c245d](https://github.com/EspenAlbert/ask-shell/commit/6c245d)
+
+
 ## 0.10.0 2026-06-01T12-38Z
 
 ### Console

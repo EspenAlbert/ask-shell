@@ -6,3 +6,8 @@ changelog_message: 'fix: Propagates live_print_scope to shell message_callbacks'
 group: shell
 message: 'fix: Propagates live_print_scope to shell message_callbacks'
 short_sha: 6c245d
+---
+name: 0.10.1
+ts: 2026-06-01 15:51:02.939571+00:00
+type: release
+old_version: 0.10.0
