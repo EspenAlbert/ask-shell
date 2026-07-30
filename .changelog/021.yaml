@@ -1,0 +1,8 @@
+name: shell
+ts: 2026-07-30 10:47:08.924504+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(shell): Preserves multiline args when resolving binaries'
+group: shell
+message: 'fix(shell): Preserves multiline args when resolving binaries'
+short_sha: 5abe38

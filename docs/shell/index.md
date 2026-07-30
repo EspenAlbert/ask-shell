@@ -27,7 +27,7 @@
 <a id="shellrun_def"></a>
 
 ### class: `ShellRun`
-- [source](../../ask_shell/_internal/models.py#L276)
+- [source](../../ask_shell/_internal/models.py#L294)
 > **Since:** 0.3.0
 
 ```python
@@ -174,7 +174,7 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 <a id="abortretryerror_def"></a>
 
 ### exception: `AbortRetryError`
-- [source](../../ask_shell/_internal/models.py#L528)
+- [source](../../ask_shell/_internal/models.py#L546)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
 > **Since:** 0.5.0
 
