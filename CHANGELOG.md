@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2 2026-07-30T10-53Z
+
+### Shell
+- fix(shell): Preserves multiline args when resolving binaries [5abe38](https://github.com/EspenAlbert/ask-shell/commit/5abe38)
+
+
 ## 0.10.1 2026-06-01T15-51Z
 
 ### Shell

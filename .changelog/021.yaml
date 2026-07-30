@@ -6,3 +6,8 @@ changelog_message: 'fix(shell): Preserves multiline args when resolving binaries
 group: shell
 message: 'fix(shell): Preserves multiline args when resolving binaries'
 short_sha: 5abe38
+---
+name: 0.10.2
+ts: 2026-07-30 10:53:50.746586+00:00
+type: release
+old_version: 0.10.1

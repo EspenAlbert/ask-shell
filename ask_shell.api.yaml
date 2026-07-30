@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.10.1
+version: 0.10.2
 groups:
 - name: __ROOT__
   symbols:
@@ -1724,7 +1724,7 @@ groups:
   - name: AbortRetryError
     module_path: _internal.models
     docstring: Raise from should_retry to stop retrying with a custom error.
-    line_number: 528
+    line_number: 546
     type: exception
     mro_bases:
     - Exception
@@ -1767,7 +1767,7 @@ groups:
       ''override''
 
       '
-    line_number: 128
+    line_number: 146
     type: class
     mro_bases:
     - Entity
@@ -1999,7 +1999,7 @@ groups:
   - name: ShellError
     module_path: _internal.models
     docstring: ''
-    line_number: 492
+    line_number: 510
     type: exception
     mro_bases:
     - Exception
@@ -2026,7 +2026,7 @@ groups:
   - name: ShellRun
     module_path: _internal.models
     docstring: "Stores dynamic behavior. Only created by this file never outside.\n\nArgs:\n    _start_flag: Future[ShellRun]: Flag that is set when the run has both p_open and stdout/stderr reading started. During multiple attempts, only the 1st attempt will call it.\n\n"
-    line_number: 276
+    line_number: 294
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -2264,4 +2264,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-06-01 15:51:02.857952+00:00
+dumped_at: 2026-07-30 10:53:50.677750+00:00
