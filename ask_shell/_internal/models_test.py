@@ -1,6 +1,9 @@
+from pathlib import Path
+
 import pytest
 from pydantic import ValidationError
 
+from ask_shell._internal import models
 from ask_shell._internal._run import run_and_wait
 from ask_shell._internal.models import (
     ERROR_MESSAGE_INTERACTIVE_SHELL,
@@ -68,3 +71,12 @@ def test_stdout_verbatim_long_json(tmp_path):
 def test_stdout_preserves_multiline(tmp_path):
     run = run_and_wait(ShellConfig(shell_input="printf 'line1\\nline2\\n'", cwd=tmp_path))
     assert run.stdout.splitlines() == ["line1", "line2"]
+
+
+def test_shell_config_binary_resolution_preserves_multiline_args(tmp_path, monkeypatch):
+    monkeypatch.setattr(models, "_resolve_binary", lambda name, cwd: Path("/usr/bin/gh"))
+    body = "Good idea.\n\n    provider/mongodbatlas: test\n\nAlso worked."
+    command = f"gh api graphql -F 'body={body}'"
+    config = ShellConfig(shell_input=command, cwd=tmp_path, skip_os_env=True)
+    assert config.shell_input.startswith("/usr/bin/gh ")
+    assert body in config.shell_input

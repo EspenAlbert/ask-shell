@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext shellconfig_def === -->
 ## class: ShellConfig
-- [source](../../ask_shell/_internal/models.py#L128)
+- [source](../../ask_shell/_internal/models.py#L146)
 > **Since:** 0.3.0
 
 ```python

@@ -4,6 +4,7 @@ import contextvars
 import logging
 import os
 import platform
+import re
 import subprocess
 import sys
 from concurrent.futures import Future
@@ -125,6 +126,23 @@ def _resolve_binary(binary_name: str, cwd: Path) -> Path:
     raise ValueError(f"Binary or non-executable '{binary_name}' not found. {install}")
 
 
+class _ShellTokenSplit(NamedTuple):
+    first: str
+    remainder: str
+
+
+_FIRST_SHELL_TOKEN = re.compile(r"(?P<first>\S+)(?P<remainder>.*)", re.DOTALL)
+
+
+def _split_first_shell_token(shell_input: str) -> _ShellTokenSplit:
+    stripped = shell_input.lstrip()
+    if not stripped:
+        raise ValueError("shell_input must not be empty")
+    match = _FIRST_SHELL_TOKEN.match(stripped)
+    assert match is not None
+    return _ShellTokenSplit(match.group("first"), match.group("remainder"))
+
+
 class ShellConfig(Entity):
     """
     >>> ShellConfig("some_script").print_prefix
@@ -202,16 +220,14 @@ class ShellConfig(Entity):
 
     @property
     def binary_file_args(self) -> ShellInput:
-        match self.shell_input.split():
-            case [file_or_binary, *args] if os.sep in file_or_binary:
-                file_or_binary_path = Path(file_or_binary).resolve()
-                if is_executable(file_or_binary_path):
-                    return ShellInput("", file_or_binary_path, args)
-                return ShellInput(file_or_binary, None, args)
-            case [file_or_binary, *args]:
-                return ShellInput(file_or_binary, None, args)
-            case _:
-                raise ValueError("shell_input must not be empty")
+        split = _split_first_shell_token(self.shell_input)
+        args = split.remainder.strip().split()
+        if os.sep in split.first:
+            file_or_binary_path = Path(split.first).resolve()
+            if is_executable(file_or_binary_path):
+                return ShellInput("", file_or_binary_path, args)
+            return ShellInput(split.first, None, args)
+        return ShellInput(split.first, None, args)
 
     def _infer_print_prefix(self, parsed_input: ShellInput):
         cwd = self.cwd
@@ -241,8 +257,10 @@ class ShellConfig(Entity):
             raise ValueError(f"cwd {self.cwd} does not exist")
         parsed_input = self.binary_file_args
         if not self.skip_binary_check and parsed_input.is_binary_call:
+            # ponytail: first-token only; full shlex if quoted binary paths matter
+            remainder = _split_first_shell_token(self.shell_input).remainder
             binary_path = _resolve_binary(parsed_input.binary_name, self.cwd)
-            self.shell_input = f"{binary_path} {' '.join(parsed_input.args)}"
+            self.shell_input = f"{binary_path}{remainder}"
         if self.is_binary_call is None:
             self.is_binary_call = parsed_input.is_binary_call
         if self.print_prefix is None:
