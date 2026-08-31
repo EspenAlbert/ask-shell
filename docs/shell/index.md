@@ -86,8 +86,7 @@ class handle_interrupt_wait:
 > **Since:** 0.3.0
 
 ```python
-def kill(run: ShellRun, immediate: bool = False, reason: str = '', abort_timeout: float = 3.0):
-    ...
+def kill(run: ShellRun, immediate: bool = False, reason: str = "", abort_timeout: float = 3.0): ...
 ```
 
 https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
@@ -106,8 +105,9 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 > **Since:** 0.3.0
 
 ```python
-def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: float = 3.0, *, skip_retry: bool = False):
-    ...
+def kill_all_runs(
+    immediate: bool = False, reason: str = "", abort_timeout: float = 3.0, *, skip_retry: bool = False
+): ...
 ```
 
 ### Changes
@@ -124,8 +124,7 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 > **Since:** 0.3.0
 
 ```python
-def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
-    ...
+def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None: ...
 ```
 
 ### Changes
@@ -142,8 +141,7 @@ def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
 > **Since:** 0.3.0
 
 ```python
-def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
-    ...
+def stop_runs_and_pool(reason: str = "atexit", immediate: bool = False): ...
 ```
 
 ### Changes
@@ -160,8 +158,9 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 > **Since:** 0.3.0
 
 ```python
-def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: bool = False) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]:
-    ...
+def wait_on_ok_errors(
+    *runs, timeout: float | None = None, skip_kill_timeouts: bool = False
+) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]: ...
 ```
 
 ### Changes
@@ -179,8 +178,7 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 > **Since:** 0.5.0
 
 ```python
-class AbortRetryError(Exception):
-    ...
+class AbortRetryError(Exception): ...
 ```
 
 Raise from should_retry to stop retrying with a custom error.

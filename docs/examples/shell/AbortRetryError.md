@@ -47,7 +47,7 @@ with pytest.raises(ShellError) as exc:
 
 assert isinstance(exc.value.base_error, AbortRetryError)
 print(str(exc.value.base_error))
-#> permanent: permanent error
+# > permanent: permanent error
 ```
 
 ## Retry on transient, then succeed
@@ -94,5 +94,5 @@ result = run_and_wait(
     )
 )
 print(result.stdout)
-#> ok
+# > ok
 ```

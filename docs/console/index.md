@@ -30,8 +30,7 @@
 > **Since:** 0.3.0
 
 ```python
-class RemoveLivePart:
-    ...
+class RemoveLivePart: ...
 ```
 
 ### Changes
@@ -49,8 +48,9 @@ class RemoveLivePart:
 > **Since:** 0.3.0
 
 ```python
-def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = '') -> RemoveLivePart:
-    ...
+def add_renderable(
+    renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = ""
+) -> RemoveLivePart: ...
 ```
 
 ### Changes
@@ -67,8 +67,16 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 > **Since:** 0.3.0
 
 ```python
-def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, app_pretty_exceptions_enable: bool = False, app_pretty_exceptions_show_locals: bool = False, skip_except_hook: bool = False, use_app_name_command_for_logs: bool = True, render_rich_error_on_sys_exit: bool = False) -> Handler:
-    ...
+def configure_logging(
+    app: Typer,
+    *,
+    settings: AskShellSettings | None = None,
+    app_pretty_exceptions_enable: bool = False,
+    app_pretty_exceptions_show_locals: bool = False,
+    skip_except_hook: bool = False,
+    use_app_name_command_for_logs: bool = True,
+    render_rich_error_on_sys_exit: bool = False,
+) -> Handler: ...
 ```
 
 ### Changes
@@ -85,8 +93,7 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 > **Since:** 0.3.0
 
 ```python
-def get_live_console() -> Console:
-    ...
+def get_live_console() -> Console: ...
 ```
 
 ### Changes
@@ -103,8 +110,7 @@ def get_live_console() -> Console:
 > **Since:** 0.3.0
 
 ```python
-def interactive_shell() -> bool:
-    ...
+def interactive_shell() -> bool: ...
 ```
 
 ### Changes
@@ -121,8 +127,18 @@ def interactive_shell() -> bool:
 > **Since:** 0.3.0
 
 ```python
-def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, log_locals: bool = False, _stack_offset: int = 1) -> None:
-    ...
+def log_to_live(
+    *objects,
+    sep: str = " ",
+    end: str = "\n",
+    style: str | Style | None = None,
+    justify: Literal[default, left, center, right, full] | None = None,
+    emoji: bool | None = None,
+    markup: bool | None = None,
+    highlight: bool | None = None,
+    log_locals: bool = False,
+    _stack_offset: int = 1,
+) -> None: ...
 ```
 
 ### Changes
@@ -175,8 +191,23 @@ class new_task:
 > **Since:** 0.3.0
 
 ```python
-def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, overflow: Literal[fold, crop, ellipsis, ignore] | None = None, no_wrap: bool | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, width: int | None = None, height: int | None = None, crop: bool = True, soft_wrap: bool | None = None, new_line_start: bool = False):
-    ...
+def print_to_live(
+    *objects,
+    sep: str = " ",
+    end: str = "\n",
+    style: str | Style | None = None,
+    justify: Literal[default, left, center, right, full] | None = None,
+    overflow: Literal[fold, crop, ellipsis, ignore] | None = None,
+    no_wrap: bool | None = None,
+    emoji: bool | None = None,
+    markup: bool | None = None,
+    highlight: bool | None = None,
+    width: int | None = None,
+    height: int | None = None,
+    crop: bool = True,
+    soft_wrap: bool | None = None,
+    new_line_start: bool = False,
+): ...
 ```
 
 ### Changes
@@ -193,8 +224,7 @@ def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style 
 > **Since:** 0.9.0
 
 ```python
-def disable_interactive_shell() -> None:
-    ...
+def disable_interactive_shell() -> None: ...
 ```
 
 Force non-interactive mode for the remainder of this process.
@@ -214,7 +244,7 @@ Force non-interactive mode for the remainder of this process.
 
 ```python
 class LivePrintContext:
-    prefix: str = ''
+    prefix: str = ""
     suppress: bool = False
 ```
 
@@ -237,8 +267,7 @@ class LivePrintContext:
 > **Since:** 0.10.0
 
 ```python
-def get_live_print_context() -> LivePrintContext | None:
-    ...
+def get_live_print_context() -> LivePrintContext | None: ...
 ```
 
 ### Changes
@@ -256,8 +285,7 @@ def get_live_print_context() -> LivePrintContext | None:
 > **Since:** 0.10.0
 
 ```python
-def live_print_scope(*, prefix: str = '', suppress: bool = False) -> Iterator[None]:
-    ...
+def live_print_scope(*, prefix: str = "", suppress: bool = False) -> Iterator[None]: ...
 ```
 
 ### Changes
