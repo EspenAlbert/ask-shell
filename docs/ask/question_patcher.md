@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext question_patcher_def === -->
 ## class: question_patcher
-- [source](../../ask_shell/_internal/interactive.py#L397)
+- [source](../../ask_shell/_internal/interactive.py#L395)
 > **Since:** 0.3.0
 
 ```python

@@ -37,7 +37,6 @@ def test_message_callback_nested_scope() -> None:
                 seen.append(ctx.prefix if ctx else None)
         return False
 
-    with live_print_scope(prefix="outer "):
-        with live_print_scope(prefix="inner "):
-            run_and_wait("echo ok", message_callbacks=[cb], mute_shell_summary=True)
+    with live_print_scope(prefix="outer "), live_print_scope(prefix="inner "):
+        run_and_wait("echo ok", message_callbacks=[cb], mute_shell_summary=True)
     assert seen == ["inner "]

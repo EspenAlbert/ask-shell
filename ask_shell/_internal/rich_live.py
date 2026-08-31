@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 def reset_live() -> None:
-    global _live, _renderables
+    global _renderables
     with _lock:
         if _live is None:
             return
@@ -59,7 +59,7 @@ def _console_hook(func: Callable) -> Callable:
             error_with_tb = error_and_traceback(e)
             stderr.write(f"Error in live console: {error_with_tb}\n")
             reset_live()
-            raise e
+            raise
 
     return wrapper
 
@@ -132,7 +132,6 @@ class live_frozen:
 
 def stop_live() -> bool:
     """Returns was_running"""
-    global _live
     with _lock:
         if _live is None or not _live.is_started:
             return False

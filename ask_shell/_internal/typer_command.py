@@ -8,7 +8,6 @@ from pathlib import Path
 from types import TracebackType
 from typing import Callable, TypeVar
 
-import click
 import typer
 from rich.logging import RichHandler
 from rich.traceback import Traceback
@@ -35,7 +34,7 @@ def except_hook_custom(
         tb: TracebackType | None,
     ) -> None:
         """Similar to typer's except hook"""
-        internal_modules = [typer, click, ask_shell]
+        internal_modules = [typer, ask_shell]
         console = get_live_console()
         rich_tb = Traceback.from_exception(
             exc_type,
@@ -78,8 +77,6 @@ def track_progress_decorator(
             ):
                 try:
                     return command(*args, **kwargs)
-                except BaseException:
-                    raise  # re-raise the exception to be handled by the except hook
                 finally:
                     log_exit_summary(settings)
 

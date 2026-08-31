@@ -148,7 +148,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](../../ask_shell/_internal/interactive.py#L381)
+- [source](../../ask_shell/_internal/interactive.py#L379)
 > **Since:** 0.3.0
 
 ```python

@@ -120,7 +120,7 @@ def kill_all_runs(
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L586)
+- [source](../../ask_shell/_internal/_run.py#L583)
 > **Since:** 0.3.0
 
 ```python
@@ -154,7 +154,7 @@ def stop_runs_and_pool(reason: str = "atexit", immediate: bool = False): ...
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L593)
+- [source](../../ask_shell/_internal/_run.py#L592)
 > **Since:** 0.3.0
 
 ```python
@@ -173,7 +173,7 @@ def wait_on_ok_errors(
 <a id="abortretryerror_def"></a>
 
 ### exception: `AbortRetryError`
-- [source](../../ask_shell/_internal/models.py#L546)
+- [source](../../ask_shell/_internal/models.py#L545)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
 > **Since:** 0.5.0
 

@@ -1,6 +1,6 @@
 import logging
 import os
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from functools import cached_property, lru_cache
 from pathlib import Path
@@ -57,11 +57,11 @@ def _clean_run_logs(run_logs: Path, clean_value: str) -> None:
             return
 
     if clean_value == "yesterday":
-        clean_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        clean_date = (datetime.now(UTC) - timedelta(days=1)).strftime("%Y-%m-%d")
     else:
         clean_date = clean_value
     try:
-        parsed_date = datetime.strptime(clean_date, "%Y-%m-%d")
+        parsed_date = datetime.strptime(clean_date, "%Y-%m-%d").replace(tzinfo=UTC)
     except ValueError:
         logger.warning("Invalid date format for run logs cleaning. Expected 'YYYY-MM-DD' or 'yesterday'.")
         return
@@ -70,7 +70,7 @@ def _clean_run_logs(run_logs: Path, clean_value: str) -> None:
             continue
         dir_name = path.name
         try:
-            dir_date = datetime.strptime(dir_name, "%Y-%m-%d")
+            dir_date = datetime.strptime(dir_name, "%Y-%m-%d").replace(tzinfo=UTC)
         except ValueError:
             continue
         if dir_date < parsed_date:
@@ -177,7 +177,7 @@ class AskShellSettings(StaticSettings):
         if self.run_logs_dir is not None:
             self.run_logs_dir.mkdir(parents=True, exist_ok=True)
             return self.run_logs_dir
-        return self.cache_root / DEFAULT_RUN_LOGS_BASE_DIR / datetime.now().strftime("%Y-%m-%d")
+        return self.cache_root / DEFAULT_RUN_LOGS_BASE_DIR / datetime.now(UTC).strftime("%Y-%m-%d")
 
     def configure_run_logs_dir_if_unset(
         self,
@@ -198,7 +198,7 @@ class AskShellSettings(StaticSettings):
             self.run_logs_dir = self.cache_root / new_relative_path
         if date_folder_expressing:
             if interactive_shell():
-                dt_folder = datetime.now().strftime(date_folder_expressing)
+                dt_folder = datetime.now(UTC).strftime(date_folder_expressing)
             else:
                 dt_folder = f"{utc_now().strftime(date_folder_expressing)}Z"
             self.run_logs_dir = self.run_logs_dir / dt_folder

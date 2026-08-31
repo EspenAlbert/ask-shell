@@ -278,15 +278,12 @@ def _run(
     output_dir: Path,
     file_name: str,
 ) -> None:
-    kwargs = (
-        dict(
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            start_new_session=True,
-            universal_newlines=True,
-        )
-        | config.popen_kwargs
-    )
+    kwargs = {
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "start_new_session": True,
+        "universal_newlines": True,
+    } | config.popen_kwargs
     with subprocess.Popen(config.shell_input, shell=True, **kwargs) as proc:  # type: ignore
         queue.put_nowait(ShellRunPOpenStarted(proc))
 
@@ -310,7 +307,7 @@ def _run(
                     is_stdout=True,
                 )
             except BaseException as e:
-                logger.exception(e)
+                logger.exception("stdout read failed")
                 queue.put_nowait(ShellRunStdReadError(is_stdout=True, error=e))
 
         def add_stderr_line(line: str):
@@ -330,7 +327,7 @@ def _run(
                     is_stdout=False,
                 )
             except BaseException as e:
-                logger.exception(e)
+                logger.exception("stderr read failed")
                 queue.put_nowait(ShellRunStdReadError(is_stdout=False, error=e))
 
         fut_stdout = _pool.submit(read_stdout)
@@ -357,7 +354,7 @@ def _attempt_run(
         return shell_run
     except BaseException as e:
         logger.warning(f"Error running {shell_run}: {e!r}")
-        logger.exception(e)
+        logger.exception("run failed")
         return e
     finally:
         _runs.pop(key, None)
@@ -369,7 +366,7 @@ def _eval_should_retry(config: ShellConfig, result: ShellRun) -> bool:
         return config.should_retry(result)
     except AbortRetryError:
         raise
-    except Exception as e:
+    except (TypeError, ValueError, RuntimeError, OSError, AttributeError) as e:
         logger.warning(f"should_retry callback failed: {e!r}")
         return False
 
@@ -423,13 +420,13 @@ def _execute_run(shell_run: ShellRun) -> ShellRun:
                 ctx.run(shell_run._on_event, message)
             except BaseException as e:
                 logger.warning(f"Error processing message '{type(message).__name__}' for {shell_run}: {e!r}")
-                logger.exception(e)
+                logger.exception("message callback failed")
 
     try:
         shell_run._on_event(
             ShellRunBefore(run=shell_run)
         )  # can block, for example if the thread pool doesn't have enough threads free
-    except BaseException as e:
+    except BaseException as e:  # noqa: BLE001
         logger.warning(f"Error before starting run {shell_run}: {e!r}")
         shell_run._complete(error=e)
         return shell_run
@@ -466,7 +463,7 @@ def run(
     retry_jitter: float | None = None,
     retry_max_wait: float | None = None,
     run_log_stem_prefix: str | None = None,
-    run_output_dir: Path | None | None = None,
+    run_output_dir: Path | None = None,
     settings: AskShellSettings | None = None,
     should_retry: Callable[[ShellRun], bool] | None = None,
     skip_binary_check: bool | None = None,
@@ -533,7 +530,7 @@ def run_and_wait(
     retry_jitter: float | None = None,
     retry_max_wait: float | None = None,
     run_log_stem_prefix: str | None = None,
-    run_output_dir: Path | None | None = None,
+    run_output_dir: Path | None = None,
     settings: AskShellSettings | None = None,
     should_retry: Callable[[ShellRun], bool] | None = None,
     skip_binary_check: bool | None = None,
@@ -586,7 +583,9 @@ def run_and_wait(
 def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
     try:
         run._complete_flag.result(timeout=timeout)
-    except BaseException as e:
+    except TimeoutError as e:
+        return e
+    except Exception as e:  # noqa: BLE001
         return e
 
 

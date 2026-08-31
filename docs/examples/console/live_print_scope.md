@@ -15,7 +15,7 @@ from ask_shell.console import get_live_print_context, live_print_scope
 with live_print_scope(prefix="[prod] "):
     ctx = get_live_print_context()
     print(repr(ctx.prefix if ctx else ""))
-    # > '[prod] '
+    #> '[prod] '
 ```
 
 ## Suppress live output
@@ -26,7 +26,7 @@ from ask_shell.console import get_live_print_context, live_print_scope
 with live_print_scope(suppress=True):
     ctx = get_live_print_context()
     print(ctx.suppress if ctx else False)
-    # > True
+    #> True
 ```
 
 Nested scopes restore the outer context when the inner block exits.
@@ -40,7 +40,7 @@ with live_print_scope(prefix="outer "):
         inner = get_live_print_context()
     after = get_live_print_context()
 print(f"{outer.prefix}|{inner.prefix}|{after.prefix}")
-# > outer |inner |outer
+#> outer |inner |outer
 ```
 
 ## Context at run_pool submit time
@@ -72,7 +72,7 @@ with run_pool("demo", total=2, pool_thread_count=2, max_concurrent_submits=2) as
     f_b.result()
 
 print(sorted(results))
-# > ['a', 'b']
+#> ['a', 'b']
 ```
 
 ## Context with run_and_wait and message_callbacks
@@ -99,7 +99,7 @@ with live_print_scope(prefix="[dir] "):
     run_and_wait("echo ok", message_callbacks=[on_stdout])
 
 print(seen)
-# > ['[dir] ']
+#> ['[dir] ']
 ```
 
 The snapshot is fixed for the life of that `ShellRun`; changing `live_print_scope` after `run_and_wait` returns does not affect callbacks for an in-flight run. Retries reuse the same snapshot.

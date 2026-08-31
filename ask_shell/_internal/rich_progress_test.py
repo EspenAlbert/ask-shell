@@ -76,9 +76,8 @@ def test_task_should_update_progress_with_logging(capture_console):
 
 def test_task_context_system_exit_zero_logs_success(caplog):
     caplog.set_level(logging.INFO)
-    with pytest.raises(SystemExit):
-        with new_task("se0", total=1):
-            raise SystemExit(0)
+    with pytest.raises(SystemExit), new_task("se0", total=1):
+        raise SystemExit(0)
     assert "✅" in caplog.text
 
 
@@ -87,7 +86,6 @@ def test_task_context_exception_with_exit_code_attr_zero_logs_success(caplog):
         exit_code = 0
 
     caplog.set_level(logging.INFO)
-    with pytest.raises(QuietExit):
-        with new_task("qe0", total=1):
-            raise QuietExit()
+    with pytest.raises(QuietExit), new_task("qe0", total=1):
+        raise QuietExit()
     assert "✅" in caplog.text

@@ -14,9 +14,8 @@ from ask_shell._internal.rich_progress import new_task
 def test_live_frozen_task_when_frozen_dont_update_console(capture_console):
     live = get_live()
     assert not live.is_started
-    with live_frozen():
-        with new_task("Task 1", log_after_remove=False):
-            assert not live.is_started
+    with live_frozen(), new_task("Task 1", log_after_remove=False):
+        assert not live.is_started
     assert not live.is_started
     assert "Task 1" not in capture_console.end_capture()
 
