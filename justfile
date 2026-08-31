@@ -78,6 +78,20 @@ docs-serve:
 vulture:
   uv run vulture .
 # === OK_EDIT: path-sync vulture ===
+# === DO_NOT_EDIT: path-sync typos ===
+typos:
+  typos --force-exclude .
+
+typos-fix:
+  typos --write-changes --force-exclude .
+# === OK_EDIT: path-sync typos ===
+# === DO_NOT_EDIT: path-sync secrets-check ===
+secrets-check:
+  betterleaks git . --pre-commit --no-banner
+
+secrets-history:
+  betterleaks git . --no-banner --redact -v
+# === OK_EDIT: path-sync secrets-check ===
 
 # Custom recipes below
 
