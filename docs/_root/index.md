@@ -18,8 +18,7 @@
 > **Since:** 0.7.0
 
 ```python
-class ShellRunSummary(StrEnum):
-    ...
+class ShellRunSummary(StrEnum): ...
 ```
 
 ### Changes

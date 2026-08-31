@@ -36,7 +36,7 @@ status.elapsed_s = 12.0
 probe = Console(file=StringIO(), width=80, color_system=None, legacy_windows=False)
 probe.print(status)
 print(probe.file.getvalue().strip())
-#> refresh: 5 complete, 3 in progress (12s)
+# > refresh: 5 complete, 3 in progress (12s)
 ```
 
 The example renders against a captured console so it can be tested without a real terminal. In production code you would pass the same instance to `add_renderable` (see below).
@@ -106,7 +106,7 @@ run = run_and_wait(
 )
 handler.flush()
 print(run.exit_code)
-#> 0
+# > 0
 ```
 
 ## When to pick which API

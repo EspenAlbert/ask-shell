@@ -6,8 +6,7 @@
 > **Since:** 0.3.0
 
 ```python
-class RaiseOnQuestionError(Exception):
-    ...
+class RaiseOnQuestionError(Exception): ...
 ```
 <!-- === OK_EDIT: pkg-ext raiseonquestionerror_def === -->
 

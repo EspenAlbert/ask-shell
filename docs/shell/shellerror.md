@@ -6,8 +6,7 @@
 > **Since:** 0.3.0
 
 ```python
-class ShellError(Exception):
-    ...
+class ShellError(Exception): ...
 ```
 <!-- === OK_EDIT: pkg-ext shellerror_def === -->
 

@@ -62,8 +62,7 @@ class ChoiceTyped:
 > **Since:** 0.3.0
 
 ```python
-class KeyInput:
-    ...
+class KeyInput: ...
 ```
 
 ### Changes
@@ -107,8 +106,8 @@ class NewHandlerChoice:
 class PromptMatch:
     response: str | None = None
     responses: list[str] = ...
-    substring: str = ''
-    exact: str = ''
+    substring: str = ""
+    exact: str = ""
     max_matches: int = 1
     matches_so_far: int = 0
 ```
@@ -136,8 +135,7 @@ class PromptMatch:
 > **Since:** 0.3.0
 
 ```python
-def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
-    ...
+def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 ```
 
 ### Changes
@@ -176,8 +174,9 @@ class force_interactive:
 > **Since:** 0.3.0
 
 ```python
-def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None = None, options: SelectOptions | None = None) -> ~T:
-    ...
+def select_dict(
+    prompt_text: str, choices: dict[str, ~T], *, default: str | None = None, options: SelectOptions | None = None
+) -> ~T: ...
 ```
 
 ### Changes
@@ -194,8 +193,9 @@ def select_dict(prompt_text: str, choices: dict[str, ~T], *, default: str | None
 > **Since:** 0.3.0
 
 ```python
-def select_list(prompt_text: str, choices: list[str], *, default: str | None = None, options: SelectOptions | None = None) -> str:
-    ...
+def select_list(
+    prompt_text: str, choices: list[str], *, default: str | None = None, options: SelectOptions | None = None
+) -> str: ...
 ```
 
 ### Changes
@@ -212,8 +212,9 @@ def select_list(prompt_text: str, choices: list[str], *, default: str | None = N
 > **Since:** 0.3.0
 
 ```python
-def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, default: ~T | None = None, options: SelectOptions | None = None) -> ~T:
-    ...
+def select_list_choice(
+    prompt_text: str, choices: list[ChoiceTyped[~T]], *, default: ~T | None = None, options: SelectOptions | None = None
+) -> ~T: ...
 ```
 
 ### Changes
@@ -230,8 +231,9 @@ def select_list_choice(prompt_text: str, choices: list[ChoiceTyped[~T]], *, defa
 > **Since:** 0.3.0
 
 ```python
-def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[str] | None = None, options: SelectOptions | None = None) -> list[str]:
-    ...
+def select_list_multiple(
+    prompt_text: str, choices: list[str], *, default: list[str] | None = None, options: SelectOptions | None = None
+) -> list[str]: ...
 ```
 
 ### Changes
@@ -248,8 +250,13 @@ def select_list_multiple(prompt_text: str, choices: list[str], *, default: list[
 > **Since:** 0.3.0
 
 ```python
-def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]], default: list[~T] | None = None, *, options: SelectOptions | None = None) -> list[~T]:
-    ...
+def select_list_multiple_choices(
+    prompt_text: str,
+    choices: list[ChoiceTyped[~T]],
+    default: list[~T] | None = None,
+    *,
+    options: SelectOptions | None = None,
+) -> list[~T]: ...
 ```
 
 ### Changes
@@ -266,8 +273,7 @@ def select_list_multiple_choices(prompt_text: str, choices: list[ChoiceTyped[~T]
 > **Since:** 0.3.0
 
 ```python
-def text(prompt_text: str, default: str = '') -> str:
-    ...
+def text(prompt_text: str, default: str = "") -> str: ...
 ```
 
 ### Changes
