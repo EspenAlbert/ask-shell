@@ -86,8 +86,7 @@ class handle_interrupt_wait:
 > **Since:** 0.3.0
 
 ```python
-def kill(run: ShellRun, immediate: bool = False, reason: str = '', abort_timeout: float = 3.0):
-    ...
+def kill(run: ShellRun, immediate: bool = False, reason: str = "", abort_timeout: float = 3.0): ...
 ```
 
 https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
@@ -106,8 +105,9 @@ https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess
 > **Since:** 0.3.0
 
 ```python
-def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: float = 3.0, *, skip_retry: bool = False):
-    ...
+def kill_all_runs(
+    immediate: bool = False, reason: str = "", abort_timeout: float = 3.0, *, skip_retry: bool = False
+): ...
 ```
 
 ### Changes
@@ -120,12 +120,11 @@ def kill_all_runs(immediate: bool = False, reason: str = '', abort_timeout: floa
 <a id="run_error_def"></a>
 
 ### function: `run_error`
-- [source](../../ask_shell/_internal/_run.py#L586)
+- [source](../../ask_shell/_internal/_run.py#L583)
 > **Since:** 0.3.0
 
 ```python
-def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
-    ...
+def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None: ...
 ```
 
 ### Changes
@@ -142,8 +141,7 @@ def run_error(run: ShellRun, timeout: float | None = 1) -> BaseException | None:
 > **Since:** 0.3.0
 
 ```python
-def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
-    ...
+def stop_runs_and_pool(reason: str = "atexit", immediate: bool = False): ...
 ```
 
 ### Changes
@@ -156,12 +154,13 @@ def stop_runs_and_pool(reason: str = 'atexit', immediate: bool = False):
 <a id="wait_on_ok_errors_def"></a>
 
 ### function: `wait_on_ok_errors`
-- [source](../../ask_shell/_internal/_run.py#L593)
+- [source](../../ask_shell/_internal/_run.py#L592)
 > **Since:** 0.3.0
 
 ```python
-def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: bool = False) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]:
-    ...
+def wait_on_ok_errors(
+    *runs, timeout: float | None = None, skip_kill_timeouts: bool = False
+) -> tuple[list[ShellRun], list[tuple[BaseException, ShellRun]]]: ...
 ```
 
 ### Changes
@@ -174,13 +173,12 @@ def wait_on_ok_errors(*runs, timeout: float | None = None, skip_kill_timeouts: b
 <a id="abortretryerror_def"></a>
 
 ### exception: `AbortRetryError`
-- [source](../../ask_shell/_internal/models.py#L546)
+- [source](../../ask_shell/_internal/models.py#L545)
 - [Example: Stop retrying with a custom error by raising AbortRetryError from should_retry](../examples/shell/AbortRetryError.md)
 > **Since:** 0.5.0
 
 ```python
-class AbortRetryError(Exception):
-    ...
+class AbortRetryError(Exception): ...
 ```
 
 Raise from should_retry to stop retrying with a custom error.

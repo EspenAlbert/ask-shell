@@ -58,9 +58,8 @@ def log_task_done(
     else:
         log_call = logger.error
     message_parts = [f"{exit_comji} {description}"]
-    if rich_task := task._rich_task:
-        if finish_time := rich_task.finished_time:
-            message_parts.append(f"completed in {finish_time:.02f}s")
+    if (rich_task := task._rich_task) and (finish_time := rich_task.finished_time):
+        message_parts.append(f"completed in {finish_time:.02f}s")
     if extra_parts := extra_parts or []:
         message_parts.append(" ".join(part for part in extra_parts if part))
     log_call(" ".join(message_parts))
@@ -99,7 +98,6 @@ class ProgressManager:
     def add_task(self, task: new_task) -> None:
         with self._lock:
             progress = self.get_progress()
-            progress.tasks
             task._task_id = progress.add_task(
                 description=task.description,
                 total=task.total,

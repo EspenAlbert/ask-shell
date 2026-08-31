@@ -175,6 +175,6 @@ def _immediate_future(fn, /, *args, **kwargs):
     try:
         result = fn(*args, **kwargs)
         fut.set_result(result)
-    except Exception as e:
+    except (TypeError, ValueError, RuntimeError, OSError, AttributeError) as e:
         fut.set_exception(e)
     return fut

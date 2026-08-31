@@ -26,12 +26,11 @@
 <a id="removelivepart_def"></a>
 
 ### class: `RemoveLivePart`
-- [source](../../ask_shell/_internal/rich_live.py#L158)
+- [source](../../ask_shell/_internal/rich_live.py#L157)
 > **Since:** 0.3.0
 
 ```python
-class RemoveLivePart:
-    ...
+class RemoveLivePart: ...
 ```
 
 ### Changes
@@ -44,13 +43,14 @@ class RemoveLivePart:
 <a id="add_renderable_def"></a>
 
 ### function: `add_renderable`
-- [source](../../ask_shell/_internal/rich_live.py#L162)
+- [source](../../ask_shell/_internal/rich_live.py#L161)
 - [Example: Mount a dynamic Rich renderable in ask-shell's live region with add_renderable, plus an apply-live demo with CI heartbeats](../examples/console/add_renderable.md)
 > **Since:** 0.3.0
 
 ```python
-def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = '') -> RemoveLivePart:
-    ...
+def add_renderable(
+    renderable: ConsoleRenderable | RichCast | str, *, order: int = 0, name: str = ""
+) -> RemoveLivePart: ...
 ```
 
 ### Changes
@@ -63,12 +63,20 @@ def add_renderable(renderable: ConsoleRenderable | RichCast | str, *, order: int
 <a id="configure_logging_def"></a>
 
 ### function: `configure_logging`
-- [source](../../ask_shell/_internal/typer_command.py#L169)
+- [source](../../ask_shell/_internal/typer_command.py#L166)
 > **Since:** 0.3.0
 
 ```python
-def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, app_pretty_exceptions_enable: bool = False, app_pretty_exceptions_show_locals: bool = False, skip_except_hook: bool = False, use_app_name_command_for_logs: bool = True, render_rich_error_on_sys_exit: bool = False) -> Handler:
-    ...
+def configure_logging(
+    app: Typer,
+    *,
+    settings: AskShellSettings | None = None,
+    app_pretty_exceptions_enable: bool = False,
+    app_pretty_exceptions_show_locals: bool = False,
+    skip_except_hook: bool = False,
+    use_app_name_command_for_logs: bool = True,
+    render_rich_error_on_sys_exit: bool = False,
+) -> Handler: ...
 ```
 
 ### Changes
@@ -81,12 +89,11 @@ def configure_logging(app: Typer, *, settings: AskShellSettings | None = None, a
 <a id="get_live_console_def"></a>
 
 ### function: `get_live_console`
-- [source](../../ask_shell/_internal/rich_live.py#L180)
+- [source](../../ask_shell/_internal/rich_live.py#L179)
 > **Since:** 0.3.0
 
 ```python
-def get_live_console() -> Console:
-    ...
+def get_live_console() -> Console: ...
 ```
 
 ### Changes
@@ -103,8 +110,7 @@ def get_live_console() -> Console:
 > **Since:** 0.3.0
 
 ```python
-def interactive_shell() -> bool:
-    ...
+def interactive_shell() -> bool: ...
 ```
 
 ### Changes
@@ -117,12 +123,22 @@ def interactive_shell() -> bool:
 <a id="log_to_live_def"></a>
 
 ### function: `log_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L234)
+- [source](../../ask_shell/_internal/rich_live.py#L233)
 > **Since:** 0.3.0
 
 ```python
-def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, log_locals: bool = False, _stack_offset: int = 1) -> None:
-    ...
+def log_to_live(
+    *objects,
+    sep: str = " ",
+    end: str = "\n",
+    style: str | Style | None = None,
+    justify: Literal[default, left, center, right, full] | None = None,
+    emoji: bool | None = None,
+    markup: bool | None = None,
+    highlight: bool | None = None,
+    log_locals: bool = False,
+    _stack_offset: int = 1,
+) -> None: ...
 ```
 
 ### Changes
@@ -135,7 +151,7 @@ def log_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | 
 <a id="new_task_def"></a>
 
 ### class: `new_task`
-- [source](../../ask_shell/_internal/rich_progress.py#L168)
+- [source](../../ask_shell/_internal/rich_progress.py#L166)
 > **Since:** 0.3.0
 
 ```python
@@ -171,12 +187,27 @@ class new_task:
 <a id="print_to_live_def"></a>
 
 ### function: `print_to_live`
-- [source](../../ask_shell/_internal/rich_live.py#L195)
+- [source](../../ask_shell/_internal/rich_live.py#L194)
 > **Since:** 0.3.0
 
 ```python
-def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style | None = None, justify: Literal[default, left, center, right, full] | None = None, overflow: Literal[fold, crop, ellipsis, ignore] | None = None, no_wrap: bool | None = None, emoji: bool | None = None, markup: bool | None = None, highlight: bool | None = None, width: int | None = None, height: int | None = None, crop: bool = True, soft_wrap: bool | None = None, new_line_start: bool = False):
-    ...
+def print_to_live(
+    *objects,
+    sep: str = " ",
+    end: str = "\n",
+    style: str | Style | None = None,
+    justify: Literal[default, left, center, right, full] | None = None,
+    overflow: Literal[fold, crop, ellipsis, ignore] | None = None,
+    no_wrap: bool | None = None,
+    emoji: bool | None = None,
+    markup: bool | None = None,
+    highlight: bool | None = None,
+    width: int | None = None,
+    height: int | None = None,
+    crop: bool = True,
+    soft_wrap: bool | None = None,
+    new_line_start: bool = False,
+): ...
 ```
 
 ### Changes
@@ -193,8 +224,7 @@ def print_to_live(*objects, sep: str = ' ', end: str = '\n', style: str | Style 
 > **Since:** 0.9.0
 
 ```python
-def disable_interactive_shell() -> None:
-    ...
+def disable_interactive_shell() -> None: ...
 ```
 
 Force non-interactive mode for the remainder of this process.
@@ -214,7 +244,7 @@ Force non-interactive mode for the remainder of this process.
 
 ```python
 class LivePrintContext:
-    prefix: str = ''
+    prefix: str = ""
     suppress: bool = False
 ```
 
@@ -237,8 +267,7 @@ class LivePrintContext:
 > **Since:** 0.10.0
 
 ```python
-def get_live_print_context() -> LivePrintContext | None:
-    ...
+def get_live_print_context() -> LivePrintContext | None: ...
 ```
 
 ### Changes
@@ -256,8 +285,7 @@ def get_live_print_context() -> LivePrintContext | None:
 > **Since:** 0.10.0
 
 ```python
-def live_print_scope(*, prefix: str = '', suppress: bool = False) -> Iterator[None]:
-    ...
+def live_print_scope(*, prefix: str = "", suppress: bool = False) -> Iterator[None]: ...
 ```
 
 ### Changes

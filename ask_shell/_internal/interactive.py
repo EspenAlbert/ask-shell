@@ -365,9 +365,7 @@ class PromptMatch:
             return False
         if (substr := self.substring) and substr in prompt_text:
             return True
-        if (exact := self.exact) and exact == prompt_text:
-            return True
-        return False
+        return bool((exact := self.exact) and exact == prompt_text)
 
     def __eq__(self, value: object) -> bool:
         if not isinstance(value, PromptMatch):

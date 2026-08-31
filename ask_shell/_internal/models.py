@@ -342,9 +342,8 @@ class ShellRun:
             return False
 
         def remove_callback():
-            with self._lock:
-                with suppress(ValueError):  # if the callback was already removed
-                    self.config.message_callbacks.remove(only_on_output_callback)
+            with self._lock, suppress(ValueError):  # if the callback was already removed
+                self.config.message_callbacks.remove(only_on_output_callback)
 
         with self._lock:
             self.config.message_callbacks.append(only_on_output_callback)
@@ -362,7 +361,7 @@ class ShellRun:
             try:
                 if callback(message):
                     self.config.message_callbacks.remove(callback)
-            except Exception as e:
+            except (TypeError, ValueError, RuntimeError, OSError, AttributeError) as e:
                 logger.error(f"Error in message callback: {e!r}")
 
     def _dump_html_logs(self):
@@ -410,7 +409,7 @@ class ShellRun:
         if no_raise:
             try:
                 return self._complete_flag.result(timeout)
-            except Exception:
+            except Exception:  # noqa: BLE001
                 return self
         return self._complete_flag.result(timeout)
 

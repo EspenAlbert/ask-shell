@@ -81,7 +81,7 @@ def test_error_run():
 
 def test_invalid_popen_args():
     with pytest.raises(ShellError) as exc:
-        run_and_wait("echo ok", extra_popen_kwargs=dict(unknown=True))
+        run_and_wait("echo ok", extra_popen_kwargs={"unknown": True})
     assert "unexpected keyword" in str(exc.value.base_error)
 
 
@@ -288,7 +288,7 @@ def test_adding_failing_callback_to_shell_run():
     def called():
         nonlocal flag
         flag = True
-        raise Exception("what will happen?")
+        raise RuntimeError("what will happen?")
 
     result.add_done_callback(called)
     result.wait_until_complete(timeout=2)
@@ -407,16 +407,15 @@ def test_backoff_respects_max_wait(tmp_path):
         sleep_values.append(seconds)
         original_sleep(0.01)
 
-    with patch.object(time, time.sleep.__name__, side_effect=mock_sleep):
-        with pytest.raises(ShellError):
-            run_and_wait(
-                f"{PYTHON_EXEC} {script_path}",
-                attempts=5,
-                retry_initial_wait=2,
-                retry_max_wait=5,
-                retry_jitter=0,
-                skip_binary_check=True,
-            )
+    with patch.object(time, time.sleep.__name__, side_effect=mock_sleep), pytest.raises(ShellError):
+        run_and_wait(
+            f"{PYTHON_EXEC} {script_path}",
+            attempts=5,
+            retry_initial_wait=2,
+            retry_max_wait=5,
+            retry_jitter=0,
+            skip_binary_check=True,
+        )
     assert sleep_values == [2, 4, 5, 5]
 
 

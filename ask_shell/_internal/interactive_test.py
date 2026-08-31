@@ -34,9 +34,8 @@ def test_text():
     with question_patcher(responses=["Jane Doe", ""]):
         assert text("Enter your name:") == "Jane Doe"
         assert text("Enter your name:", default="John Doe") == "John Doe"
-    with pytest.raises(KeyboardInterrupt):
-        with question_patcher(responses=[KeyInput.CONTROLC]):
-            text("Enter your name:")
+    with pytest.raises(KeyboardInterrupt), question_patcher(responses=[KeyInput.CONTROLC]):
+        text("Enter your name:")
 
 
 @pytest.mark.parametrize(
@@ -136,9 +135,8 @@ def test_SelectOptions_should_raise_value_error():
 
 
 def test_question_patcher_should_raise_value_error_when_there_are_no_more_input():
-    with pytest.raises(ValueError):
-        with question_patcher(responses=[]):
-            select_list("Select an option:", ["Option 1", "Option 2"])
+    with pytest.raises(ValueError), question_patcher(responses=[]):
+        select_list("Select an option:", ["Option 1", "Option 2"])
 
 
 def test_return_default_if_not_interactive_should_raise_error_when_not_interactive():
@@ -252,15 +250,16 @@ def test_prompt_dynamic_match():
 
 def test_no_dynamic_match():
     prompt_text = "my prompt"
-    with pytest.raises(
-        ValueError,
-        match="Not enough responses provided. Expected 0, got 1 questions. Last prompt: 'my prompt'",
+    with (
+        pytest.raises(
+            ValueError,
+            match="Not enough responses provided. Expected 0, got 1 questions. Last prompt: 'my prompt'",
+        ),
+        question_patcher(),
     ):
-        with question_patcher():
-            text(prompt_text)
+        text(prompt_text)
 
 
 def test_raise_on_question():
-    with pytest.raises(RaiseOnQuestionError, match="Question asked: 'hello error'"):
-        with raise_on_question():
-            text("hello error")
+    with pytest.raises(RaiseOnQuestionError, match="Question asked: 'hello error'"), raise_on_question():
+        text("hello error")
