@@ -112,10 +112,7 @@ class ChoiceTyped(Generic[T]):
 
     @classmethod
     def from_descriptions(cls, descriptions: dict[str, str]) -> list[ChoiceTyped[str]]:
-        return [
-            cls(name=name, value=name, description=description)
-            for name, description in descriptions.items()
-        ]  # type: ignore
+        return [cls(name=name, value=name, description=description) for name, description in descriptions.items()]  # type: ignore
 
     def as_choice(self) -> Choice:
         return Choice(
