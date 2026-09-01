@@ -73,7 +73,7 @@ def capture_console() -> Console:  # type: ignore
     console.begin_capture()
     live = get_live()
     live.console = console
-    yield console  # type: ignore
+    yield console
     console.end_capture()
     reset_live()
 

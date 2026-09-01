@@ -355,7 +355,7 @@ def test_message_callbacks():
         if cls_name not in message_class_names:
             message_class_names.append(cls_name)
 
-    run_and_wait("echo ok", message_callbacks=[message_callback])  # type: ignore
+    run_and_wait("echo ok", message_callbacks=[message_callback])
 
     assert message_class_names == [
         ShellRunBefore.__name__,

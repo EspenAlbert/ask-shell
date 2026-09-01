@@ -68,7 +68,7 @@ def track_progress_decorator(
             if (
                 not skip_except_hook
             ):  # this must be done inside of the call as the typer.main sets the except hook when the app is called
-                sys.excepthook = except_hook_custom(skip_rich_exception)  # type: ignore
+                sys.excepthook = except_hook_custom(skip_rich_exception)
             if use_app_name_command_for_logs:
                 settings.configure_run_logs_dir_if_unset(new_relative_path=f"{app_name}/{command_name}")
             sys_args = " ".join(sys.argv)

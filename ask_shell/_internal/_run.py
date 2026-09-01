@@ -284,7 +284,7 @@ def _run(
         "start_new_session": True,
         "universal_newlines": True,
     } | config.popen_kwargs
-    with subprocess.Popen(config.shell_input, shell=True, **kwargs) as proc:  # type: ignore
+    with subprocess.Popen(config.shell_input, shell=True, **kwargs) as proc:
         queue.put_nowait(ShellRunPOpenStarted(proc))
 
         def stdout_started(is_stdout: bool, console: Console, log_path: Path):

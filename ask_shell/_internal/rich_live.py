@@ -80,7 +80,7 @@ def get_live() -> Live:
             _live = Live(transient=True, console=_live_console())
             live_render = _live._live_render
             old_console = live_render.__rich_console__
-            live_render.__rich_console__ = _console_hook(old_console)
+            live_render.__rich_console__ = _console_hook(old_console)  # ty: ignore[invalid-assignment]
     return _live
 
 
@@ -146,10 +146,10 @@ def pause_live(func: T) -> T:
     """Decorator to ensure that the stdout is "free" from progress updates during the function execution.
     This is useful for input functions in th interactive module and shell processes that require user input."""
 
-    @wraps(func)  # type: ignore
+    @wraps(func)
     def wrapper(*args, **kwargs):
         with live_frozen():
-            return func(*args, **kwargs)  # type: ignore
+            return func(*args, **kwargs)
 
     return wrapper  # type: ignore
 

@@ -97,7 +97,7 @@ class ShellRunSummary(StrEnum):
 
 
 class AskShellSettings(StaticSettings):
-    model_config = ConfigDict(populate_by_name=True)  # type: ignore
+    model_config = ConfigDict(populate_by_name=True)
     log_level: LogLevelIgnoredCase = "UNSET"
 
     ENV_NAME_FORCE_INTERACTIVE_SHELL: ClassVar[str] = f"{ENV_PREFIX}FORCE_INTERACTIVE_SHELL"
