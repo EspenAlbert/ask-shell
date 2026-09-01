@@ -43,4 +43,4 @@ with question_patcher(responses=["y", "myname"]):
 
 ## License
 
-MIT. See [LICENSE](https://github.com/EspenAlbert/ask-shell/blob/main/LICENSE).
+MIT. See [LICENSE](/Users/espen.albert/agentws/py-src/code/ask-shell/blob/main/LICENSE).
