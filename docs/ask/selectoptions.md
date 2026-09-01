@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext selectoptions_def === -->
 ## class: SelectOptions
-- [source](../../ask_shell/_internal/interactive.py#L140)
+- [source](../../ask_shell/_internal/interactive.py#L137)
 > **Since:** 0.3.0
 
 ```python
