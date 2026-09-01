@@ -101,7 +101,7 @@ class run_pool:
         future.add_done_callback(self._on_submit_done)
         with self._lock:
             self._futures.append(future)
-        return future
+        return future  # ty: ignore[invalid-return-type]
 
     def __enter__(self):
         self._task = new_task(self.task_name, self.total)

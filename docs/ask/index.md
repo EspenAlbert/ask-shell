@@ -58,7 +58,7 @@ class ChoiceTyped:
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](../../ask_shell/_internal/interactive.py#L316)
+- [source](../../ask_shell/_internal/interactive.py#L313)
 > **Since:** 0.3.0
 
 ```python
@@ -99,7 +99,7 @@ class NewHandlerChoice:
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](../../ask_shell/_internal/interactive.py#L338)
+- [source](../../ask_shell/_internal/interactive.py#L335)
 > **Since:** 0.3.0
 
 ```python
@@ -148,7 +148,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](../../ask_shell/_internal/interactive.py#L379)
+- [source](../../ask_shell/_internal/interactive.py#L376)
 > **Since:** 0.3.0
 
 ```python
@@ -170,7 +170,7 @@ class force_interactive:
 <a id="select_dict_def"></a>
 
 ### function: `select_dict`
-- [source](../../ask_shell/_internal/interactive.py#L261)
+- [source](../../ask_shell/_internal/interactive.py#L258)
 > **Since:** 0.3.0
 
 ```python
@@ -189,7 +189,7 @@ def select_dict(
 <a id="select_list_def"></a>
 
 ### function: `select_list`
-- [source](../../ask_shell/_internal/interactive.py#L277)
+- [source](../../ask_shell/_internal/interactive.py#L274)
 > **Since:** 0.3.0
 
 ```python
@@ -208,7 +208,7 @@ def select_list(
 <a id="select_list_choice_def"></a>
 
 ### function: `select_list_choice`
-- [source](../../ask_shell/_internal/interactive.py#L302)
+- [source](../../ask_shell/_internal/interactive.py#L299)
 > **Since:** 0.3.0
 
 ```python
@@ -227,7 +227,7 @@ def select_list_choice(
 <a id="select_list_multiple_def"></a>
 
 ### function: `select_list_multiple`
-- [source](../../ask_shell/_internal/interactive.py#L230)
+- [source](../../ask_shell/_internal/interactive.py#L227)
 > **Since:** 0.3.0
 
 ```python
@@ -246,7 +246,7 @@ def select_list_multiple(
 <a id="select_list_multiple_choices_def"></a>
 
 ### function: `select_list_multiple_choices`
-- [source](../../ask_shell/_internal/interactive.py#L246)
+- [source](../../ask_shell/_internal/interactive.py#L243)
 > **Since:** 0.3.0
 
 ```python
@@ -269,7 +269,7 @@ def select_list_multiple_choices(
 <a id="text_def"></a>
 
 ### function: `text`
-- [source](../../ask_shell/_internal/interactive.py#L129)
+- [source](../../ask_shell/_internal/interactive.py#L126)
 > **Since:** 0.3.0
 
 ```python

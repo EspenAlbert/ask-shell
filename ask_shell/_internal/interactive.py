@@ -112,10 +112,7 @@ class ChoiceTyped(Generic[T]):
 
     @classmethod
     def from_descriptions(cls, descriptions: dict[str, str]) -> list[ChoiceTyped[str]]:
-        return [
-            cls(name=name, value=name, description=description)  # type: ignore
-            for name, description in descriptions.items()
-        ]  # type: ignore
+        return [cls(name=name, value=name, description=description) for name, description in descriptions.items()]  # type: ignore
 
     def as_choice(self) -> Choice:
         return Choice(
@@ -194,7 +191,7 @@ class SelectOptions(BaseModel, Generic[T]):
         )
         _set_prompt_text(question, prompt_text)
         try:
-            return _question_asker(question, T)
+            return _question_asker(question, T)  # ty: ignore[invalid-argument-type]
         except KeyboardInterrupt:
             if not self.allow_new:
                 raise
