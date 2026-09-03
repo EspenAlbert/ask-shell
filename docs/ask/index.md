@@ -60,7 +60,7 @@ class ChoiceTyped:
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](../../ask_shell/_internal/interactive.py#L378)
+- [source](../../ask_shell/_internal/interactive.py#L382)
 > **Since:** 0.3.0
 
 ```python
@@ -101,7 +101,7 @@ class NewHandlerChoice:
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](../../ask_shell/_internal/interactive.py#L400)
+- [source](../../ask_shell/_internal/interactive.py#L404)
 > **Since:** 0.3.0
 
 ```python
@@ -150,7 +150,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](../../ask_shell/_internal/interactive.py#L441)
+- [source](../../ask_shell/_internal/interactive.py#L445)
 > **Since:** 0.3.0
 
 ```python
@@ -191,7 +191,7 @@ def select_dict(
 <a id="select_list_def"></a>
 
 ### function: `select_list`
-- [source](../../ask_shell/_internal/interactive.py#L318)
+- [source](../../ask_shell/_internal/interactive.py#L319)
 > **Since:** 0.3.0
 
 ```python
@@ -210,7 +210,7 @@ def select_list(
 <a id="select_list_choice_def"></a>
 
 ### function: `select_list_choice`
-- [source](../../ask_shell/_internal/interactive.py#L354)
+- [source](../../ask_shell/_internal/interactive.py#L356)
 > **Since:** 0.3.0
 
 ```python
