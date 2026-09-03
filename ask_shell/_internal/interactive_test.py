@@ -1,7 +1,10 @@
 import string
 
 import pytest
+from model_lib import parse
+from model_lib.constants import FileFormat
 
+from ask_shell._internal import non_interactive as ni
 from ask_shell._internal.interactive import (
     SEARCH_ENABLED_AFTER_CHOICES,
     ChoiceTyped,
@@ -20,6 +23,18 @@ from ask_shell._internal.interactive import (
     select_list_multiple_choices,
     text,
 )
+from ask_shell._internal.interactive_models import ConfirmQuestion, NonInteractivePromptFile
+from ask_shell._internal.non_interactive import NonInteractivePromptError
+from ask_shell.settings import AskShellSettings
+
+
+@pytest.fixture(autouse=True)
+def _reset_replay_index() -> None:
+    ni._replay_index = 0
+
+
+def _load_prompt(settings: AskShellSettings) -> NonInteractivePromptFile:
+    return parse.parse_model(settings.non_interactive_prompt_file, t=NonInteractivePromptFile, format=FileFormat.yaml)
 
 
 def test_confirm():
@@ -139,12 +154,33 @@ def test_question_patcher_should_raise_value_error_when_there_are_no_more_input(
         select_list("Select an option:", ["Option 1", "Option 2"])
 
 
-def test_return_default_if_not_interactive_should_raise_error_when_not_interactive():
-    with pytest.raises(
-        ValueError,
-        match="Function called in non-interactive shell, but no default value provided",
-    ):
+def test_non_interactive_text_raises(settings):
+    with pytest.raises(NonInteractivePromptError, match=str(settings.non_interactive_prompt_file)):
         text("Are you sure?")
+
+
+def test_confirm_default_records_row(settings, monkeypatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_USE_DEFAULTS, "true")
+    assert confirm("Go?", default=True)
+    doc = _load_prompt(settings)
+    assert len(doc.questions) == 1
+    match doc.questions[0]:
+        case ConfirmQuestion(response=True):
+            pass
+        case _:
+            raise AssertionError(f"expected answered confirm, got {doc.questions[0]!r}")
+
+
+def test_confirm_default_dumps_when_use_defaults_off(settings, monkeypatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_USE_DEFAULTS, "false")
+    with pytest.raises(NonInteractivePromptError):
+        confirm("Go?", default=True)
+
+
+def test_question_patcher_skips_session_file(settings):
+    with question_patcher(responses=[""]):
+        select_list("Pick:", ["a", "b"])
+    assert not settings.non_interactive_prompt_file.exists()
 
 
 def test_select_list_multiple_choices_one_selection():

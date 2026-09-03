@@ -6,13 +6,17 @@ from model_lib.constants import FileFormat
 from zero_3rdparty import file_utils
 
 from ask_shell._internal import non_interactive as ni
-from ask_shell._internal.interactive import ChoiceTyped
-from ask_shell._internal.non_interactive import (
-    NonInteractivePromptError,
+from ask_shell._internal.interactive_models import (
+    ChoiceTyped,
     NonInteractivePromptFile,
     PromptKind,
     SelectQuestion,
+)
+from ask_shell._internal.non_interactive import (
+    NonInteractivePromptError,
+    record_answered_row,
     replay_or_dump,
+    try_replay_answered,
 )
 from ask_shell.settings import AskShellSettings
 
@@ -175,3 +179,15 @@ def test_undecided_select_rewrites_and_keeps_index(settings):
     with pytest.raises(NonInteractivePromptError):
         replay_or_dump(kind=PromptKind.SELECT, prompt="Pick", settings=settings, choices=choices)
     assert len(_dump_path(settings).questions) == 1
+
+
+def test_try_replay_answered_and_record(settings):
+    record_answered_row(
+        kind=PromptKind.CONFIRM,
+        prompt="Go?",
+        settings=settings,
+        value=True,
+    )
+    ni._replay_index = 0
+    assert try_replay_answered(kind=PromptKind.CONFIRM, prompt="Go?", settings=settings) is True
+    assert try_replay_answered(kind=PromptKind.TEXT, prompt="Name?", settings=settings) is None

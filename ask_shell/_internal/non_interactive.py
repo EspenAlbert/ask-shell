@@ -6,76 +6,32 @@ import fcntl
 import os
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
-from enum import StrEnum
 from pathlib import Path
-from typing import Annotated, Any, Literal
+from typing import Any
 
-from model_lib import Entity, dump, parse
+from model_lib import dump, parse
 from model_lib.constants import FileFormat
 from model_lib.errors import PayloadError
-from pydantic import Field, ValidationError
+from pydantic import ValidationError
 from zero_3rdparty import file_utils
 
-from ask_shell._internal.interactive import ChoiceTyped
+from ask_shell._internal.interactive_models import (
+    ChoiceTyped,
+    ConfirmQuestion,
+    MultiSelectStatus,
+    NonInteractivePromptFile,
+    PromptKind,
+    PromptQuestion,
+    SelectAlternative,
+    SelectMultipleQuestion,
+    SelectQuestion,
+    TextQuestion,
+)
 from ask_shell.settings import AskShellSettings
 
 _UNDECIDED = "undecided"
 _replay_index = 0
 _lock_fd: contextvars.ContextVar[int | None] = contextvars.ContextVar("_prompt_session_lock_fd", default=None)
-
-
-class PromptKind(StrEnum):
-    CONFIRM = "confirm"
-    TEXT = "text"
-    SELECT = "select"
-    SELECT_MULTIPLE = "select_multiple"
-
-
-class MultiSelectStatus(StrEnum):
-    UNDECIDED = "undecided"
-    ANSWERED = "answered"
-
-
-class SelectAlternative(Entity):
-    name: str
-    description: str | None = None
-
-
-class ConfirmQuestion(Entity):
-    kind: Literal[PromptKind.CONFIRM] = PromptKind.CONFIRM
-    prompt: str
-    response: Literal["undecided"] | bool = _UNDECIDED
-
-
-class TextQuestion(Entity):
-    kind: Literal[PromptKind.TEXT] = PromptKind.TEXT
-    prompt: str
-    response: str = _UNDECIDED
-
-
-class SelectQuestion(Entity):
-    kind: Literal[PromptKind.SELECT] = PromptKind.SELECT
-    prompt: str
-    alternatives: list[SelectAlternative] = Field(default_factory=list)
-    chosen: str | None = None
-
-
-class SelectMultipleQuestion(Entity):
-    kind: Literal[PromptKind.SELECT_MULTIPLE] = PromptKind.SELECT_MULTIPLE
-    prompt: str
-    status: MultiSelectStatus = MultiSelectStatus.UNDECIDED
-    alternatives: list[SelectAlternative] = Field(default_factory=list)
-    checked: list[str] = Field(default_factory=list)
-
-
-PromptQuestion = Annotated[
-    ConfirmQuestion | TextQuestion | SelectQuestion | SelectMultipleQuestion,
-    Field(discriminator="kind"),
-]
-
-
-class NonInteractivePromptFile(Entity):
-    questions: list[PromptQuestion] = Field(default_factory=list)
 
 
 class NonInteractivePromptError(Exception):
@@ -119,6 +75,33 @@ def prompt_session_lock(settings: AskShellSettings) -> Iterator[None]:
         _lock_fd.reset(token)
 
 
+def try_replay_answered(
+    *,
+    kind: PromptKind,
+    prompt: str,
+    settings: AskShellSettings,
+    choices: Sequence[ChoiceTyped] = (),
+) -> Any | None:
+    if kind in {PromptKind.SELECT, PromptKind.SELECT_MULTIPLE}:
+        assert choices, f"choices must not be empty for {kind}"
+    with prompt_session_lock(settings):
+        return _try_replay_answered(kind=kind, prompt=prompt, settings=settings, choices=choices)
+
+
+def record_answered_row(
+    *,
+    kind: PromptKind,
+    prompt: str,
+    settings: AskShellSettings,
+    value: Any,
+    choices: Sequence[ChoiceTyped] = (),
+) -> None:
+    if kind in {PromptKind.SELECT, PromptKind.SELECT_MULTIPLE}:
+        assert choices, f"choices must not be empty for {kind}"
+    with prompt_session_lock(settings):
+        _record_answered_row(kind=kind, prompt=prompt, settings=settings, choices=choices, value=value)
+
+
 def replay_or_dump(
     *,
     kind: PromptKind,
@@ -130,6 +113,40 @@ def replay_or_dump(
         assert choices, f"choices must not be empty for {kind}"
     with prompt_session_lock(settings):
         return _replay_or_dump(kind=kind, prompt=prompt, settings=settings, choices=choices)
+
+
+def _try_replay_answered(
+    *,
+    kind: PromptKind,
+    prompt: str,
+    settings: AskShellSettings,
+    choices: Sequence[ChoiceTyped],
+) -> Any | None:
+    global _replay_index
+    doc, _ = _load_prompt_file(settings.non_interactive_prompt_file)
+    current = doc.questions[_replay_index] if _replay_index < len(doc.questions) else None
+    if current is None or current.kind != kind or current.prompt != prompt or not _row_is_answered(current, choices):
+        return None
+    value = _row_value(current, choices)
+    _replay_index += 1
+    return value
+
+
+def _record_answered_row(
+    *,
+    kind: PromptKind,
+    prompt: str,
+    settings: AskShellSettings,
+    choices: Sequence[ChoiceTyped],
+    value: Any,
+) -> None:
+    global _replay_index
+    path = settings.non_interactive_prompt_file
+    doc, _ = _load_prompt_file(path)
+    doc.questions = doc.questions[:_replay_index]
+    doc.questions.append(_answered_row_from_value(kind, prompt, choices, value))
+    _atomic_write(path, doc)
+    _replay_index += 1
 
 
 def _replay_or_dump(
@@ -172,6 +189,33 @@ def _atomic_write(path: Path, doc: NonInteractivePromptFile) -> None:
 
 def _alternatives(choices: Sequence[ChoiceTyped]) -> list[SelectAlternative]:
     return [SelectAlternative(name=choice.name, description=choice.description) for choice in choices]
+
+
+def _answered_row_from_value(
+    kind: PromptKind,
+    prompt: str,
+    choices: Sequence[ChoiceTyped],
+    value: Any,
+) -> PromptQuestion:
+    alternatives = _alternatives(choices)
+    match kind:
+        case PromptKind.CONFIRM:
+            return ConfirmQuestion(prompt=prompt, response=value)
+        case PromptKind.TEXT:
+            return TextQuestion(prompt=prompt, response=value)
+        case PromptKind.SELECT:
+            name = next(choice.name for choice in choices if choice.value == value)
+            return SelectQuestion(prompt=prompt, alternatives=alternatives, chosen=name)
+        case PromptKind.SELECT_MULTIPLE:
+            checked = [choice.name for choice in choices if choice.value in value]
+            return SelectMultipleQuestion(
+                prompt=prompt,
+                alternatives=alternatives,
+                status=MultiSelectStatus.ANSWERED,
+                checked=checked,
+            )
+        case _:
+            raise ValueError(f"unsupported prompt kind: {kind}")
 
 
 def _undecided_row(kind: PromptKind, prompt: str, choices: Sequence[ChoiceTyped]) -> PromptQuestion:
