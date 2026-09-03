@@ -1,5 +1,3 @@
-"""Inspired by: https://github.com/tmbo/questionary/blob/master/tests/utils.py"""
-
 from __future__ import annotations
 
 import asyncio
@@ -7,24 +5,30 @@ import io
 import logging
 import os
 import string
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
-from functools import wraps
-from typing import Any, Callable, Generic, Self, TypeVar
+from typing import Any, Generic, Self, TypeVar
 
 from prompt_toolkit.input.defaults import create_pipe_input
 from prompt_toolkit.output import DummyOutput
 from prompt_toolkit.output.plain_text import PlainTextOutput
 from pydantic import BaseModel, model_validator
-from questionary import Choice, Question, checkbox
+from questionary import Question, checkbox
 from questionary import confirm as _confirm
 from questionary import select as _select
 from questionary import text as _text
-from zero_3rdparty.object_name import as_name, func_arg_names
+from zero_3rdparty.object_name import as_name
 from zero_3rdparty.str_utils import ensure_suffix
 
 from ask_shell._internal._run import get_pool
 from ask_shell._internal._run_env import (
     interactive_shell,
+)
+from ask_shell._internal.interactive_models import ChoiceTyped, PromptKind
+from ask_shell._internal.non_interactive import (
+    record_answered_row,
+    replay_or_dump,
+    try_replay_answered,
 )
 from ask_shell._internal.rich_live import pause_live
 from ask_shell.settings import AskShellSettings, _global_settings
@@ -48,44 +52,11 @@ def _default_asker(q: Question, _: type[T]) -> T:
 _question_asker: TypedAsk = _default_asker
 
 
-FuncT = TypeVar("FuncT", bound=Callable)
-
-
-def return_default_if_not_interactive(func: FuncT) -> FuncT:
-    assert "default" in func_arg_names(func), f"Function {as_name(func)} must have a 'default' parameter"
-
-    @wraps(func)
-    def return_default(*args, **kwargs):
-        if interactive_shell():
-            return func(*args, **kwargs)
-        default_value = kwargs.get("default", None)
-        if default_value is None:
-            raise ValueError(
-                f"Function called in non-interactive shell, but no default value provided &func={as_name(func)}"
-            )
-        logger.warning(
-            f"Function {as_name(func)} called in non-interactive shell, returning default value: {default_value}"
-        )
-        return default_value
-
-    return return_default  # type: ignore
-
-
 _PROMPT_TEXT_ATTR_NAME = "__prompt_text__"
 
 
 def _set_prompt_text(q: Question, prompt_text: str) -> None:
     setattr(q, _PROMPT_TEXT_ATTR_NAME, prompt_text)
-
-
-@pause_live
-def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
-    if default is None:
-        question = _confirm(prompt_text)
-    else:
-        question = _confirm(prompt_text, default=default)
-    _set_prompt_text(question, prompt_text)
-    return _question_asker(question, bool)
 
 
 _unset = object()
@@ -103,35 +74,78 @@ class NewHandlerChoice(Generic[T]):
     new_prompt: str
 
 
-@dataclass
-class ChoiceTyped(Generic[T]):
-    name: str
-    value: T
-    description: str | None = None
-    checked: bool = False
-
-    @classmethod
-    def from_descriptions(cls, descriptions: dict[str, str]) -> list[ChoiceTyped[str]]:
-        return [cls(name=name, value=name, description=description) for name, description in descriptions.items()]  # type: ignore
-
-    def as_choice(self) -> Choice:
-        return Choice(
-            title=self.name,
-            value=self.value,
-            description=self.description,
-            checked=self.checked,
-        )
+def _ask_with_session(
+    *,
+    kind: PromptKind,
+    prompt: str,
+    choices: Sequence[ChoiceTyped],
+    has_usable_default: bool,
+    usable_default: Any,
+    ask_fn: Callable[[], T],
+) -> T:
+    if _question_asker is not _default_asker:
+        return ask_fn()
+    settings = AskShellSettings.from_env()
+    if not interactive_shell():
+        if settings.use_defaults and has_usable_default:
+            logger.warning(f"Ask called in non-interactive shell, returning default value: {usable_default}")
+            record_answered_row(
+                kind=kind,
+                prompt=prompt,
+                settings=settings,
+                choices=choices,
+                value=usable_default,
+            )
+            return usable_default
+        return replay_or_dump(kind=kind, prompt=prompt, settings=settings, choices=choices)
+    replayed = try_replay_answered(kind=kind, prompt=prompt, settings=settings, choices=choices)
+    if replayed is not None:
+        return replayed
+    value = ask_fn()
+    record_answered_row(kind=kind, prompt=prompt, settings=settings, choices=choices, value=value)
+    return value
 
 
 @pause_live
-@return_default_if_not_interactive
+def confirm(prompt_text: str, *, default: bool | None = None) -> bool:
+    def ask_fn() -> bool:
+        if default is None:
+            question = _confirm(prompt_text)
+        else:
+            question = _confirm(prompt_text, default=default)
+        _set_prompt_text(question, prompt_text)
+        return _question_asker(question, bool)
+
+    return _ask_with_session(
+        kind=PromptKind.CONFIRM,
+        prompt=prompt_text,
+        choices=(),
+        has_usable_default=default is not None,
+        usable_default=default,
+        ask_fn=ask_fn,
+    )
+
+
+@pause_live
 def text(
     prompt_text: str,
-    default: str = "",
+    default: str | None = None,
 ) -> str:
-    question = _text(prompt_text, default=default)
-    _set_prompt_text(question, prompt_text)
-    return _question_asker(question, str)
+    questionary_default = default if default is not None else ""
+
+    def ask_fn() -> str:
+        question = _text(prompt_text, default=questionary_default)
+        _set_prompt_text(question, prompt_text)
+        return _question_asker(question, str)
+
+    return _ask_with_session(
+        kind=PromptKind.TEXT,
+        prompt=prompt_text,
+        choices=(),
+        has_usable_default=default is not None,
+        usable_default=default,
+        ask_fn=ask_fn,
+    )
 
 
 class SelectOptions(BaseModel, Generic[T]):
@@ -225,7 +239,6 @@ class SelectOptions(BaseModel, Generic[T]):
 
 
 @pause_live
-@return_default_if_not_interactive
 def select_list_multiple(
     prompt_text: str,
     choices: list[str],
@@ -235,13 +248,23 @@ def select_list_multiple(
 ) -> list[str]:
     assert choices, f"choices must not be empty for {as_name(select_list_multiple)}"
     options = options or SelectOptions()
-    default = default or []
-    default_choices = [ChoiceTyped(option, checked=option in default, value=option) for option in choices]
-    return options._select_multiple(prompt_text, default_choices)
+    default_checked = default or []
+    typed_choices = [ChoiceTyped(option, checked=option in default_checked, value=option) for option in choices]
+
+    def ask_fn() -> list[str]:
+        return options._select_multiple(prompt_text, typed_choices)
+
+    return _ask_with_session(
+        kind=PromptKind.SELECT_MULTIPLE,
+        prompt=prompt_text,
+        choices=typed_choices,
+        has_usable_default=default is not None,
+        usable_default=default_checked,
+        ask_fn=ask_fn,
+    )
 
 
 @pause_live
-@return_default_if_not_interactive
 def select_list_multiple_choices(
     prompt_text: str,
     choices: list[ChoiceTyped[T]],
@@ -252,11 +275,21 @@ def select_list_multiple_choices(
 ) -> list[T]:
     assert choices, f"choices must not be empty for {as_name(select_list_multiple_choices)}"
     options = options or SelectOptions()
-    return options._select_multiple(prompt_text, choices)
+
+    def ask_fn() -> list[T]:
+        return options._select_multiple(prompt_text, choices)
+
+    return _ask_with_session(
+        kind=PromptKind.SELECT_MULTIPLE,
+        prompt=prompt_text,
+        choices=choices,
+        has_usable_default=default is not None,
+        usable_default=default or [],
+        ask_fn=ask_fn,
+    )
 
 
 @pause_live
-@return_default_if_not_interactive
 def select_dict(
     prompt_text: str,
     choices: dict[str, T],
@@ -267,12 +300,23 @@ def select_dict(
     assert choices, f"choices must not be empty for {as_name(select_dict)}"
     options = options or SelectOptions()
     default_safe = default or ""
-    choices_typed = [ChoiceTyped(name=key, value=value, checked=key == default_safe) for key, value in choices.items()]
-    return options._select(prompt_text, choices_typed)
+    typed_choices = [ChoiceTyped(name=key, value=value, checked=key == default_safe) for key, value in choices.items()]
+    default_in_choices = default in choices if default is not None else False
+
+    def ask_fn() -> T:
+        return options._select(prompt_text, typed_choices)
+
+    return _ask_with_session(
+        kind=PromptKind.SELECT,
+        prompt=prompt_text,
+        choices=typed_choices,
+        has_usable_default=default_in_choices,
+        usable_default=choices[default] if default is not None and default in choices else None,
+        ask_fn=ask_fn,
+    )
 
 
 @pause_live
-@return_default_if_not_interactive
 def select_list(
     prompt_text: str,
     choices: list[str],
@@ -282,22 +326,34 @@ def select_list(
 ) -> str:
     assert choices, f"choices must not be empty for {as_name(select_list)}"
     options = options or SelectOptions()
-    chosen = options.set_defaults(len(choices))
-    return _question_asker(
-        _select(
-            prompt_text,
-            default=default,
-            choices=choices,
-            use_jk_keys=chosen.use_jk_keys,
-            use_shortcuts=chosen.use_shortcuts,
-            use_search_filter=chosen.use_search_filter,
-        ),
-        str,
+    typed_choices = [ChoiceTyped(name=choice, value=choice) for choice in choices]
+    default_in_choices = default in choices if default is not None else False
+
+    def ask_fn() -> str:
+        chosen = options.set_defaults(len(choices))
+        return _question_asker(
+            _select(
+                prompt_text,
+                default=default,
+                choices=choices,
+                use_jk_keys=chosen.use_jk_keys,
+                use_shortcuts=chosen.use_shortcuts,
+                use_search_filter=chosen.use_search_filter,
+            ),
+            str,
+        )
+
+    return _ask_with_session(
+        kind=PromptKind.SELECT,
+        prompt=prompt_text,
+        choices=typed_choices,
+        has_usable_default=default_in_choices,
+        usable_default=default if default_in_choices else None,
+        ask_fn=ask_fn,
     )
 
 
 @pause_live
-@return_default_if_not_interactive
 def select_list_choice(
     prompt_text: str,
     choices: list[ChoiceTyped[T]],
@@ -307,7 +363,20 @@ def select_list_choice(
 ) -> T:
     assert choices, f"choices must not be empty for {as_name(select_list_choice)}"
     options = options or SelectOptions()
-    return options._select(prompt_text, choices)
+    choice_values = {choice.value for choice in choices}
+    default_in_choices = default is not None and default in choice_values
+
+    def ask_fn() -> T:
+        return options._select(prompt_text, choices)
+
+    return _ask_with_session(
+        kind=PromptKind.SELECT,
+        prompt=prompt_text,
+        choices=choices,
+        has_usable_default=default_in_choices,
+        usable_default=default if default_in_choices else None,
+        ask_fn=ask_fn,
+    )
 
 
 class KeyInput:

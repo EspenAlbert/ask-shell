@@ -1,0 +1,114 @@
+name: prompt_session_lock
+ts: 2026-09-03 20:55:06.549699+00:00
+type: keep_private
+full_path: _internal.non_interactive.prompt_session_lock
+---
+name: try_replay_answered
+ts: 2026-09-03 20:55:06.549769+00:00
+type: keep_private
+full_path: _internal.non_interactive.try_replay_answered
+---
+name: record_answered_row
+ts: 2026-09-03 20:55:06.549777+00:00
+type: keep_private
+full_path: _internal.non_interactive.record_answered_row
+---
+name: replay_or_dump
+ts: 2026-09-03 20:55:06.549784+00:00
+type: keep_private
+full_path: _internal.non_interactive.replay_or_dump
+---
+name: PromptKind
+ts: 2026-09-03 20:55:21.621053+00:00
+type: keep_private
+full_path: _internal.interactive_models.PromptKind
+---
+name: MultiSelectStatus
+ts: 2026-09-03 20:55:21.621172+00:00
+type: keep_private
+full_path: _internal.interactive_models.MultiSelectStatus
+---
+name: SelectAlternative
+ts: 2026-09-03 20:55:21.621179+00:00
+type: keep_private
+full_path: _internal.interactive_models.SelectAlternative
+---
+name: ConfirmQuestion
+ts: 2026-09-03 20:55:21.621183+00:00
+type: keep_private
+full_path: _internal.interactive_models.ConfirmQuestion
+---
+name: TextQuestion
+ts: 2026-09-03 20:55:21.621188+00:00
+type: keep_private
+full_path: _internal.interactive_models.TextQuestion
+---
+name: SelectQuestion
+ts: 2026-09-03 20:55:21.621192+00:00
+type: keep_private
+full_path: _internal.interactive_models.SelectQuestion
+---
+name: SelectMultipleQuestion
+ts: 2026-09-03 20:55:21.621196+00:00
+type: keep_private
+full_path: _internal.interactive_models.SelectMultipleQuestion
+---
+name: NonInteractivePromptFile
+ts: 2026-09-03 20:55:21.621201+00:00
+type: keep_private
+full_path: _internal.interactive_models.NonInteractivePromptFile
+---
+name: ask
+ts: 2026-09-03 20:55:33.607676+00:00
+type: group_module
+module_path: _internal.non_interactive
+---
+name: NonInteractivePromptError
+ts: 2026-09-03 20:55:33.609316+00:00
+type: make_public
+details: created in _internal/non_interactive.py
+full_path: _internal.non_interactive.NonInteractivePromptError
+group: ask
+---
+name: PromptSessionLockedError
+ts: 2026-09-03 20:55:33.610639+00:00
+type: make_public
+details: created in _internal/non_interactive.py
+full_path: _internal.non_interactive.PromptSessionLockedError
+group: ask
+---
+name: AskShellSettings
+ts: 2026-09-03 20:55:34.020370+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''non_interactive_prompt_path'' (default: None)'
+field_name: non_interactive_prompt_path
+group: __ROOT__
+---
+name: AskShellSettings
+ts: 2026-09-03 20:55:34.020381+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''use_defaults'' (default: True)'
+field_name: use_defaults
+group: __ROOT__
+---
+name: text
+ts: 2026-09-03 20:55:34.020388+00:00
+type: breaking_change
+auto_generated: true
+change_kind: param_type_changed
+details: 'param ''default'' type: str -> str | None'
+field_name: default
+group: ask
+---
+name: text
+ts: 2026-09-03 20:55:34.020392+00:00
+type: additional_change
+auto_generated: true
+change_kind: default_changed
+details: 'param ''default'' default: '''' -> None'
+field_name: default
+group: ask
