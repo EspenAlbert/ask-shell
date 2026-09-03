@@ -311,7 +311,7 @@ def select_dict(
         prompt=prompt_text,
         choices=typed_choices,
         has_usable_default=default_in_choices,
-        usable_default=choices[default] if default_in_choices else None,
+        usable_default=choices[default] if default is not None and default in choices else None,
         ask_fn=ask_fn,
     )
 
