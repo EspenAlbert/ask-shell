@@ -15,7 +15,7 @@ def text(prompt_text: str, default: str | None = None) -> str: ...
 
 | Version | Change |
 |---------|--------|
-| unreleased | param 'default' default: '' -> None |
-| unreleased | param 'default' type: str -> str | None |
+| 0.11.0 | param 'default' default: '' -> None |
+| 0.11.0 | param 'default' type: str -> str | None |
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext text_changes === -->

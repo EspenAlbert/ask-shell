@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.0 2026-09-03T21-35Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added optional field 'non_interactive_prompt_path' (default: None)
+- `__ROOT__.AskShellSettings`: added optional field 'use_defaults' (default: True)
+
+### Ask
+- BREAKING `ask.text`: param 'default' type: str -> str | None
+- New exception `NonInteractivePromptError`
+- New exception `PromptSessionLockedError`
+- `ask.text`: param 'default' default: '' -> None
+
+
 ## 0.10.2 2026-07-30T10-53Z
 
 ### Shell

@@ -75,8 +75,8 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| unreleased | added optional field 'use_defaults' (default: True) |
-| unreleased | added optional field 'non_interactive_prompt_path' (default: None) |
+| 0.11.0 | added optional field 'use_defaults' (default: True) |
+| 0.11.0 | added optional field 'non_interactive_prompt_path' (default: None) |
 | 0.9.0 | added optional field 'disable_interactive_shell' (default: False) |
 | 0.8.0 | added optional field 'terminal_width' (default: 120) |
 | 0.8.0 | added optional field 'terminal_height' (default: 40) |

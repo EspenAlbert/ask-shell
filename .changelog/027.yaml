@@ -112,3 +112,8 @@ change_kind: default_changed
 details: 'param ''default'' default: '''' -> None'
 field_name: default
 group: ask
+---
+name: 0.11.0
+ts: 2026-09-03 21:35:06.808929+00:00
+type: release
+old_version: 0.10.2

@@ -272,7 +272,7 @@ def select_list_multiple_choices(
 
 ### exception: `NonInteractivePromptError`
 - [source](../../ask_shell/_internal/non_interactive.py#L37)
-> **Since:** unreleased
+> **Since:** 0.11.0
 
 ```python
 class NonInteractivePromptError(Exception): ...
@@ -282,14 +282,14 @@ class NonInteractivePromptError(Exception): ...
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.11.0 | Made public |
 <!-- === OK_EDIT: pkg-ext noninteractiveprompterror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext promptsessionlockederror_def === -->
 <a id="promptsessionlockederror_def"></a>
 
 ### exception: `PromptSessionLockedError`
 - [source](../../ask_shell/_internal/non_interactive.py#L47)
-> **Since:** unreleased
+> **Since:** 0.11.0
 
 ```python
 class PromptSessionLockedError(Exception): ...
@@ -299,5 +299,5 @@ class PromptSessionLockedError(Exception): ...
 
 | Version | Change |
 |---------|--------|
-| unreleased | Made public |
+| 0.11.0 | Made public |
 <!-- === OK_EDIT: pkg-ext promptsessionlockederror_def === -->

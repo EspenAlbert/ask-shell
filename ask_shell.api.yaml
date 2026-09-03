@@ -1,12 +1,12 @@
 pkg_import_name: ask_shell
-version: 0.10.2
+version: 0.11.0
 groups:
 - name: __ROOT__
   symbols:
   - name: AskShellSettings
     module_path: settings
     docstring: ''
-    line_number: 99
+    line_number: 104
     type: class
     mro_bases:
     - StaticSettings
@@ -199,10 +199,35 @@ groups:
       env_vars:
       - ask_shell_terminal_height
       - terminal_height
+    - name: use_defaults
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'True'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: When true, non-interactive asks with a caller default return that default.
+      env_vars:
+      - ask_shell_use_defaults
+      - use_defaults
+    - name: non_interactive_prompt_path
+      type_annotation: Path | None
+      type_imports:
+      - pathlib.Path
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Absolute working file for the non-interactive prompt session. Unset means cache_root / filename.
+      env_vars:
+      - ask_shell_non_interactive_prompt_path
+      - non_interactive_prompt_path
   - name: ShellRunSummary
     module_path: settings
     docstring: ''
-    line_number: 94
+    line_number: 99
     type: class
     mro_bases:
     - StrEnum
@@ -224,44 +249,10 @@ groups:
       return_type_imports: []
 - name: ask
   symbols:
-  - name: ChoiceTyped
-    module_path: _internal.interactive
-    docstring: ''
-    line_number: 106
-    type: class
-    mro_bases: []
-    num_direct_bases: 1
-    fields:
-    - name: name
-      type_annotation: str
-      type_imports: []
-      is_class_var: false
-      is_computed: false
-    - name: value
-      type_annotation: ~T
-      type_imports: []
-      is_class_var: false
-      is_computed: false
-    - name: description
-      type_annotation: str | None
-      type_imports: []
-      default:
-        value_repr: None
-        is_factory: false
-      is_class_var: false
-      is_computed: false
-    - name: checked
-      type_annotation: bool
-      type_imports: []
-      default:
-        value_repr: 'False'
-        is_factory: false
-      is_class_var: false
-      is_computed: false
   - name: KeyInput
     module_path: _internal.interactive
     docstring: ''
-    line_number: 316
+    line_number: 382
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -280,7 +271,7 @@ groups:
   - name: NewHandlerChoice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 100
+    line_number: 71
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -298,7 +289,7 @@ groups:
   - name: PromptMatch
     module_path: _internal.interactive
     docstring: ''
-    line_number: 338
+    line_number: 404
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -354,7 +345,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 505
+    line_number: 569
     type: exception
     mro_bases:
     - Exception
@@ -373,7 +364,7 @@ groups:
   - name: SelectOptions
     module_path: _internal.interactive
     docstring: ''
-    line_number: 140
+    line_number: 151
     type: class
     mro_bases:
     - BaseModel
@@ -414,7 +405,7 @@ groups:
   - name: confirm
     module_path: _internal.interactive
     docstring: ''
-    line_number: 81
+    line_number: 109
     type: function
     signature:
       parameters:
@@ -434,7 +425,7 @@ groups:
   - name: force_interactive
     module_path: _internal.interactive
     docstring: ''
-    line_number: 381
+    line_number: 445
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -462,7 +453,7 @@ groups:
       thread pools, prompt_toolkit may still write to closed streams.
 
       '
-    line_number: 397
+    line_number: 461
     type: class
     mro_bases:
     - force_interactive
@@ -505,7 +496,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 511
+    line_number: 575
     type: class
     mro_bases:
     - force_interactive
@@ -531,7 +522,7 @@ groups:
   - name: select_dict
     module_path: _internal.interactive
     docstring: ''
-    line_number: 261
+    line_number: 292
     type: function
     signature:
       parameters:
@@ -563,7 +554,7 @@ groups:
   - name: select_list
     module_path: _internal.interactive
     docstring: ''
-    line_number: 277
+    line_number: 319
     type: function
     signature:
       parameters:
@@ -595,7 +586,7 @@ groups:
   - name: select_list_choice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 302
+    line_number: 356
     type: function
     signature:
       parameters:
@@ -627,7 +618,7 @@ groups:
   - name: select_list_multiple
     module_path: _internal.interactive
     docstring: ''
-    line_number: 230
+    line_number: 241
     type: function
     signature:
       parameters:
@@ -659,7 +650,7 @@ groups:
   - name: select_list_multiple_choices
     module_path: _internal.interactive
     docstring: ''
-    line_number: 246
+    line_number: 267
     type: function
     signature:
       parameters:
@@ -701,12 +692,100 @@ groups:
         type_imports: []
       - name: default
         kind: positional_or_keyword
-        type_annotation: str
+        type_annotation: str | None
         type_imports: []
         default:
-          value_repr: ''''''
+          value_repr: None
           is_factory: false
       return_annotation: str
+      return_type_imports: []
+  - name: ChoiceTyped
+    module_path: _internal.interactive_models
+    docstring: ''
+    line_number: 70
+    type: class
+    mro_bases: []
+    num_direct_bases: 1
+    fields:
+    - name: name
+      type_annotation: str
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: value
+      type_annotation: ~T
+      type_imports: []
+      is_class_var: false
+      is_computed: false
+    - name: description
+      type_annotation: str | None
+      type_imports: []
+      default:
+        value_repr: None
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+    - name: checked
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+  - name: NonInteractivePromptError
+    module_path: _internal.non_interactive
+    docstring: ''
+    line_number: 37
+    type: exception
+    mro_bases:
+    - Exception
+    - BaseException
+    num_direct_bases: 1
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: path
+        kind: positional_or_keyword
+        type_annotation: Path
+        type_imports:
+        - pathlib.Path
+      - name: parse_error
+        kind: keyword_only
+        type_annotation: str | None
+        type_imports: []
+        default:
+          value_repr: None
+          is_factory: false
+      return_annotation: None
+      return_type_imports: []
+  - name: PromptSessionLockedError
+    module_path: _internal.non_interactive
+    docstring: ''
+    line_number: 47
+    type: exception
+    mro_bases:
+    - Exception
+    - BaseException
+    num_direct_bases: 1
+    init_signature:
+      parameters:
+      - name: self
+        kind: positional_or_keyword
+        type_imports: []
+      - name: path
+        kind: positional_or_keyword
+        type_annotation: Path
+        type_imports:
+        - pathlib.Path
+      - name: lock_path
+        kind: positional_or_keyword
+        type_annotation: Path
+        type_imports:
+        - pathlib.Path
+      return_annotation: None
       return_type_imports: []
 - name: console
   symbols:
@@ -788,7 +867,7 @@ groups:
   - name: RemoveLivePart
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 158
+    line_number: 157
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -807,7 +886,7 @@ groups:
   - name: add_renderable
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 162
+    line_number: 161
     type: function
     signature:
       parameters:
@@ -837,7 +916,7 @@ groups:
   - name: get_live_console
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 180
+    line_number: 179
     type: function
     signature:
       parameters: []
@@ -847,7 +926,7 @@ groups:
   - name: log_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 234
+    line_number: 233
     type: function
     signature:
       parameters:
@@ -925,7 +1004,7 @@ groups:
   - name: print_to_live
     module_path: _internal.rich_live
     docstring: ''
-    line_number: 195
+    line_number: 194
     type: function
     signature:
       parameters:
@@ -1037,7 +1116,7 @@ groups:
   - name: new_task
     module_path: _internal.rich_progress
     docstring: ''
-    line_number: 168
+    line_number: 166
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -1107,7 +1186,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 169
+    line_number: 204
     type: function
     signature:
       parameters:
@@ -1258,7 +1337,7 @@ groups:
   - name: run
     module_path: _internal._run
     docstring: ''
-    line_number: 453
+    line_number: 450
     type: function
     signature:
       parameters:
@@ -1451,7 +1530,7 @@ groups:
   - name: run_and_wait
     module_path: _internal._run
     docstring: ''
-    line_number: 519
+    line_number: 516
     type: function
     signature:
       parameters:
@@ -1651,7 +1730,7 @@ groups:
   - name: run_error
     module_path: _internal._run
     docstring: ''
-    line_number: 586
+    line_number: 583
     type: function
     signature:
       parameters:
@@ -1694,7 +1773,7 @@ groups:
   - name: wait_on_ok_errors
     module_path: _internal._run
     docstring: ''
-    line_number: 593
+    line_number: 592
     type: function
     signature:
       parameters:
@@ -1724,7 +1803,7 @@ groups:
   - name: AbortRetryError
     module_path: _internal.models
     docstring: Raise from should_retry to stop retrying with a custom error.
-    line_number: 546
+    line_number: 545
     type: exception
     mro_bases:
     - Exception
@@ -1999,7 +2078,7 @@ groups:
   - name: ShellError
     module_path: _internal.models
     docstring: ''
-    line_number: 510
+    line_number: 509
     type: exception
     mro_bases:
     - Exception
@@ -2264,4 +2343,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-07-30 10:53:50.677750+00:00
+dumped_at: 2026-09-03 21:35:06.731236+00:00
