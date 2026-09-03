@@ -6,15 +6,20 @@ from contextlib import suppress
 from functools import wraps
 from pathlib import Path
 from types import TracebackType
-from typing import Callable, TypeVar
+from typing import Callable, NoReturn, TypeVar
 
 import typer
 from rich.logging import RichHandler
 from rich.traceback import Traceback
 
 import ask_shell
+from ask_shell._internal.non_interactive import (
+    NonInteractivePromptError,
+    PromptSessionLockedError,
+    prompt_session_lock,
+)
 from ask_shell._internal.rich_live import get_live_console, log_to_live
-from ask_shell._internal.rich_progress import new_task
+from ask_shell._internal.rich_progress import _is_clean_exit, new_task
 from ask_shell.settings import AskShellSettings, default_rich_info_style
 
 T = TypeVar("T", bound=Callable)
@@ -23,6 +28,24 @@ original_excepthook = sys.excepthook
 
 def log_exit_summary(settings: AskShellSettings):
     log_to_live(f"{default_rich_info_style()}You can find the run logs in {settings.run_logs} ")
+
+
+def _print_prompt_error_contract(exc: BaseException, settings: AskShellSettings) -> None:
+    log_to_live(str(exc))
+    log_to_live("Re-run the same command after editing.")
+    log_to_live(settings.prompt_path_export_line())
+
+
+def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
+    live = settings.non_interactive_prompt_file
+    if live.exists():
+        log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+        log_to_live(settings.prompt_path_export_line())
+
+
+def _fail_prompt_session(exc: BaseException, settings: AskShellSettings) -> NoReturn:
+    _print_prompt_error_contract(exc, settings)
+    raise typer.Exit(1) from None
 
 
 def except_hook_custom(
@@ -71,12 +94,27 @@ def track_progress_decorator(
                 sys.excepthook = except_hook_custom(skip_rich_exception)
             if use_app_name_command_for_logs:
                 settings.configure_run_logs_dir_if_unset(new_relative_path=f"{app_name}/{command_name}")
+            settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir=f"{app_name}/{command_name}")
             sys_args = " ".join(sys.argv)
             with new_task(
                 description=f"Running: '{sys_args}'",
             ):
                 try:
-                    return command(*args, **kwargs)
+                    with prompt_session_lock(settings):
+                        try:
+                            result = command(*args, **kwargs)
+                        except (NonInteractivePromptError, PromptSessionLockedError) as exc:
+                            _fail_prompt_session(exc, settings)
+                        except BaseException as exc:
+                            if _is_clean_exit(exc):
+                                settings.archive_non_interactive_prompt_file()
+                                raise
+                            _hint_prompt_file_on_error(settings)
+                            raise
+                        settings.archive_non_interactive_prompt_file()
+                        return result
+                except PromptSessionLockedError as exc:
+                    _fail_prompt_session(exc, settings)
                 finally:
                     log_exit_summary(settings)
 

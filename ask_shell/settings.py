@@ -81,6 +81,10 @@ def _clean_run_logs(run_logs: Path, clean_value: str) -> None:
 _rlock = RLock()
 
 
+def _utc_archive_stamp() -> str:
+    return datetime.now(UTC).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+
 def as_upper(v: str) -> str:
     return v.upper()
 
@@ -157,6 +161,19 @@ class AskShellSettings(StaticSettings):
     terminal_width: int = Field(default=120, alias=ENV_NAME_TERMINAL_WIDTH)
     ENV_NAME_TERMINAL_HEIGHT: ClassVar[str] = f"{ENV_PREFIX}TERMINAL_HEIGHT"
     terminal_height: int = Field(default=40, alias=ENV_NAME_TERMINAL_HEIGHT)
+    ENV_NAME_USE_DEFAULTS: ClassVar[str] = f"{ENV_PREFIX}USE_DEFAULTS"
+    use_defaults: bool = Field(
+        default=True,
+        alias=ENV_NAME_USE_DEFAULTS,
+        description="When true, non-interactive asks with a caller default return that default.",
+    )
+    ENV_NAME_NON_INTERACTIVE_PROMPT_PATH: ClassVar[str] = f"{ENV_PREFIX}NON_INTERACTIVE_PROMPT_PATH"
+    non_interactive_prompt_path: Path | None = Field(
+        default=None,
+        alias=ENV_NAME_NON_INTERACTIVE_PROMPT_PATH,
+        description="Absolute working file for the non-interactive prompt session. Unset means cache_root / filename.",
+    )
+    NON_INTERACTIVE_PROMPT_FILENAME: ClassVar[str] = "non_interactive_prompt.yaml"
 
     @model_validator(mode="after")
     def ensure_vars_set(self) -> Self:
@@ -208,6 +225,52 @@ class AskShellSettings(StaticSettings):
                 self.run_logs_dir
             )  # ensures default settings creation will have the RUN_LOGS_DIR set
         return self.run_logs_dir
+
+    @property
+    def non_interactive_prompt_file(self) -> Path:
+        if self.non_interactive_prompt_path is not None:
+            return self.non_interactive_prompt_path
+        return self.cache_root / self.NON_INTERACTIVE_PROMPT_FILENAME
+
+    @property
+    def non_interactive_prompt_lock_file(self) -> Path:
+        live = self.non_interactive_prompt_file
+        return live.with_name(f"{live.name}.lock")
+
+    def configure_non_interactive_prompt_path_if_unset(
+        self,
+        *,
+        new_relative_dir: str = "",
+        new_absolute_path: Path | None = None,
+        skip_env_update: bool = False,
+    ) -> Path:
+        if self.non_interactive_prompt_path is not None:
+            return self.non_interactive_prompt_path
+        assert new_relative_dir or new_absolute_path, "Either new_absolute_path or new_relative_dir must be provided"
+        if new_absolute_path is not None:
+            self.non_interactive_prompt_path = new_absolute_path
+        else:
+            self.non_interactive_prompt_path = self.cache_root / new_relative_dir / self.NON_INTERACTIVE_PROMPT_FILENAME
+        if skip_env_update:
+            return self.non_interactive_prompt_path
+        os.environ[self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH] = str(self.non_interactive_prompt_path)
+        return self.non_interactive_prompt_path
+
+    def archive_non_interactive_prompt_file(self) -> Path | None:
+        live = self.non_interactive_prompt_file
+        if live.exists():
+            stamp = _utc_archive_stamp()
+            dest = live.with_name(f"{stamp}_{live.name}")
+            suffix = 2
+            while dest.exists():
+                dest = live.with_name(f"{stamp}-{suffix}_{live.name}")
+                suffix += 1
+            live.rename(dest)
+            return dest
+        return None
+
+    def prompt_path_export_line(self) -> str:
+        return f"export {self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH}='{self.non_interactive_prompt_file.resolve()}'"
 
     def _last_run_counter(self) -> int:
         """Returns the next run counter based on existing directories."""

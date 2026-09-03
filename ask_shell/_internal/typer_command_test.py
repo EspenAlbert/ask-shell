@@ -1,9 +1,21 @@
 import logging
+import os
+import subprocess
+import sys
+from collections.abc import Callable
+from pathlib import Path
 
 import pytest
 import typer
+from zero_3rdparty import file_utils
 
 from ask_shell._internal import typer_command
+from ask_shell._internal.non_interactive import (
+    NonInteractivePromptError,
+    PromptSessionLockedError,
+    prompt_session_lock,
+)
+from ask_shell.settings import AskShellSettings
 
 
 def test_hide_secrets(caplog, tmp_path):
@@ -59,3 +71,149 @@ def test_configure_logging_skips_group_without_typer_instance(monkeypatch: pytes
     group_info = root.registered_groups[0]
     monkeypatch.setattr(group_info, "typer_instance", None)
     typer_command.configure_logging(root, skip_except_hook=True)
+
+
+def _leaf_live(settings: AskShellSettings, *parts: str) -> Path:
+    return settings.cache_root.joinpath(*parts, AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME)
+
+
+def _wrap(settings: AskShellSettings, fn: Callable, *, name: str = "root", cmd: str = "leaf"):
+    app = typer.Typer(name=name)
+    app.command(cmd)(fn)
+    typer_command.configure_logging(app, settings=settings, skip_except_hook=True)
+    callback = app.registered_commands[0].callback
+    assert callback is not None
+    return callback
+
+
+def _capture_live(monkeypatch: pytest.MonkeyPatch) -> list[str]:
+    lines: list[str] = []
+    monkeypatch.setattr(typer_command, "log_to_live", lambda *objs, **_: lines.append(" ".join(map(str, objs))))
+    return lines
+
+
+def _archives(live: Path) -> list[Path]:
+    return [path for path in live.parent.glob(f"*_{live.name}") if path != live]
+
+
+def test_command_scoped_and_nested_prompt_path(settings):
+    seen: dict[str, Path] = {}
+
+    def leaf() -> None:
+        seen["path"] = settings.non_interactive_prompt_file
+
+    _wrap(settings, leaf)()
+    assert seen["path"] == _leaf_live(settings, "root", "leaf")
+    settings.non_interactive_prompt_path = None
+    root = typer.Typer(name="root")
+    sub = typer.Typer()
+    sub.command("leaf")(leaf)
+    root.add_typer(sub, name="grp")
+    typer_command.configure_logging(root, settings=settings, skip_except_hook=True)
+    nested = root.registered_groups[0].typer_instance
+    assert nested is not None
+    callback = nested.registered_commands[0].callback
+    assert callback is not None
+    callback()
+    assert seen["path"] == _leaf_live(settings, "root", "grp", "leaf")
+
+
+def test_env_pin_is_unchanged(settings, tmp_path):
+    pinned = tmp_path / "custom.yaml"
+    settings.non_interactive_prompt_path = pinned
+    _wrap(settings, lambda: None)()
+    assert settings.non_interactive_prompt_file == pinned
+
+
+def test_success_archives_live_file(settings):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    _wrap(settings, lambda: None)()
+    assert not live.exists()
+    assert len(_archives(live)) == 1
+
+
+def test_success_without_live_file_is_noop(settings):
+    live = _leaf_live(settings, "root", "leaf")
+    _wrap(settings, lambda: None)()
+    yaml_files = list(live.parent.glob("*.yaml")) if live.parent.exists() else []
+    assert yaml_files == []
+
+
+def test_error_keeps_live_file(settings, monkeypatch):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    lines = _capture_live(monkeypatch)
+
+    def boom() -> None:
+        raise RuntimeError("nope")
+
+    with pytest.raises(RuntimeError, match="nope"):
+        _wrap(settings, boom)()
+    assert live.exists()
+    assert _archives(live) == []
+    joined = "\n".join(lines)
+    assert str(live) in joined
+    assert settings.prompt_path_export_line() in joined
+
+
+@pytest.mark.parametrize(
+    "factory",
+    [
+        lambda live: NonInteractivePromptError(live),
+        lambda live: PromptSessionLockedError(live, Path(f"{live}.lock")),
+    ],
+    ids=["prompt", "locked"],
+)
+def test_session_errors_exit_1_without_traceback(settings, monkeypatch, factory):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    lines = _capture_live(monkeypatch)
+
+    def boom() -> None:
+        raise factory(live)
+
+    with pytest.raises(typer.Exit) as exc_info:
+        _wrap(settings, boom)()
+    assert exc_info.value.exit_code == 1
+    assert live.exists()
+    assert _archives(live) == []
+    joined = "\n".join(lines)
+    assert str(live) in joined
+    assert "Traceback" not in joined
+    assert "non_interactive.py" not in joined
+    assert "interactive.py" not in joined
+
+
+_LOCK_CHILD = """
+import sys
+import typer
+from ask_shell._internal import typer_command
+from ask_shell.settings import AskShellSettings
+
+settings = AskShellSettings.from_env()
+app = typer.Typer(name="root")
+
+@app.command("leaf")
+def leaf():
+    return None
+
+typer_command.configure_logging(app, settings=settings, skip_except_hook=True)
+try:
+    app.registered_commands[0].callback()
+except typer.Exit as exc:
+    raise SystemExit(exc.exit_code) from None
+"""
+
+
+def test_overlapping_process_fails_fast(settings):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    settings.non_interactive_prompt_path = live
+    env = os.environ | {AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH: str(live)}
+    with prompt_session_lock(settings):
+        held = subprocess.run([sys.executable, "-c", _LOCK_CHILD], env=env, capture_output=True, text=True, check=False)
+        assert held.returncode == 1, held.stderr
+        assert live.read_text() == "questions: []\n"
+    released = subprocess.run([sys.executable, "-c", _LOCK_CHILD], env=env, capture_output=True, text=True, check=False)
+    assert released.returncode == 0, released.stderr

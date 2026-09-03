@@ -10,11 +10,18 @@ from ask_shell._internal._run import stop_runs_and_pool
 from ask_shell._internal.models import ShellConfig, ShellRun
 from ask_shell._internal.rich_live import get_live, reset_live
 from ask_shell._internal.rich_progress import get_default_progress_manager
-from ask_shell.settings import AskShellSettings
+from ask_shell.settings import ENV_PREFIX, AskShellSettings
 
 
 @pytest.fixture(autouse=True)
-def settings(static_env_vars: StaticSettings) -> AskShellSettings:
+def _isolate_ask_shell_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, raising=False)
+    monkeypatch.delenv("RUN_LOGS_DIR", raising=False)
+    monkeypatch.delenv(f"{ENV_PREFIX}RUN_LOGS_DIR", raising=False)
+
+
+@pytest.fixture(autouse=True)
+def settings(static_env_vars: StaticSettings, _isolate_ask_shell_env: None) -> AskShellSettings:
     return AskShellSettings.from_env(global_callback_strings=[], **static_env_vars.model_dump())
 
 

@@ -1,6 +1,11 @@
 import os
+import re
 
 import pytest
+from zero_3rdparty import file_utils
+
+from ask_shell import settings as settings_mod
+from ask_shell.settings import AskShellSettings
 
 
 @pytest.mark.skipif(os.environ.get("SLOW", "") == "", reason="needs os.environ[SLOW]")
@@ -43,3 +48,55 @@ def test_configure_run_logs_dir_if_unset(tmp_path, settings):
     )
     assert re_configured != new_run_logs_dir
     assert re_configured.name.endswith("Z")
+
+
+def test_default_prompt_file_uses_classvar_filename(settings):
+    assert AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME == "non_interactive_prompt.yaml"
+    assert (
+        settings.non_interactive_prompt_file == settings.cache_root / AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    )
+    assert settings.use_defaults
+
+
+def test_configure_prompt_path_if_unset_and_noop(settings):
+    filename = AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    first = settings.configure_non_interactive_prompt_path_if_unset(
+        new_relative_dir="my-app/leaf", skip_env_update=True
+    )
+    assert first == settings.cache_root / "my-app/leaf" / filename
+    assert first.name == filename
+    second = settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir="other", skip_env_update=True)
+    assert second == first
+    pinned = settings.cache_root / "pinned.yaml"
+    settings.non_interactive_prompt_path = pinned
+    assert settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir="ignored") == pinned
+
+
+def test_configure_prompt_path_writes_env(settings):
+    path = settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir="my-app/leaf")
+    assert os.environ[AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH] == str(path)
+    loaded = AskShellSettings.from_env()
+    assert loaded.non_interactive_prompt_file == path
+    assert AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH in settings.prompt_path_export_line()
+    assert str(path.resolve()) in settings.prompt_path_export_line()
+
+
+def test_archive_prompt_file_and_collision(settings, monkeypatch):
+    filename = AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    live = settings.non_interactive_prompt_file
+    assert settings.archive_non_interactive_prompt_file() is None
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    archived = settings.archive_non_interactive_prompt_file()
+    assert archived is not None
+    assert not live.exists()
+    assert archived.name.startswith("20")
+    assert re.match(r"\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z_", archived.name)
+    assert archived.name.endswith(f"_{filename}")
+    stamp = "2026-09-03T20-18-00Z"
+    monkeypatch.setattr(settings_mod, "_utc_archive_stamp", lambda: stamp)
+    file_utils.ensure_parents_write_text(live, "again\n")
+    taken = live.with_name(f"{stamp}_{filename}")
+    file_utils.ensure_parents_write_text(taken, "taken\n")
+    collided = settings.archive_non_interactive_prompt_file()
+    assert collided == live.with_name(f"{stamp}-2_{filename}")
+    assert collided.read_text() == "again\n"
