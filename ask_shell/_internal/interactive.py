@@ -301,6 +301,7 @@ def select_dict(
     options = options or SelectOptions()
     default_safe = default or ""
     typed_choices = [ChoiceTyped(name=key, value=value, checked=key == default_safe) for key, value in choices.items()]
+    default_in_choices = default in choices if default is not None else False
 
     def ask_fn() -> T:
         return options._select(prompt_text, typed_choices)
@@ -309,8 +310,8 @@ def select_dict(
         kind=PromptKind.SELECT,
         prompt=prompt_text,
         choices=typed_choices,
-        has_usable_default=default is not None,
-        usable_default=choices[default] if default is not None else None,
+        has_usable_default=default_in_choices,
+        usable_default=choices[default] if default_in_choices else None,
         ask_fn=ask_fn,
     )
 
@@ -326,6 +327,7 @@ def select_list(
     assert choices, f"choices must not be empty for {as_name(select_list)}"
     options = options or SelectOptions()
     typed_choices = [ChoiceTyped(name=choice, value=choice) for choice in choices]
+    default_in_choices = default in choices if default is not None else False
 
     def ask_fn() -> str:
         chosen = options.set_defaults(len(choices))
@@ -345,8 +347,8 @@ def select_list(
         kind=PromptKind.SELECT,
         prompt=prompt_text,
         choices=typed_choices,
-        has_usable_default=default is not None,
-        usable_default=default,
+        has_usable_default=default_in_choices,
+        usable_default=default if default_in_choices else None,
         ask_fn=ask_fn,
     )
 
@@ -361,6 +363,8 @@ def select_list_choice(
 ) -> T:
     assert choices, f"choices must not be empty for {as_name(select_list_choice)}"
     options = options or SelectOptions()
+    choice_values = {choice.value for choice in choices}
+    default_in_choices = default is not None and default in choice_values
 
     def ask_fn() -> T:
         return options._select(prompt_text, choices)
@@ -369,8 +373,8 @@ def select_list_choice(
         kind=PromptKind.SELECT,
         prompt=prompt_text,
         choices=choices,
-        has_usable_default=default is not None,
-        usable_default=default,
+        has_usable_default=default_in_choices,
+        usable_default=default if default_in_choices else None,
         ask_fn=ask_fn,
     )
 

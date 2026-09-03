@@ -177,6 +177,25 @@ def test_confirm_default_dumps_when_use_defaults_off(settings, monkeypatch):
         confirm("Go?", default=True)
 
 
+def test_select_dict_invalid_default_dumps(settings, monkeypatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_USE_DEFAULTS, "true")
+    with pytest.raises(NonInteractivePromptError, match=str(settings.non_interactive_prompt_file)):
+        select_dict("Pick:", {"a": 1, "b": 2}, default="missing")
+
+
+def test_select_list_invalid_default_dumps(settings, monkeypatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_USE_DEFAULTS, "true")
+    with pytest.raises(NonInteractivePromptError, match=str(settings.non_interactive_prompt_file)):
+        select_list("Pick:", ["a", "b"], default="missing")
+
+
+def test_select_list_choice_invalid_default_dumps(settings, monkeypatch):
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_USE_DEFAULTS, "true")
+    choices = [ChoiceTyped(name="a", value=1), ChoiceTyped(name="b", value=2)]
+    with pytest.raises(NonInteractivePromptError, match=str(settings.non_interactive_prompt_file)):
+        select_list_choice("Pick:", choices, default=99)
+
+
 def test_question_patcher_skips_session_file(settings):
     with question_patcher(responses=[""]):
         select_list("Pick:", ["a", "b"])

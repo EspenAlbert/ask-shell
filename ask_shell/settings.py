@@ -1,5 +1,6 @@
 import logging
 import os
+import shlex
 from datetime import UTC, datetime, timedelta
 from enum import StrEnum
 from functools import cached_property, lru_cache
@@ -246,7 +247,8 @@ class AskShellSettings(StaticSettings):
     ) -> Path:
         if self.non_interactive_prompt_path is not None:
             return self.non_interactive_prompt_path
-        assert new_relative_dir or new_absolute_path, "Either new_absolute_path or new_relative_dir must be provided"
+        if not new_relative_dir and new_absolute_path is None:
+            raise ValueError("Either new_absolute_path or new_relative_dir must be provided")
         if new_absolute_path is not None:
             self.non_interactive_prompt_path = new_absolute_path
         else:
@@ -270,7 +272,8 @@ class AskShellSettings(StaticSettings):
         return None
 
     def prompt_path_export_line(self) -> str:
-        return f"export {self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH}='{self.non_interactive_prompt_file.resolve()}'"
+        quoted_path = shlex.quote(str(self.non_interactive_prompt_file.resolve()))
+        return f"export {self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH}={quoted_path}"
 
     def _last_run_counter(self) -> int:
         """Returns the next run counter based on existing directories."""

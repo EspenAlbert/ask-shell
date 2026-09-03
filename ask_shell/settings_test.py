@@ -1,5 +1,6 @@
 import os
 import re
+import shlex
 
 import pytest
 from zero_3rdparty import file_utils
@@ -79,6 +80,19 @@ def test_configure_prompt_path_writes_env(settings):
     assert loaded.non_interactive_prompt_file == path
     assert AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH in settings.prompt_path_export_line()
     assert str(path.resolve()) in settings.prompt_path_export_line()
+
+
+def test_configure_prompt_path_requires_dir_or_absolute(settings):
+    with pytest.raises(ValueError, match="Either new_absolute_path or new_relative_dir must be provided"):
+        settings.configure_non_interactive_prompt_path_if_unset()
+
+
+def test_prompt_path_export_line_escapes_single_quotes(settings, tmp_path):
+    path = tmp_path / "agent's" / AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    settings.non_interactive_prompt_path = path
+    export_line = settings.prompt_path_export_line()
+    expected = f"export {AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH}={shlex.quote(str(path.resolve()))}"
+    assert export_line == expected
 
 
 def test_archive_prompt_file_and_collision(settings, monkeypatch):
