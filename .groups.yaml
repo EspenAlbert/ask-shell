@@ -9,8 +9,9 @@ groups:
 - name: ask
   owned_modules:
   - _internal.interactive
+  - _internal.interactive_models
+  - _internal.non_interactive
   owned_refs:
-  - _internal.interactive.ChoiceTyped
   - _internal.interactive.KeyInput
   - _internal.interactive.NewHandlerChoice
   - _internal.interactive.PromptMatch
@@ -26,6 +27,9 @@ groups:
   - _internal.interactive.select_list_multiple
   - _internal.interactive.select_list_multiple_choices
   - _internal.interactive.text
+  - _internal.interactive_models.ChoiceTyped
+  - _internal.non_interactive.NonInteractivePromptError
+  - _internal.non_interactive.PromptSessionLockedError
 - name: console
   owned_modules:
   - _internal._run_env

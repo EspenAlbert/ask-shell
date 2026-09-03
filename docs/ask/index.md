@@ -7,7 +7,9 @@
 - [`ChoiceTyped`](#choicetyped_def)
 - [`KeyInput`](#keyinput_def)
 - [`NewHandlerChoice`](#newhandlerchoice_def)
+- [`NonInteractivePromptError`](#noninteractiveprompterror_def)
 - [`PromptMatch`](#promptmatch_def)
+- [`PromptSessionLockedError`](#promptsessionlockederror_def)
 - [RaiseOnQuestionError](./raiseonquestionerror.md)
 - [SelectOptions](./selectoptions.md)
 - [`confirm`](#confirm_def)
@@ -19,7 +21,7 @@
 - [`select_list_choice`](#select_list_choice_def)
 - [`select_list_multiple`](#select_list_multiple_def)
 - [`select_list_multiple_choices`](#select_list_multiple_choices_def)
-- [`text`](#text_def)
+- [text](./text.md)
 <!-- === OK_EDIT: pkg-ext symbols === -->
 
 <!-- === DO_NOT_EDIT: pkg-ext symbol_details_header === -->
@@ -30,7 +32,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](../../ask_shell/_internal/interactive.py#L106)
+- [source](../../ask_shell/_internal/interactive_models.py#L70)
 > **Since:** 0.3.0
 
 ```python
@@ -58,7 +60,7 @@ class ChoiceTyped:
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](../../ask_shell/_internal/interactive.py#L313)
+- [source](../../ask_shell/_internal/interactive.py#L378)
 > **Since:** 0.3.0
 
 ```python
@@ -75,7 +77,7 @@ class KeyInput: ...
 <a id="newhandlerchoice_def"></a>
 
 ### class: `NewHandlerChoice`
-- [source](../../ask_shell/_internal/interactive.py#L100)
+- [source](../../ask_shell/_internal/interactive.py#L71)
 > **Since:** 0.3.0
 
 ```python
@@ -99,7 +101,7 @@ class NewHandlerChoice:
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](../../ask_shell/_internal/interactive.py#L335)
+- [source](../../ask_shell/_internal/interactive.py#L400)
 > **Since:** 0.3.0
 
 ```python
@@ -131,7 +133,7 @@ class PromptMatch:
 <a id="confirm_def"></a>
 
 ### function: `confirm`
-- [source](../../ask_shell/_internal/interactive.py#L81)
+- [source](../../ask_shell/_internal/interactive.py#L109)
 > **Since:** 0.3.0
 
 ```python
@@ -148,7 +150,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](../../ask_shell/_internal/interactive.py#L376)
+- [source](../../ask_shell/_internal/interactive.py#L441)
 > **Since:** 0.3.0
 
 ```python
@@ -170,7 +172,7 @@ class force_interactive:
 <a id="select_dict_def"></a>
 
 ### function: `select_dict`
-- [source](../../ask_shell/_internal/interactive.py#L258)
+- [source](../../ask_shell/_internal/interactive.py#L292)
 > **Since:** 0.3.0
 
 ```python
@@ -189,7 +191,7 @@ def select_dict(
 <a id="select_list_def"></a>
 
 ### function: `select_list`
-- [source](../../ask_shell/_internal/interactive.py#L274)
+- [source](../../ask_shell/_internal/interactive.py#L318)
 > **Since:** 0.3.0
 
 ```python
@@ -208,7 +210,7 @@ def select_list(
 <a id="select_list_choice_def"></a>
 
 ### function: `select_list_choice`
-- [source](../../ask_shell/_internal/interactive.py#L299)
+- [source](../../ask_shell/_internal/interactive.py#L354)
 > **Since:** 0.3.0
 
 ```python
@@ -227,7 +229,7 @@ def select_list_choice(
 <a id="select_list_multiple_def"></a>
 
 ### function: `select_list_multiple`
-- [source](../../ask_shell/_internal/interactive.py#L227)
+- [source](../../ask_shell/_internal/interactive.py#L241)
 > **Since:** 0.3.0
 
 ```python
@@ -246,7 +248,7 @@ def select_list_multiple(
 <a id="select_list_multiple_choices_def"></a>
 
 ### function: `select_list_multiple_choices`
-- [source](../../ask_shell/_internal/interactive.py#L243)
+- [source](../../ask_shell/_internal/interactive.py#L267)
 > **Since:** 0.3.0
 
 ```python
@@ -265,20 +267,37 @@ def select_list_multiple_choices(
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_multiple_choices_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext text_def === -->
-<a id="text_def"></a>
+<!-- === DO_NOT_EDIT: pkg-ext noninteractiveprompterror_def === -->
+<a id="noninteractiveprompterror_def"></a>
 
-### function: `text`
-- [source](../../ask_shell/_internal/interactive.py#L126)
-> **Since:** 0.3.0
+### exception: `NonInteractivePromptError`
+- [source](../../ask_shell/_internal/non_interactive.py#L37)
+> **Since:** unreleased
 
 ```python
-def text(prompt_text: str, default: str = "") -> str: ...
+class NonInteractivePromptError(Exception): ...
 ```
 
 ### Changes
 
 | Version | Change |
 |---------|--------|
-| 0.3.0 | Made public |
-<!-- === OK_EDIT: pkg-ext text_def === -->
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext noninteractiveprompterror_def === -->
+<!-- === DO_NOT_EDIT: pkg-ext promptsessionlockederror_def === -->
+<a id="promptsessionlockederror_def"></a>
+
+### exception: `PromptSessionLockedError`
+- [source](../../ask_shell/_internal/non_interactive.py#L47)
+> **Since:** unreleased
+
+```python
+class PromptSessionLockedError(Exception): ...
+```
+
+### Changes
+
+| Version | Change |
+|---------|--------|
+| unreleased | Made public |
+<!-- === OK_EDIT: pkg-ext promptsessionlockederror_def === -->

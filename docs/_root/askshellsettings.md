@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext askshellsettings_def === -->
 ## class: AskShellSettings
-- [source](../../ask_shell/settings.py#L99)
+- [source](../../ask_shell/settings.py#L103)
 > **Since:** 0.3.0
 
 ```python
@@ -23,6 +23,8 @@ class AskShellSettings(StaticSettings):
     shell_run_summary: ShellRunSummary = <ShellRunSummary.ALL: 'all'>
     terminal_width: int = 120
     terminal_height: int = 40
+    use_defaults: bool = True
+    non_interactive_prompt_path: Path | None = None
 ```
 <!-- === OK_EDIT: pkg-ext askshellsettings_def === -->
 
@@ -73,6 +75,8 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'use_defaults' (default: True) |
+| unreleased | added optional field 'non_interactive_prompt_path' (default: None) |
 | 0.9.0 | added optional field 'disable_interactive_shell' (default: False) |
 | 0.8.0 | added optional field 'terminal_width' (default: 120) |
 | 0.8.0 | added optional field 'terminal_height' (default: 40) |
