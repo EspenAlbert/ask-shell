@@ -23,6 +23,8 @@ nav:
     - question_patcher: ask/question_patcher.md
     - raise_on_question: ask/raise_on_question.md
     - text: ask/text.md
+    - Examples:
+      - non_interactive_agent_loop: examples/ask/non_interactive_agent_loop.md
   - console:
     - Overview: console/index.md
     - Examples:

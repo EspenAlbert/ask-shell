@@ -36,6 +36,11 @@ tag_prefix = "v"
 max_bump_type = "minor"
 # === OK_EDIT: path-sync pkg-ext ===
 
+[tool.pkg-ext.groups.ask]
+examples_include = [
+  "non_interactive_agent_loop",
+]
+
 [tool.pkg-ext.groups.shell]
 examples_include = [
   "AbortRetryError",
