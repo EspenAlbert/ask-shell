@@ -1,6 +1,7 @@
 import os
 import re
 import shlex
+from pathlib import Path
 
 import pytest
 from zero_3rdparty import file_utils
@@ -64,13 +65,41 @@ def test_configure_prompt_path_if_unset_and_noop(settings):
     first = settings.configure_non_interactive_prompt_path_if_unset(
         new_relative_dir="my-app/leaf", skip_env_update=True
     )
-    assert first == settings.cache_root / "my-app/leaf" / filename
+    assert first == settings.cache_root / "my-app" / "leaf" / filename
     assert first.name == filename
     second = settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir="other", skip_env_update=True)
     assert second == first
     pinned = settings.cache_root / "pinned.yaml"
     settings.non_interactive_prompt_path = pinned
     assert settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir="ignored") == pinned
+
+
+@pytest.mark.parametrize(
+    ("yaml", "app", "cmd", "expected_suffix"),
+    [
+        (
+            "session:\n  command: adoc/gh_rr\n  pinned: false\nquestions: []\n",
+            "adoc",
+            "gh_rr",
+            "adoc/gh_rr",
+        ),
+        (
+            "session:\n  command: adoc/gh_rr\n  pinned: true\nquestions: []\n",
+            "pkg-ext",
+            "pre_commit",
+            "adoc/gh_rr",
+        ),
+        ("questions: []\n", "pkg-ext", "pre_commit", "pkg-ext/pre_commit"),
+    ],
+    ids=["same-command", "pinned-foreign", "legacy-foreign"],
+)
+def test_resolve_non_interactive_prompt_path(settings, yaml, app, cmd, expected_suffix):
+    filename = AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    parent = settings.cache_root / "adoc" / "gh_rr" / filename
+    file_utils.ensure_parents_write_text(parent, yaml)
+    settings.non_interactive_prompt_path = parent
+    resolved = settings.resolve_non_interactive_prompt_path(app_name=app, command_name=cmd)
+    assert resolved == settings.cache_root / Path(*expected_suffix.split("/")) / filename
 
 
 def test_configure_prompt_path_writes_env(settings):

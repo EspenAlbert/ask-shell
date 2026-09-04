@@ -15,6 +15,8 @@ from zero_3rdparty.datetime_utils import utc_now
 from zero_3rdparty.file_utils import clean_dir
 from zero_3rdparty.object_name import as_name
 
+from ask_shell._internal.prompt_file import ensure_session_header, load_prompt_file
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_RUN_LOGS_BASE_DIR = "run_logs"
@@ -238,6 +240,40 @@ class AskShellSettings(StaticSettings):
         live = self.non_interactive_prompt_file
         return live.with_name(f"{live.name}.lock")
 
+    def scoped_non_interactive_prompt_path(self, *, app_name: str, command_name: str) -> Path:
+        return self.cache_root / app_name / command_name / self.NON_INTERACTIVE_PROMPT_FILENAME
+
+    def resolve_non_interactive_prompt_path(self, *, app_name: str, command_name: str) -> Path:
+        command = f"{app_name}/{command_name}"
+        scoped = self.scoped_non_interactive_prompt_path(app_name=app_name, command_name=command_name)
+        env_path = self.non_interactive_prompt_path
+        if env_path is None:
+            return scoped
+        if not _path_under_cache_root(env_path, self.cache_root):
+            return env_path
+        if not env_path.exists():
+            return scoped
+        doc, _ = load_prompt_file(env_path)
+        if doc.session is None:
+            return scoped if env_path != scoped else env_path
+        if doc.session.pinned or doc.session.command == command:
+            return env_path
+        return scoped
+
+    def finalize_non_interactive_prompt_path(
+        self,
+        *,
+        app_name: str = "",
+        command_name: str = "",
+        path: Path | None = None,
+        skip_env_update: bool = False,
+    ) -> Path:
+        resolved = path or self.resolve_non_interactive_prompt_path(app_name=app_name, command_name=command_name)
+        self.non_interactive_prompt_path = resolved
+        if not skip_env_update:
+            os.environ[self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH] = str(resolved)
+        return resolved
+
     def configure_non_interactive_prompt_path_if_unset(
         self,
         *,
@@ -250,13 +286,19 @@ class AskShellSettings(StaticSettings):
         if not new_relative_dir and new_absolute_path is None:
             raise ValueError("Either new_absolute_path or new_relative_dir must be provided")
         if new_absolute_path is not None:
-            self.non_interactive_prompt_path = new_absolute_path
+            pinned = not _path_under_cache_root(new_absolute_path, self.cache_root)
+            ensure_session_header(new_absolute_path, command="custom", pinned=pinned)
+            return self.finalize_non_interactive_prompt_path(path=new_absolute_path, skip_env_update=skip_env_update)
+        parts = new_relative_dir.rsplit("/", 1)
+        if len(parts) == 2:
+            app_name, command_name = parts
         else:
-            self.non_interactive_prompt_path = self.cache_root / new_relative_dir / self.NON_INTERACTIVE_PROMPT_FILENAME
-        if skip_env_update:
-            return self.non_interactive_prompt_path
-        os.environ[self.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH] = str(self.non_interactive_prompt_path)
-        return self.non_interactive_prompt_path
+            app_name, command_name = new_relative_dir, "command"
+        return self.finalize_non_interactive_prompt_path(
+            app_name=app_name,
+            command_name=command_name,
+            skip_env_update=skip_env_update,
+        )
 
     def archive_non_interactive_prompt_file(self) -> Path | None:
         live = self.non_interactive_prompt_file
@@ -301,6 +343,17 @@ class AskShellSettings(StaticSettings):
 
 def default_rich_info_style() -> str:
     return "[cyan]"
+
+
+def _path_under_cache_root(path: Path, cache_root: Path) -> bool:
+    try:
+        path.resolve().relative_to(cache_root.resolve())
+    except ValueError:
+        return False
+    return True
+
+
+path_under_cache_root = _path_under_cache_root
 
 
 _global_settings = AskShellSettings.for_testing(global_callback_strings=[], remove_os_secrets=False)

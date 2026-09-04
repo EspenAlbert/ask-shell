@@ -136,8 +136,9 @@ def test_success_archives_live_file(settings):
 def test_success_without_live_file_is_noop(settings):
     live = _leaf_live(settings, "root", "leaf")
     _wrap(settings, lambda: None)()
-    yaml_files = list(live.parent.glob("*.yaml")) if live.parent.exists() else []
-    assert yaml_files == []
+    archives = _archives(live)
+    assert len(archives) == 1
+    assert "session:" in archives[0].read_text()
 
 
 def test_error_keeps_live_file(settings, monkeypatch):
@@ -217,3 +218,45 @@ def test_overlapping_process_fails_fast(settings):
         assert live.read_text() == "questions: []\n"
     released = subprocess.run([sys.executable, "-c", _LOCK_CHILD], env=env, capture_output=True, text=True, check=False)
     assert released.returncode == 0, released.stderr
+
+
+_NESTED_CHILD = """
+import os
+import typer
+from ask_shell._internal import typer_command
+from ask_shell.settings import AskShellSettings
+
+settings = AskShellSettings.from_env()
+app = typer.Typer(name="pkg-ext")
+
+@app.command("pre_commit")
+def pre_commit():
+    return None
+
+typer_command.configure_logging(app, settings=settings, skip_except_hook=True)
+app.registered_commands[0].callback()
+"""
+
+
+def test_nested_command_uses_own_prompt_path_while_parent_locked(settings):
+    parent_live = settings.cache_root / "adoc" / "gh_rr" / AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    file_utils.ensure_parents_write_text(
+        parent_live,
+        "session:\n  command: adoc/gh_rr\n  pinned: false\nquestions: []\n",
+    )
+    settings.non_interactive_prompt_path = parent_live
+    env = os.environ | {
+        AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH: str(parent_live),
+        "CACHE_DIR": str(settings.cache_root.parent),
+    }
+    with prompt_session_lock(settings):
+        child = subprocess.run(
+            [sys.executable, "-c", _NESTED_CHILD],
+            env=env,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert child.returncode == 0, child.stderr
+    child_dir = settings.cache_root / "pkg-ext" / "pre_commit"
+    assert list(child_dir.glob("*non_interactive_prompt.yaml"))
