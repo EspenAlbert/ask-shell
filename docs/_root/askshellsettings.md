@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext askshellsettings_def === -->
 ## class: AskShellSettings
-- [source](../../ask_shell/settings.py#L104)
+- [source](../../ask_shell/settings.py#L106)
 > **Since:** 0.3.0
 
 ```python

@@ -14,7 +14,7 @@
 <a id="shellrunsummary_def"></a>
 
 ### class: `ShellRunSummary`
-- [source](../../ask_shell/settings.py#L99)
+- [source](../../ask_shell/settings.py#L101)
 > **Since:** 0.7.0
 
 ```python
