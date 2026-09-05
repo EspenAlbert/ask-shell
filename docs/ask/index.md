@@ -32,7 +32,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](../../ask_shell/_internal/interactive_models.py#L70)
+- [source](../../ask_shell/_internal/interactive_models.py#L76)
 > **Since:** 0.3.0
 
 ```python
@@ -60,7 +60,7 @@ class ChoiceTyped:
 <a id="keyinput_def"></a>
 
 ### class: `KeyInput`
-- [source](../../ask_shell/_internal/interactive.py#L382)
+- [source](../../ask_shell/_internal/interactive.py#L381)
 > **Since:** 0.3.0
 
 ```python
@@ -101,7 +101,7 @@ class NewHandlerChoice:
 <a id="promptmatch_def"></a>
 
 ### class: `PromptMatch`
-- [source](../../ask_shell/_internal/interactive.py#L404)
+- [source](../../ask_shell/_internal/interactive.py#L403)
 > **Since:** 0.3.0
 
 ```python
@@ -150,7 +150,7 @@ def confirm(prompt_text: str, *, default: bool | None = None) -> bool: ...
 <a id="force_interactive_def"></a>
 
 ### class: `force_interactive`
-- [source](../../ask_shell/_internal/interactive.py#L445)
+- [source](../../ask_shell/_internal/interactive.py#L444)
 > **Since:** 0.3.0
 
 ```python
@@ -271,7 +271,7 @@ def select_list_multiple_choices(
 <a id="noninteractiveprompterror_def"></a>
 
 ### exception: `NonInteractivePromptError`
-- [source](../../ask_shell/_internal/non_interactive.py#L37)
+- [source](../../ask_shell/_internal/non_interactive.py#L33)
 > **Since:** 0.11.0
 
 ```python
@@ -288,7 +288,7 @@ class NonInteractivePromptError(Exception): ...
 <a id="promptsessionlockederror_def"></a>
 
 ### exception: `PromptSessionLockedError`
-- [source](../../ask_shell/_internal/non_interactive.py#L47)
+- [source](../../ask_shell/_internal/non_interactive.py#L43)
 > **Since:** 0.11.0
 
 ```python

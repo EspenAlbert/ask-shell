@@ -9,12 +9,6 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
-from model_lib import dump, parse
-from model_lib.constants import FileFormat
-from model_lib.errors import PayloadError
-from pydantic import ValidationError
-from zero_3rdparty import file_utils
-
 from ask_shell._internal.interactive_models import (
     ChoiceTyped,
     ConfirmQuestion,
@@ -22,11 +16,13 @@ from ask_shell._internal.interactive_models import (
     NonInteractivePromptFile,
     PromptKind,
     PromptQuestion,
+    PromptSession,
     SelectAlternative,
     SelectMultipleQuestion,
     SelectQuestion,
     TextQuestion,
 )
+from ask_shell._internal.prompt_file import load_prompt_file, write_prompt_file
 from ask_shell.settings import AskShellSettings
 
 _UNDECIDED = "undecided"
@@ -73,6 +69,13 @@ def prompt_session_lock(settings: AskShellSettings) -> Iterator[None]:
         fcntl.flock(fd, fcntl.LOCK_UN)
         os.close(fd)
         _lock_fd.reset(token)
+
+
+def _pin_session(doc: NonInteractivePromptFile) -> None:
+    if doc.session is None:
+        doc.session = PromptSession(command="", pinned=True)
+        return
+    doc.session.pinned = True
 
 
 def try_replay_answered(
@@ -123,7 +126,7 @@ def _try_replay_answered(
     choices: Sequence[ChoiceTyped],
 ) -> Any | None:
     global _replay_index
-    doc, _ = _load_prompt_file(settings.non_interactive_prompt_file)
+    doc, _ = load_prompt_file(settings.non_interactive_prompt_file)
     current = doc.questions[_replay_index] if _replay_index < len(doc.questions) else None
     if current is None or current.kind != kind or current.prompt != prompt or not _row_is_answered(current, choices):
         return None
@@ -142,10 +145,10 @@ def _record_answered_row(
 ) -> None:
     global _replay_index
     path = settings.non_interactive_prompt_file
-    doc, _ = _load_prompt_file(path)
+    doc, _ = load_prompt_file(path)
     doc.questions = doc.questions[:_replay_index]
     doc.questions.append(_answered_row_from_value(kind, prompt, choices, value))
-    _atomic_write(path, doc)
+    write_prompt_file(path, doc)
     _replay_index += 1
 
 
@@ -158,33 +161,18 @@ def _replay_or_dump(
 ) -> Any:
     global _replay_index
     path = settings.non_interactive_prompt_file
-    doc, parse_error = _load_prompt_file(path)
+    doc, parse_error = load_prompt_file(path)
     questions = doc.questions
     current = questions[_replay_index] if _replay_index < len(questions) else None
     if current is None or current.kind != kind or current.prompt != prompt or not _row_is_answered(current, choices):
         doc.questions = questions[:_replay_index]
         doc.questions.append(_undecided_row(kind, prompt, choices))
-        _atomic_write(path, doc)
+        _pin_session(doc)
+        write_prompt_file(path, doc)
         raise NonInteractivePromptError(path, parse_error=parse_error)
     value = _row_value(current, choices)
     _replay_index += 1
     return value
-
-
-def _load_prompt_file(path: Path) -> tuple[NonInteractivePromptFile, str | None]:
-    if path.exists() and path.stat().st_size > 0:
-        try:
-            return parse.parse_model(path, t=NonInteractivePromptFile, format=FileFormat.yaml), None
-        except (PayloadError, ValidationError) as exc:
-            return NonInteractivePromptFile(), str(exc)
-    return NonInteractivePromptFile(), None
-
-
-def _atomic_write(path: Path, doc: NonInteractivePromptFile) -> None:
-    content = dump.dump_as_str(doc.model_dump(mode="json", exclude_none=True), FileFormat.yaml)
-    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
-    file_utils.ensure_parents_write_text(tmp, content)
-    os.replace(tmp, path)
 
 
 def _alternatives(choices: Sequence[ChoiceTyped]) -> list[SelectAlternative]:

@@ -363,8 +363,7 @@ def select_list_choice(
 ) -> T:
     assert choices, f"choices must not be empty for {as_name(select_list_choice)}"
     options = options or SelectOptions()
-    choice_values = {choice.value for choice in choices}
-    default_in_choices = default is not None and default in choice_values
+    default_in_choices = default is not None and any(choice.value == default for choice in choices)
 
     def ask_fn() -> T:
         return options._select(prompt_text, choices)

@@ -18,9 +18,10 @@ from ask_shell._internal.non_interactive import (
     PromptSessionLockedError,
     prompt_session_lock,
 )
+from ask_shell._internal.prompt_file import ensure_session_header, load_prompt_file
 from ask_shell._internal.rich_live import get_live_console, log_to_live
 from ask_shell._internal.rich_progress import _is_clean_exit, new_task
-from ask_shell.settings import AskShellSettings, default_rich_info_style
+from ask_shell.settings import AskShellSettings, default_rich_info_style, path_under_cache_root
 
 T = TypeVar("T", bound=Callable)
 original_excepthook = sys.excepthook
@@ -34,6 +35,11 @@ def _print_prompt_error_contract(exc: BaseException, settings: AskShellSettings)
     log_to_live(str(exc))
     log_to_live("Re-run the same command after editing.")
     log_to_live(settings.prompt_path_export_line())
+    live = settings.non_interactive_prompt_file
+    if live.exists():
+        doc, _ = load_prompt_file(live)
+        if doc.session and doc.session.pinned:
+            log_to_live("This prompt file stays pinned after the first unanswered dump.")
 
 
 def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
@@ -94,13 +100,19 @@ def track_progress_decorator(
                 sys.excepthook = except_hook_custom(skip_rich_exception)
             if use_app_name_command_for_logs:
                 settings.configure_run_logs_dir_if_unset(new_relative_path=f"{app_name}/{command_name}")
-            settings.configure_non_interactive_prompt_path_if_unset(new_relative_dir=f"{app_name}/{command_name}")
+            settings.finalize_non_interactive_prompt_path(app_name=app_name, command_name=command_name)
+            session_command = f"{app_name}/{command_name}"
             sys_args = " ".join(sys.argv)
             with new_task(
                 description=f"Running: '{sys_args}'",
             ):
                 try:
                     with prompt_session_lock(settings):
+                        ensure_session_header(
+                            settings.non_interactive_prompt_file,
+                            command=session_command,
+                            pinned=not path_under_cache_root(settings.non_interactive_prompt_file, settings.cache_root),
+                        )
                         try:
                             result = command(*args, **kwargs)
                         except (NonInteractivePromptError, PromptSessionLockedError) as exc:

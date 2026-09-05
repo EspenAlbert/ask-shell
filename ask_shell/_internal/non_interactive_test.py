@@ -50,6 +50,8 @@ def test_empty_file_writes_undecided_and_raises(settings):
     assert len(doc.questions) == 1
     assert doc.questions[0].kind == PromptKind.CONFIRM
     assert doc.questions[0].prompt == "Go?"
+    assert doc.session is not None
+    assert doc.session.pinned
 
 
 def test_answered_select_returns_choice_value(settings):

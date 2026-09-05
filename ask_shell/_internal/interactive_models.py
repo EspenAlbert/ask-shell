@@ -63,7 +63,13 @@ PromptQuestion = Annotated[
 ]
 
 
+class PromptSession(Entity):
+    command: str
+    pinned: bool = False
+
+
 class NonInteractivePromptFile(Entity):
+    session: PromptSession | None = None
     questions: list[PromptQuestion] = Field(default_factory=list)
 
 

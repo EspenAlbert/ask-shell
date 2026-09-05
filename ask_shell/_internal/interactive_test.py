@@ -196,6 +196,12 @@ def test_select_list_choice_invalid_default_dumps(settings, monkeypatch):
         select_list_choice("Pick:", choices, default=99)
 
 
+def test_select_list_choice_accepts_unhashable_values():
+    choices = [ChoiceTyped(name="a", value={"k": 1}), ChoiceTyped(name="b", value={"k": 2})]
+    with question_patcher(responses=[""]):
+        assert select_list_choice("Pick:", choices, default={"k": 1}) == {"k": 1}
+
+
 def test_question_patcher_skips_session_file(settings):
     with question_patcher(responses=[""]):
         select_list("Pick:", ["a", "b"])

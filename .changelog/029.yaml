@@ -1,0 +1,28 @@
+name: load_prompt_file
+ts: 2026-09-04 07:21:02.922107+00:00
+type: keep_private
+full_path: _internal.prompt_file.load_prompt_file
+---
+name: write_prompt_file
+ts: 2026-09-04 07:21:02.922156+00:00
+type: keep_private
+full_path: _internal.prompt_file.write_prompt_file
+---
+name: ensure_session_header
+ts: 2026-09-04 07:21:02.922163+00:00
+type: keep_private
+full_path: _internal.prompt_file.ensure_session_header
+---
+name: PromptSession
+ts: 2026-09-04 07:21:08.631200+00:00
+type: keep_private
+full_path: _internal.interactive_models.PromptSession
+---
+name: console
+ts: 2026-09-04 07:22:54.232130+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(ask): Scope non-interactive prompt files per command'
+group: console
+message: 'fix(ask): Scope non-interactive prompt files per command'
+short_sha: '846280'
