@@ -35,6 +35,7 @@ exclude = ["*_examples.py", "*_test.py", "conftest.py", "test_*.json"]
 tag_prefix = "v"
 max_bump_type = "minor"
 # === OK_EDIT: path-sync pkg-ext ===
+expose_mode = "cli_only"
 
 [tool.pkg-ext.groups.ask]
 examples_include = [
