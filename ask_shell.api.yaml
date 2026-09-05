@@ -1,12 +1,12 @@
 pkg_import_name: ask_shell
-version: 0.11.0
+version: 0.11.1
 groups:
 - name: __ROOT__
   symbols:
   - name: AskShellSettings
     module_path: settings
     docstring: ''
-    line_number: 104
+    line_number: 106
     type: class
     mro_bases:
     - StaticSettings
@@ -227,7 +227,7 @@ groups:
   - name: ShellRunSummary
     module_path: settings
     docstring: ''
-    line_number: 99
+    line_number: 101
     type: class
     mro_bases:
     - StrEnum
@@ -252,7 +252,7 @@ groups:
   - name: KeyInput
     module_path: _internal.interactive
     docstring: ''
-    line_number: 382
+    line_number: 381
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -289,7 +289,7 @@ groups:
   - name: PromptMatch
     module_path: _internal.interactive
     docstring: ''
-    line_number: 404
+    line_number: 403
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -345,7 +345,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 569
+    line_number: 568
     type: exception
     mro_bases:
     - Exception
@@ -425,7 +425,7 @@ groups:
   - name: force_interactive
     module_path: _internal.interactive
     docstring: ''
-    line_number: 445
+    line_number: 444
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -453,7 +453,7 @@ groups:
       thread pools, prompt_toolkit may still write to closed streams.
 
       '
-    line_number: 461
+    line_number: 460
     type: class
     mro_bases:
     - force_interactive
@@ -496,7 +496,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 575
+    line_number: 574
     type: class
     mro_bases:
     - force_interactive
@@ -702,7 +702,7 @@ groups:
   - name: ChoiceTyped
     module_path: _internal.interactive_models
     docstring: ''
-    line_number: 70
+    line_number: 76
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -736,7 +736,7 @@ groups:
   - name: NonInteractivePromptError
     module_path: _internal.non_interactive
     docstring: ''
-    line_number: 37
+    line_number: 33
     type: exception
     mro_bases:
     - Exception
@@ -764,7 +764,7 @@ groups:
   - name: PromptSessionLockedError
     module_path: _internal.non_interactive
     docstring: ''
-    line_number: 47
+    line_number: 43
     type: exception
     mro_bases:
     - Exception
@@ -1186,7 +1186,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 204
+    line_number: 216
     type: function
     signature:
       parameters:
@@ -2343,4 +2343,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-09-03 21:35:06.731236+00:00
+dumped_at: 2026-09-05 13:11:32.952314+00:00

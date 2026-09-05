@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.1 2026-09-05T13-11Z
+
+### Console
+- fix(ask): Scope non-interactive prompt files per command [846280](https://github.com/EspenAlbert/ask-shell/commit/846280)
+
+
 ## 0.11.0 2026-09-03T21-35Z
 
 ### __Root__

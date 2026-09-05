@@ -26,3 +26,8 @@ changelog_message: 'fix(ask): Scope non-interactive prompt files per command'
 group: console
 message: 'fix(ask): Scope non-interactive prompt files per command'
 short_sha: '846280'
+---
+name: 0.11.1
+ts: 2026-09-05 13:11:33.035319+00:00
+type: release
+old_version: 0.11.0
