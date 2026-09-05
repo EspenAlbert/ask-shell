@@ -3,16 +3,16 @@
 from ask_shell import shell
 from ask_shell import console
 from ask_shell import shell_events
+from ask_shell import ask
 from ask_shell.settings import AskShellSettings
 from ask_shell.settings import ShellRunSummary
-from ask_shell import ask
 
 VERSION = "0.11.1"
 __all__ = [
     "shell",
     "console",
     "shell_events",
+    "ask",
     "AskShellSettings",
     "ShellRunSummary",
-    "ask",
 ]

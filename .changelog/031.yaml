@@ -1,0 +1,23 @@
+name: prompt_session_needs_attention
+ts: 2026-09-05 14:06:59.000389+00:00
+type: keep_private
+full_path: _internal.prompt_file.prompt_session_needs_attention
+---
+name: is_empty_prompt_stub
+ts: 2026-09-05 14:06:59.000445+00:00
+type: keep_private
+full_path: _internal.prompt_file.is_empty_prompt_stub
+---
+name: discard_empty_prompt_stub
+ts: 2026-09-05 14:06:59.000454+00:00
+type: keep_private
+full_path: _internal.prompt_file.discard_empty_prompt_stub
+---
+name: ask
+ts: 2026-09-05 14:07:01.357154+00:00
+type: fix
+author: EspenAlbert
+changelog_message: 'fix(ask): Skip prompt hints when no questions were asked'
+group: ask
+message: 'fix(ask): Skip prompt hints when no questions were asked'
+short_sha: 90d6ba
