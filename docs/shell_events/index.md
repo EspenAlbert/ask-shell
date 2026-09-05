@@ -92,13 +92,15 @@ class ShellRunBefore:
 ```python
 ShellRunCallbackT = typing.Callable[
     [
-        ask_shell._internal.events.ShellRunBefore
-        | ask_shell._internal.events.ShellRunPOpenStarted
-        | ask_shell._internal.events.ShellRunStdStarted
-        | ask_shell._internal.events.ShellRunStdReadError
-        | ask_shell._internal.events.ShellRunStdOutput
-        | ask_shell._internal.events.ShellRunRetryAttempt
-        | ask_shell._internal.events.ShellRunAfter
+        typing.Union[
+            ask_shell._internal.events.ShellRunBefore,
+            ask_shell._internal.events.ShellRunPOpenStarted,
+            ask_shell._internal.events.ShellRunStdStarted,
+            ask_shell._internal.events.ShellRunStdReadError,
+            ask_shell._internal.events.ShellRunStdOutput,
+            ask_shell._internal.events.ShellRunRetryAttempt,
+            ask_shell._internal.events.ShellRunAfter,
+        ]
     ],
     bool | None,
 ]

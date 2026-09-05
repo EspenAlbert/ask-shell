@@ -21,3 +21,8 @@ changelog_message: 'fix(ask): Skip prompt hints when no questions were asked'
 group: ask
 message: 'fix(ask): Skip prompt hints when no questions were asked'
 short_sha: 90d6ba
+---
+name: 0.11.2
+ts: 2026-09-05 14:08:49.468804+00:00
+type: release
+old_version: 0.11.1

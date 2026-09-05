@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.2 2026-09-05T14-08Z
+
+### Ask
+- fix(ask): Skip prompt hints when no questions were asked [90d6ba](https://github.com/EspenAlbert/ask-shell/commit/90d6ba)
+
+
 ## 0.11.1 2026-09-05T13-11Z
 
 ### Console
