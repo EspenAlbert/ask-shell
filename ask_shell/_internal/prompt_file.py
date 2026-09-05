@@ -9,7 +9,18 @@ from model_lib.errors import PayloadError
 from pydantic import ValidationError
 from zero_3rdparty import file_utils
 
-from ask_shell._internal.interactive_models import NonInteractivePromptFile, PromptSession
+from ask_shell._internal.interactive_models import (
+    ConfirmQuestion,
+    MultiSelectStatus,
+    NonInteractivePromptFile,
+    PromptQuestion,
+    PromptSession,
+    SelectMultipleQuestion,
+    SelectQuestion,
+    TextQuestion,
+)
+
+_UNDECIDED = "undecided"
 
 
 def load_prompt_file(path: Path) -> tuple[NonInteractivePromptFile, str | None]:
@@ -26,6 +37,38 @@ def write_prompt_file(path: Path, doc: NonInteractivePromptFile) -> None:
     tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
     file_utils.ensure_parents_write_text(tmp, content)
     os.replace(tmp, path)
+
+
+def _row_is_undecided(row: PromptQuestion) -> bool:
+    match row:
+        case ConfirmQuestion(response="undecided"):
+            return True
+        case TextQuestion(response="undecided"):
+            return True
+        case SelectQuestion(chosen=None) | SelectQuestion(chosen=""):
+            return True
+        case SelectMultipleQuestion(status=MultiSelectStatus.UNDECIDED):
+            return True
+        case _:
+            return False
+
+
+def prompt_session_needs_attention(doc: NonInteractivePromptFile) -> bool:
+    return bool(doc.questions) and any(_row_is_undecided(row) for row in doc.questions)
+
+
+def is_empty_prompt_stub(doc: NonInteractivePromptFile) -> bool:
+    return not doc.questions and doc.session is not None and not doc.session.pinned
+
+
+def discard_empty_prompt_stub(path: Path) -> bool:
+    if not path.exists():
+        return False
+    doc, _ = load_prompt_file(path)
+    if not is_empty_prompt_stub(doc):
+        return False
+    path.unlink(missing_ok=True)
+    return True
 
 
 def ensure_session_header(path: Path, *, command: str, pinned: bool = False) -> None:

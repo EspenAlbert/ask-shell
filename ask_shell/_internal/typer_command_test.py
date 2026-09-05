@@ -127,7 +127,10 @@ def test_env_pin_is_unchanged(settings, tmp_path):
 
 def test_success_archives_live_file(settings):
     live = _leaf_live(settings, "root", "leaf")
-    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    file_utils.ensure_parents_write_text(
+        live,
+        "questions:\n  - kind: confirm\n    prompt: Ship?\n    response: true\n",
+    )
     _wrap(settings, lambda: None)()
     assert not live.exists()
     assert len(_archives(live)) == 1
@@ -136,14 +139,16 @@ def test_success_archives_live_file(settings):
 def test_success_without_live_file_is_noop(settings):
     live = _leaf_live(settings, "root", "leaf")
     _wrap(settings, lambda: None)()
-    archives = _archives(live)
-    assert len(archives) == 1
-    assert "session:" in archives[0].read_text()
+    assert not live.exists()
+    assert _archives(live) == []
 
 
 def test_error_keeps_live_file(settings, monkeypatch):
     live = _leaf_live(settings, "root", "leaf")
-    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    file_utils.ensure_parents_write_text(
+        live,
+        "questions:\n  - kind: confirm\n    prompt: Ship?\n    response: undecided\n",
+    )
     lines = _capture_live(monkeypatch)
 
     def boom() -> None:
@@ -156,6 +161,29 @@ def test_error_keeps_live_file(settings, monkeypatch):
     joined = "\n".join(lines)
     assert str(live) in joined
     assert settings.prompt_path_export_line() in joined
+
+
+@pytest.mark.parametrize(
+    ("exc_type", "exc_factory"),
+    [
+        (RuntimeError, lambda: RuntimeError("nope")),
+        (SystemExit, lambda: SystemExit("Missing required env var: GH_TOKEN")),
+    ],
+    ids=["runtime", "system_exit"],
+)
+def test_error_without_questions_no_prompt_hint(settings, monkeypatch, exc_type, exc_factory):
+    live = _leaf_live(settings, "root", "leaf")
+    lines = _capture_live(monkeypatch)
+
+    def boom() -> None:
+        raise exc_factory()
+
+    with pytest.raises(exc_type):
+        _wrap(settings, boom)()
+    assert not live.exists()
+    joined = "\n".join(lines)
+    assert "Prompt session file left" not in joined
+    assert settings.prompt_path_export_line() not in joined
 
 
 @pytest.mark.parametrize(
@@ -221,7 +249,6 @@ def test_overlapping_process_fails_fast(settings):
 
 
 _NESTED_CHILD = """
-import os
 import typer
 from ask_shell._internal import typer_command
 from ask_shell.settings import AskShellSettings
@@ -231,7 +258,7 @@ app = typer.Typer(name="pkg-ext")
 
 @app.command("pre_commit")
 def pre_commit():
-    return None
+    print(settings.non_interactive_prompt_file, end="")
 
 typer_command.configure_logging(app, settings=settings, skip_except_hook=True)
 app.registered_commands[0].callback()
@@ -258,5 +285,6 @@ def test_nested_command_uses_own_prompt_path_while_parent_locked(settings):
             check=False,
         )
         assert child.returncode == 0, child.stderr
-    child_dir = settings.cache_root / "pkg-ext" / "pre_commit"
-    assert list(child_dir.glob("*non_interactive_prompt.yaml"))
+    assert "pkg-ext/pre_commit/non_interactive_prompt.yaml" in child.stdout
+    child_live = settings.cache_root / "pkg-ext" / "pre_commit" / AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
+    assert not child_live.exists()

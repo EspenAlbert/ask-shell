@@ -3,7 +3,7 @@ description: Dump, edit, and re-run a non-interactive prompt session
 -->
 # non_interactive_agent_loop
 
-When a CLI runs without a TTY, `confirm` and `text` raise `NonInteractivePromptError` and write `non_interactive_prompt.yaml`. An agent edits `response` on each row and re-runs the same command until it succeeds. Replay follows `questions` index order; `session.command` and `session.pinned` keep the file across subprocess runs. Nested CLIs that inherit the env path get their own scoped file when `session.command` does not match.
+When a CLI runs without a TTY, `confirm` and `text` raise `NonInteractivePromptError` and write `non_interactive_prompt.yaml`. An agent edits `response` on each row and re-runs the same command until it succeeds. Replay follows `questions` index order; `session.command` and `session.pinned` keep the file across subprocess runs. Nested CLIs that inherit the env path get their own scoped file when `session.command` does not match. Prompt replay hints and export lines appear only after a question was dumped with an undecided answer, not for unrelated command failures.
 
 The first dump exits 1. The error and export line below use `non_interactive_prompt.yaml` in place of the temp cache path.
 

@@ -63,7 +63,7 @@ def add_renderable(
 <a id="configure_logging_def"></a>
 
 ### function: `configure_logging`
-- [source](../../ask_shell/_internal/typer_command.py#L216)
+- [source](../../ask_shell/_internal/typer_command.py#L232)
 > **Since:** 0.3.0
 
 ```python
