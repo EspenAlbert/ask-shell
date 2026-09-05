@@ -18,7 +18,12 @@ from ask_shell._internal.non_interactive import (
     PromptSessionLockedError,
     prompt_session_lock,
 )
-from ask_shell._internal.prompt_file import ensure_session_header, load_prompt_file
+from ask_shell._internal.prompt_file import (
+    discard_empty_prompt_stub,
+    ensure_session_header,
+    load_prompt_file,
+    prompt_session_needs_attention,
+)
 from ask_shell._internal.rich_live import get_live_console, log_to_live
 from ask_shell._internal.rich_progress import _is_clean_exit, new_task
 from ask_shell.settings import AskShellSettings, default_rich_info_style, path_under_cache_root
@@ -42,11 +47,22 @@ def _print_prompt_error_contract(exc: BaseException, settings: AskShellSettings)
             log_to_live("This prompt file stays pinned after the first unanswered dump.")
 
 
+def _finish_prompt_session(settings: AskShellSettings) -> None:
+    if discard_empty_prompt_stub(settings.non_interactive_prompt_file):
+        return
+    settings.archive_non_interactive_prompt_file()
+
+
 def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
     live = settings.non_interactive_prompt_file
-    if live.exists():
-        log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
-        log_to_live(settings.prompt_path_export_line())
+    if not live.exists():
+        return
+    doc, _ = load_prompt_file(live)
+    if not prompt_session_needs_attention(doc):
+        discard_empty_prompt_stub(live)
+        return
+    log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+    log_to_live(settings.prompt_path_export_line())
 
 
 def _fail_prompt_session(exc: BaseException, settings: AskShellSettings) -> NoReturn:
@@ -119,11 +135,11 @@ def track_progress_decorator(
                             _fail_prompt_session(exc, settings)
                         except BaseException as exc:
                             if _is_clean_exit(exc):
-                                settings.archive_non_interactive_prompt_file()
+                                _finish_prompt_session(settings)
                                 raise
                             _hint_prompt_file_on_error(settings)
                             raise
-                        settings.archive_non_interactive_prompt_file()
+                        _finish_prompt_session(settings)
                         return result
                 except PromptSessionLockedError as exc:
                     _fail_prompt_session(exc, settings)
