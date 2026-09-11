@@ -119,6 +119,12 @@ class AskShellSettings(StaticSettings):
         alias=ENV_NAME_DISABLE_INTERACTIVE_SHELL,
         description="Force non-interactive mode for long-running servers and automation",
     )
+    ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE: ClassVar[str] = f"{ENV_PREFIX}SKIP_NON_INTERACTIVE_PROMPT_FILE"
+    skip_non_interactive_prompt_file: bool = Field(
+        default=False,
+        alias=ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE,
+        description="Skip the non-interactive prompt session file and lock entirely. For long-running commands that never ask a prompt.",
+    )
     ENV_NAME_THREAD_COUNT: ClassVar[str] = f"{ENV_PREFIX}THREAD_COUNT"
     thread_count: int = Field(
         default=100,

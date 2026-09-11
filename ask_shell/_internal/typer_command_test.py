@@ -143,6 +143,25 @@ def test_success_without_live_file_is_noop(settings):
     assert _archives(live) == []
 
 
+def test_skip_non_interactive_prompt_file_no_live_file(settings):
+    live = _leaf_live(settings, "root", "leaf")
+    settings.skip_non_interactive_prompt_file = True
+    assert _wrap(settings, lambda: None)() is None
+    assert not live.exists()
+    assert _archives(live) == []
+
+
+def test_skip_non_interactive_prompt_file_runs_while_parent_locked(settings):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(live, "questions: []\n")
+    settings.non_interactive_prompt_path = live
+    settings.skip_non_interactive_prompt_file = True
+    with prompt_session_lock(settings):
+        assert _wrap(settings, lambda: None)() is None
+    assert live.read_text() == "questions: []\n"
+    assert _archives(live) == []
+
+
 def test_error_keeps_live_file(settings, monkeypatch):
     live = _leaf_live(settings, "root", "leaf")
     file_utils.ensure_parents_write_text(
