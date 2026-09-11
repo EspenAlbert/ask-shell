@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.11.3 2026-09-11T14-59Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added optional field 'skip_non_interactive_prompt_file' (default: False)
+
+### Ask
+- fix(ask): Preserve None values in typed select choices [2d396b](https://github.com/EspenAlbert/ask-shell/commit/2d396b)
+- `ask.NonInteractivePromptError`: added optional param 'discarded' (default: ())
+- `ask.NonInteractivePromptError`: added optional param 'prompt' (default: '')
+
+
 ## 0.11.2 2026-09-05T14-08Z
 
 ### Ask

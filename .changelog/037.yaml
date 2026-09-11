@@ -33,3 +33,8 @@ change_kind: optional_param_added
 details: 'added optional param ''prompt'' (default: '''')'
 field_name: prompt
 group: ask
+---
+name: 0.11.3
+ts: 2026-09-11 14:59:54.358100+00:00
+type: release
+old_version: 0.11.2

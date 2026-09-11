@@ -7,7 +7,7 @@ from ask_shell import ask
 from ask_shell.settings import AskShellSettings
 from ask_shell.settings import ShellRunSummary
 
-VERSION = "0.11.2"
+VERSION = "0.11.3"
 __all__ = [
     "shell",
     "console",

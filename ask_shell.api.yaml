@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.11.2
+version: 0.11.3
 groups:
 - name: __ROOT__
   symbols:
@@ -80,6 +80,18 @@ groups:
       env_vars:
       - ask_shell_disable_interactive_shell
       - disable_interactive_shell
+    - name: skip_non_interactive_prompt_file
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: Skip the non-interactive prompt session file and lock entirely. For long-running commands that never ask a prompt.
+      env_vars:
+      - ask_shell_skip_non_interactive_prompt_file
+      - skip_non_interactive_prompt_file
     - name: thread_count
       type_annotation: int
       type_imports: []
@@ -238,12 +250,12 @@ groups:
     init_signature:
       parameters:
       - name: self
-        kind: positional_or_keyword
+        kind: positional_only
         type_imports: []
       - name: args
         kind: var_positional
         type_imports: []
-      - name: kwds
+      - name: kwargs
         kind: var_keyword
         type_imports: []
       return_type_imports: []
@@ -702,7 +714,7 @@ groups:
   - name: ChoiceTyped
     module_path: _internal.interactive_models
     docstring: ''
-    line_number: 76
+    line_number: 80
     type: class
     mro_bases: []
     num_direct_bases: 1
@@ -736,7 +748,7 @@ groups:
   - name: NonInteractivePromptError
     module_path: _internal.non_interactive
     docstring: ''
-    line_number: 33
+    line_number: 34
     type: exception
     mro_bases:
     - Exception
@@ -759,12 +771,30 @@ groups:
         default:
           value_repr: None
           is_factory: false
+      - name: discarded
+        kind: keyword_only
+        type_annotation: Sequence[ConfirmQuestion | TextQuestion | SelectQuestion | SelectMultipleQuestion]
+        type_imports:
+        - ask_shell._internal.interactive_models.ConfirmQuestion
+        - ask_shell._internal.interactive_models.TextQuestion
+        - ask_shell._internal.interactive_models.SelectQuestion
+        - ask_shell._internal.interactive_models.SelectMultipleQuestion
+        default:
+          value_repr: ()
+          is_factory: false
+      - name: prompt
+        kind: keyword_only
+        type_annotation: str
+        type_imports: []
+        default:
+          value_repr: ''''''
+          is_factory: false
       return_annotation: None
       return_type_imports: []
   - name: PromptSessionLockedError
     module_path: _internal.non_interactive
     docstring: ''
-    line_number: 43
+    line_number: 56
     type: exception
     mro_bases:
     - Exception
@@ -1186,7 +1216,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 232
+    line_number: 251
     type: function
     signature:
       parameters:
@@ -2254,7 +2284,7 @@ groups:
     module_path: _internal.events
     docstring: ''
     type: type_alias
-    alias_target: typing.Callable[[typing.Union[ask_shell._internal.events.ShellRunBefore, ask_shell._internal.events.ShellRunPOpenStarted, ask_shell._internal.events.ShellRunStdStarted, ask_shell._internal.events.ShellRunStdReadError, ask_shell._internal.events.ShellRunStdOutput, ask_shell._internal.events.ShellRunRetryAttempt, ask_shell._internal.events.ShellRunAfter]], bool | None]
+    alias_target: typing.Callable[[ask_shell._internal.events.ShellRunBefore | ask_shell._internal.events.ShellRunPOpenStarted | ask_shell._internal.events.ShellRunStdStarted | ask_shell._internal.events.ShellRunStdReadError | ask_shell._internal.events.ShellRunStdOutput | ask_shell._internal.events.ShellRunRetryAttempt | ask_shell._internal.events.ShellRunAfter], bool | None]
   - name: ShellRunPOpenStarted
     module_path: _internal.events
     docstring: ''
@@ -2343,4 +2373,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-09-05 14:08:49.412610+00:00
+dumped_at: 2026-09-11 14:59:54.267562+00:00

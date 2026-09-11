@@ -15,7 +15,7 @@ class NonInteractivePromptError(Exception): ...
 
 | Version | Change |
 |---------|--------|
-| unreleased | added optional param 'prompt' (default: '') |
-| unreleased | added optional param 'discarded' (default: ()) |
+| 0.11.3 | added optional param 'prompt' (default: '') |
+| 0.11.3 | added optional param 'discarded' (default: ()) |
 | 0.11.0 | Made public |
 <!-- === OK_EDIT: pkg-ext noninteractiveprompterror_changes === -->
