@@ -4,6 +4,7 @@ import contextvars
 import errno
 import fcntl
 import os
+import re
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
 from pathlib import Path
@@ -31,11 +32,23 @@ _lock_fd: contextvars.ContextVar[int | None] = contextvars.ContextVar("_prompt_s
 
 
 class NonInteractivePromptError(Exception):
-    def __init__(self, path: Path, *, parse_error: str | None = None) -> None:
+    def __init__(
+        self,
+        path: Path,
+        *,
+        parse_error: str | None = None,
+        discarded: Sequence[PromptQuestion] = (),
+        prompt: str = "",
+    ) -> None:
         self.path = path
+        self.discarded = tuple(discarded)
         lines = [f"Non-interactive prompt needs an answer in {path}."]
         if parse_error:
             lines.append(f"Could not parse the existing file: {parse_error}")
+        for row in discarded:
+            lines.append("Discarded answered row that did not match the incoming prompt.")
+            lines.append(f"  incoming prompt: {prompt!r}")
+            lines.append(f"  stored prompt: {row.prompt!r}")
         lines.append("Set the last question's response, chosen, checked, or status, then re-run the same command.")
         super().__init__("\n".join(lines))
 
@@ -127,12 +140,11 @@ def _try_replay_answered(
 ) -> Any | None:
     global _replay_index
     doc, _ = load_prompt_file(settings.non_interactive_prompt_file)
-    current = doc.questions[_replay_index] if _replay_index < len(doc.questions) else None
-    if current is None or current.kind != kind or current.prompt != prompt or not _row_is_answered(current, choices):
+    index = _find_answered_index(doc.questions, kind=kind, prompt=prompt, choices=choices)
+    if index is None:
         return None
-    value = _row_value(current, choices)
-    _replay_index += 1
-    return value
+    _replay_index = index + 1
+    return _row_value(doc.questions[index], choices)
 
 
 def _record_answered_row(
@@ -163,16 +175,16 @@ def _replay_or_dump(
     path = settings.non_interactive_prompt_file
     doc, parse_error = load_prompt_file(path)
     questions = doc.questions
-    current = questions[_replay_index] if _replay_index < len(questions) else None
-    if current is None or current.kind != kind or current.prompt != prompt or not _row_is_answered(current, choices):
+    index = _find_answered_index(questions, kind=kind, prompt=prompt, choices=choices)
+    if index is None:
+        discarded = [row for row in questions[_replay_index:] if _row_is_answered(row, choices)]
         doc.questions = questions[:_replay_index]
         doc.questions.append(_undecided_row(kind, prompt, choices))
         _pin_session(doc)
         write_prompt_file(path, doc)
-        raise NonInteractivePromptError(path, parse_error=parse_error)
-    value = _row_value(current, choices)
-    _replay_index += 1
-    return value
+        raise NonInteractivePromptError(path, parse_error=parse_error, discarded=discarded, prompt=prompt)
+    _replay_index = index + 1
+    return _row_value(doc.questions[index], choices)
 
 
 def _alternatives(choices: Sequence[ChoiceTyped]) -> list[SelectAlternative]:
@@ -223,6 +235,30 @@ def _undecided_row(kind: PromptKind, prompt: str, choices: Sequence[ChoiceTyped]
 
 def _choice_names(choices: Sequence[ChoiceTyped]) -> set[str]:
     return {choice.name for choice in choices}
+
+
+_WHITESPACE = re.compile(r"\s+")
+
+
+def _normalize_prompt(prompt: str) -> str:
+    return _WHITESPACE.sub(" ", prompt).strip()
+
+
+def _find_answered_index(
+    questions: Sequence[PromptQuestion],
+    *,
+    kind: PromptKind,
+    prompt: str,
+    choices: Sequence[ChoiceTyped],
+) -> int | None:
+    target = _normalize_prompt(prompt)
+    for index in range(_replay_index, len(questions)):
+        row = questions[index]
+        if row.kind != kind or _normalize_prompt(row.prompt) != target:
+            continue
+        if _row_is_answered(row, choices):
+            return index
+    return None
 
 
 def _row_is_answered(row: PromptQuestion, choices: Sequence[ChoiceTyped]) -> bool:
