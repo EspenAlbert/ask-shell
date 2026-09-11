@@ -18,6 +18,7 @@ nav:
     - AskShellSettings: _root/askshellsettings.md
   - ask:
     - Overview: ask/index.md
+    - NonInteractivePromptError: ask/noninteractiveprompterror.md
     - RaiseOnQuestionError: ask/raiseonquestionerror.md
     - SelectOptions: ask/selectoptions.md
     - question_patcher: ask/question_patcher.md
