@@ -1,8 +1,0 @@
-name: ask
-ts: 2026-09-11 14:52:12.758361+00:00
-type: fix
-author: Espen Albert
-changelog_message: 'fix(ask): Preserve None values in typed select choices'
-group: ask
-message: 'fix(ask): Preserve None values in typed select choices'
-short_sha: 2d396b

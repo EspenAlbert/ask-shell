@@ -7,7 +7,7 @@
 - [`ChoiceTyped`](#choicetyped_def)
 - [`KeyInput`](#keyinput_def)
 - [`NewHandlerChoice`](#newhandlerchoice_def)
-- [`NonInteractivePromptError`](#noninteractiveprompterror_def)
+- [NonInteractivePromptError](./noninteractiveprompterror.md)
 - [`PromptMatch`](#promptmatch_def)
 - [`PromptSessionLockedError`](#promptsessionlockederror_def)
 - [RaiseOnQuestionError](./raiseonquestionerror.md)
@@ -267,23 +267,6 @@ def select_list_multiple_choices(
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_multiple_choices_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext noninteractiveprompterror_def === -->
-<a id="noninteractiveprompterror_def"></a>
-
-### exception: `NonInteractivePromptError`
-- [source](../../ask_shell/_internal/non_interactive.py#L34)
-> **Since:** 0.11.0
-
-```python
-class NonInteractivePromptError(Exception): ...
-```
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.11.0 | Made public |
-<!-- === OK_EDIT: pkg-ext noninteractiveprompterror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext promptsessionlockederror_def === -->
 <a id="promptsessionlockederror_def"></a>
 

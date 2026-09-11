@@ -1,0 +1,35 @@
+name: ask
+ts: 2026-09-11 14:52:12.758361+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(ask): Preserve None values in typed select choices'
+group: ask
+message: 'fix(ask): Preserve None values in typed select choices'
+short_sha: 2d396b
+---
+name: AskShellSettings
+ts: 2026-09-11 14:53:27.018191+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''skip_non_interactive_prompt_file'' (default: False)'
+field_name: skip_non_interactive_prompt_file
+group: __ROOT__
+---
+name: NonInteractivePromptError
+ts: 2026-09-11 14:53:27.018200+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''discarded'' (default: ())'
+field_name: discarded
+group: ask
+---
+name: NonInteractivePromptError
+ts: 2026-09-11 14:53:27.018204+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_param_added
+details: 'added optional param ''prompt'' (default: '''')'
+field_name: prompt
+group: ask
