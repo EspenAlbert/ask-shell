@@ -13,6 +13,7 @@ class AskShellSettings(StaticSettings):
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
     disable_interactive_shell: bool = False
+    skip_non_interactive_prompt_file: bool = False
     thread_count: int = 100
     thread_pool_full_wait_time_seconds: float = 5
     search_enabled_after_choices: int = 7
@@ -75,6 +76,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'skip_non_interactive_prompt_file' (default: False) |
 | 0.11.0 | added optional field 'use_defaults' (default: True) |
 | 0.11.0 | added optional field 'non_interactive_prompt_path' (default: None) |
 | 0.9.0 | added optional field 'disable_interactive_shell' (default: False) |

@@ -2,7 +2,8 @@ import logging
 import os
 import sys
 import traceback
-from contextlib import suppress
+from collections.abc import Iterator
+from contextlib import contextmanager, suppress
 from functools import wraps
 from pathlib import Path
 from types import TracebackType
@@ -70,6 +71,37 @@ def _fail_prompt_session(exc: BaseException, settings: AskShellSettings) -> NoRe
     raise typer.Exit(1) from None
 
 
+@contextmanager
+def _prompt_session(
+    settings: AskShellSettings,
+    *,
+    app_name: str,
+    command_name: str,
+    skip: bool,
+) -> Iterator[None]:
+    if skip:
+        yield
+        return
+    settings.finalize_non_interactive_prompt_path(app_name=app_name, command_name=command_name)
+    with prompt_session_lock(settings):
+        ensure_session_header(
+            settings.non_interactive_prompt_file,
+            command=f"{app_name}/{command_name}",
+            pinned=not path_under_cache_root(settings.non_interactive_prompt_file, settings.cache_root),
+        )
+        try:
+            yield
+        except (NonInteractivePromptError, PromptSessionLockedError) as exc:
+            _fail_prompt_session(exc, settings)
+        except BaseException as exc:
+            if _is_clean_exit(exc):
+                _finish_prompt_session(settings)
+                raise
+            _hint_prompt_file_on_error(settings)
+            raise
+        _finish_prompt_session(settings)
+
+
 def except_hook_custom(
     skip_rich_exception: bool,
 ) -> Callable[[type[BaseException], BaseException, TracebackType | None], None]:
@@ -116,31 +148,18 @@ def track_progress_decorator(
                 sys.excepthook = except_hook_custom(skip_rich_exception)
             if use_app_name_command_for_logs:
                 settings.configure_run_logs_dir_if_unset(new_relative_path=f"{app_name}/{command_name}")
-            settings.finalize_non_interactive_prompt_path(app_name=app_name, command_name=command_name)
-            session_command = f"{app_name}/{command_name}"
             sys_args = " ".join(sys.argv)
             with new_task(
                 description=f"Running: '{sys_args}'",
             ):
                 try:
-                    with prompt_session_lock(settings):
-                        ensure_session_header(
-                            settings.non_interactive_prompt_file,
-                            command=session_command,
-                            pinned=not path_under_cache_root(settings.non_interactive_prompt_file, settings.cache_root),
-                        )
-                        try:
-                            result = command(*args, **kwargs)
-                        except (NonInteractivePromptError, PromptSessionLockedError) as exc:
-                            _fail_prompt_session(exc, settings)
-                        except BaseException as exc:
-                            if _is_clean_exit(exc):
-                                _finish_prompt_session(settings)
-                                raise
-                            _hint_prompt_file_on_error(settings)
-                            raise
-                        _finish_prompt_session(settings)
-                        return result
+                    with _prompt_session(
+                        settings,
+                        app_name=app_name,
+                        command_name=command_name,
+                        skip=settings.skip_non_interactive_prompt_file,
+                    ):
+                        return command(*args, **kwargs)
                 except PromptSessionLockedError as exc:
                     _fail_prompt_session(exc, settings)
                 finally:

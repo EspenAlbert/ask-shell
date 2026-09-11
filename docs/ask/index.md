@@ -7,7 +7,7 @@
 - [`ChoiceTyped`](#choicetyped_def)
 - [`KeyInput`](#keyinput_def)
 - [`NewHandlerChoice`](#newhandlerchoice_def)
-- [`NonInteractivePromptError`](#noninteractiveprompterror_def)
+- [NonInteractivePromptError](./noninteractiveprompterror.md)
 - [`PromptMatch`](#promptmatch_def)
 - [`PromptSessionLockedError`](#promptsessionlockederror_def)
 - [RaiseOnQuestionError](./raiseonquestionerror.md)
@@ -32,7 +32,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](../../ask_shell/_internal/interactive_models.py#L76)
+- [source](../../ask_shell/_internal/interactive_models.py#L80)
 > **Since:** 0.3.0
 
 ```python
@@ -267,28 +267,11 @@ def select_list_multiple_choices(
 |---------|--------|
 | 0.3.0 | Made public |
 <!-- === OK_EDIT: pkg-ext select_list_multiple_choices_def === -->
-<!-- === DO_NOT_EDIT: pkg-ext noninteractiveprompterror_def === -->
-<a id="noninteractiveprompterror_def"></a>
-
-### exception: `NonInteractivePromptError`
-- [source](../../ask_shell/_internal/non_interactive.py#L33)
-> **Since:** 0.11.0
-
-```python
-class NonInteractivePromptError(Exception): ...
-```
-
-### Changes
-
-| Version | Change |
-|---------|--------|
-| 0.11.0 | Made public |
-<!-- === OK_EDIT: pkg-ext noninteractiveprompterror_def === -->
 <!-- === DO_NOT_EDIT: pkg-ext promptsessionlockederror_def === -->
 <a id="promptsessionlockederror_def"></a>
 
 ### exception: `PromptSessionLockedError`
-- [source](../../ask_shell/_internal/non_interactive.py#L43)
+- [source](../../ask_shell/_internal/non_interactive.py#L56)
 > **Since:** 0.11.0
 
 ```python

@@ -112,6 +112,67 @@ questions:
     assert doc.questions[0].prompt == "New?"
 
 
+def test_mismatch_error_reports_discarded_answered_prompt(settings):
+    file_utils.ensure_parents_write_text(
+        settings.non_interactive_prompt_file,
+        """\
+questions:
+  - kind: confirm
+    prompt: '    10|Old?'
+    response: true
+""",
+    )
+    with pytest.raises(NonInteractivePromptError) as exc_info:
+        replay_or_dump(kind=PromptKind.CONFIRM, prompt="New?", settings=settings)
+    message = str(exc_info.value)
+    assert "New?" in message
+    assert "Old?" in message
+    assert "discarded" in message.lower()
+
+
+def test_answered_row_replayed_out_of_index(settings):
+    file_utils.ensure_parents_write_text(
+        settings.non_interactive_prompt_file,
+        """\
+questions:
+  - kind: confirm
+    prompt: Stale?
+    response: undecided
+  - kind: confirm
+    prompt: Pick?
+    response: true
+""",
+    )
+    assert replay_or_dump(kind=PromptKind.CONFIRM, prompt="Pick?", settings=settings) is True
+
+
+def test_whitespace_normalized_prompt_matches(settings):
+    file_utils.ensure_parents_write_text(
+        settings.non_interactive_prompt_file,
+        """\
+questions:
+  - kind: text
+    prompt: "Release\\n  name?"
+    response: v1.0
+""",
+    )
+    assert replay_or_dump(kind=PromptKind.TEXT, prompt="Release name?", settings=settings) == "v1.0"
+
+
+def test_kind_mismatch_not_replayed_even_when_prompt_matches(settings):
+    file_utils.ensure_parents_write_text(
+        settings.non_interactive_prompt_file,
+        """\
+questions:
+  - kind: text
+    prompt: Same?
+    response: Ada
+""",
+    )
+    with pytest.raises(NonInteractivePromptError):
+        replay_or_dump(kind=PromptKind.CONFIRM, prompt="Same?", settings=settings)
+
+
 def test_answered_multi_without_checked_is_empty(settings):
     file_utils.ensure_parents_write_text(
         settings.non_interactive_prompt_file,

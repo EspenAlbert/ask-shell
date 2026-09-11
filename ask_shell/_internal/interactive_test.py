@@ -1,4 +1,5 @@
 import string
+from datetime import date
 
 import pytest
 from model_lib import parse
@@ -200,6 +201,14 @@ def test_select_list_choice_accepts_unhashable_values():
     choices = [ChoiceTyped(name="a", value={"k": 1}), ChoiceTyped(name="b", value={"k": 2})]
     with question_patcher(responses=[""]):
         assert select_list_choice("Pick:", choices, default={"k": 1}) == {"k": 1}
+
+
+def test_select_list_choice_none_value_returns_none():
+    choices = [ChoiceTyped(name="No due date", value=None), ChoiceTyped(name="Tue", value=date(2026, 9, 15))]
+    with question_patcher(responses=[""]):
+        assert select_list_choice("Pick:", choices) is None
+    with question_patcher(responses=[KeyInput.DOWN]):
+        assert select_list_choice("Pick:", choices) == date(2026, 9, 15)
 
 
 def test_question_patcher_skips_session_file(settings):

@@ -60,6 +60,12 @@ def test_default_prompt_file_uses_classvar_filename(settings):
     assert settings.use_defaults
 
 
+def test_skip_non_interactive_prompt_file_default_and_env(settings, monkeypatch):
+    assert settings.skip_non_interactive_prompt_file is False
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE, "true")
+    assert AskShellSettings.from_env().skip_non_interactive_prompt_file is True
+
+
 def test_configure_prompt_path_if_unset_and_noop(settings):
     filename = AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
     first = settings.configure_non_interactive_prompt_path_if_unset(
