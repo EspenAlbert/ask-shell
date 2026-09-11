@@ -10,6 +10,10 @@ from questionary import Choice
 
 _UNDECIDED = "undecided"
 
+#: Placeholder passed to questionary's ``Choice`` so it does not substitute the
+#: title when a typed value is ``None`` (see ``ChoiceTyped.as_choice``).
+_UNSET = object()
+
 T = TypeVar("T")
 
 
@@ -85,9 +89,13 @@ class ChoiceTyped(Generic[T]):
         return [cls(name=name, value=name, description=description) for name, description in descriptions.items()]  # type: ignore
 
     def as_choice(self) -> Choice:
-        return Choice(
+        # questionary replaces a None value with the title, so pass a placeholder and
+        # restore the real value (including None) after construction.
+        choice = Choice(
             title=self.name,
-            value=self.value,
+            value=_UNSET,
             description=self.description,
             checked=self.checked,
         )
+        choice.value = self.value
+        return choice
