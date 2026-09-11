@@ -13,6 +13,7 @@ class AskShellSettings(StaticSettings):
     log_level: Literal[DEBUG, INFO, WARNING, ERROR, CRITICAL, UNSET] = 'UNSET'
     force_interactive_shell: bool = False
     disable_interactive_shell: bool = False
+    skip_non_interactive_prompt_file: bool = False
     thread_count: int = 100
     thread_pool_full_wait_time_seconds: float = 5
     search_enabled_after_choices: int = 7

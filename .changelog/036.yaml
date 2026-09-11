@@ -1,0 +1,8 @@
+name: ask
+ts: 2026-09-11 14:25:54.971295+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(ask): Match non-interactive answers by normalized prompt'
+group: ask
+message: 'fix(ask): Match non-interactive answers by normalized prompt'
+short_sha: 829dcf

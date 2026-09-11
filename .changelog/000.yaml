@@ -1,8 +1,8 @@
 name: ask
-ts: 2026-09-11 14:25:54.971295+00:00
+ts: 2026-09-11 14:52:12.758361+00:00
 type: fix
 author: Espen Albert
-changelog_message: 'fix(ask): Match non-interactive answers by normalized prompt'
+changelog_message: 'fix(ask): Preserve None values in typed select choices'
 group: ask
-message: 'fix(ask): Match non-interactive answers by normalized prompt'
-short_sha: 829dcf
+message: 'fix(ask): Preserve None values in typed select choices'
+short_sha: 2d396b

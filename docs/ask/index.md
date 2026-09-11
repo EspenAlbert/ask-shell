@@ -32,7 +32,7 @@
 <a id="choicetyped_def"></a>
 
 ### class: `ChoiceTyped`
-- [source](../../ask_shell/_internal/interactive_models.py#L76)
+- [source](../../ask_shell/_internal/interactive_models.py#L80)
 > **Since:** 0.3.0
 
 ```python
@@ -271,7 +271,7 @@ def select_list_multiple_choices(
 <a id="noninteractiveprompterror_def"></a>
 
 ### exception: `NonInteractivePromptError`
-- [source](../../ask_shell/_internal/non_interactive.py#L33)
+- [source](../../ask_shell/_internal/non_interactive.py#L34)
 > **Since:** 0.11.0
 
 ```python
@@ -288,7 +288,7 @@ class NonInteractivePromptError(Exception): ...
 <a id="promptsessionlockederror_def"></a>
 
 ### exception: `PromptSessionLockedError`
-- [source](../../ask_shell/_internal/non_interactive.py#L43)
+- [source](../../ask_shell/_internal/non_interactive.py#L56)
 > **Since:** 0.11.0
 
 ```python
