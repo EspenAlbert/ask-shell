@@ -98,6 +98,10 @@ def _ask_with_session(
             )
             return usable_default
         return replay_or_dump(kind=kind, prompt=prompt, settings=settings, choices=choices)
+    if settings.non_interactive_prompt_path is None:
+        # An unconfigured process must not read or write the shared default prompt file in a TTY.
+        logger.debug("No session prompt path configured for this process, prompting directly.")
+        return ask_fn()
     replayed = try_replay_answered(kind=kind, prompt=prompt, settings=settings, choices=choices)
     if replayed is not None:
         return replayed

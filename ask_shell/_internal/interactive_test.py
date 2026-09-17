@@ -1,10 +1,13 @@
+import os
 import string
 from datetime import date
 
 import pytest
 from model_lib import parse
 from model_lib.constants import FileFormat
+from zero_3rdparty import file_utils
 
+from ask_shell._internal import interactive
 from ask_shell._internal import non_interactive as ni
 from ask_shell._internal.interactive import (
     SEARCH_ENABLED_AFTER_CHOICES,
@@ -15,6 +18,7 @@ from ask_shell._internal.interactive import (
     RaiseOnQuestionError,
     SelectOptions,
     confirm,
+    force_interactive,
     question_patcher,
     raise_on_question,
     select_dict,
@@ -333,3 +337,67 @@ def test_no_dynamic_match():
 def test_raise_on_question():
     with pytest.raises(RaiseOnQuestionError, match="Question asked: 'hello error'"), raise_on_question():
         text("hello error")
+
+
+class _ScriptedAsker:
+    def __init__(self, value: bool | None = None) -> None:
+        self.value = value
+        self.calls = 0
+
+    def __call__(self, q, response_type):
+        self.calls += 1
+        if self.value is None:
+            raise AssertionError("asker should not be called when replaying")
+        return self.value
+
+
+def _patch_askers(monkeypatch: pytest.MonkeyPatch, asker: _ScriptedAsker) -> None:
+    monkeypatch.setattr(interactive, "_default_asker", asker)
+    monkeypatch.setattr(interactive, "_question_asker", asker)
+
+
+def test_tty_skips_unconfigured_prompt_file(settings, monkeypatch):
+    file_utils.ensure_parents_write_text(
+        settings.non_interactive_prompt_file,
+        """\
+questions:
+  - kind: confirm
+    prompt: Go?
+    response: true
+""",
+    )
+    assert not os.environ.get(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH)
+    asker = _ScriptedAsker(False)
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        assert confirm("Go?") is False
+    assert asker.calls == 1
+
+
+def test_tty_unconfigured_does_not_write_prompt_file(settings, monkeypatch):
+    settings.non_interactive_prompt_file.unlink(missing_ok=True)
+    asker = _ScriptedAsker(False)
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        confirm("Go?", default=True)
+    assert asker.calls == 1
+    assert not settings.non_interactive_prompt_file.exists()
+
+
+def test_tty_replays_configured_prompt_file(settings, monkeypatch):
+    path = settings.non_interactive_prompt_file
+    file_utils.ensure_parents_write_text(
+        path,
+        """\
+questions:
+  - kind: confirm
+    prompt: Go?
+    response: true
+""",
+    )
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, str(path))
+    asker = _ScriptedAsker()
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        assert confirm("Go?") is True
+    assert asker.calls == 0

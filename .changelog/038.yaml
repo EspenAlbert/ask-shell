@@ -1,0 +1,8 @@
+name: ask
+ts: 2026-09-17 12:29:23.732801+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(ask): Do not replay an unscoped prompt file in a TTY'
+group: ask
+message: 'fix(ask): Do not replay an unscoped prompt file in a TTY'
+short_sha: 5681d9
