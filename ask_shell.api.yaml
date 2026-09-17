@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.11.3
+version: 0.11.4
 groups:
 - name: __ROOT__
   symbols:
@@ -264,7 +264,7 @@ groups:
   - name: KeyInput
     module_path: _internal.interactive
     docstring: ''
-    line_number: 381
+    line_number: 385
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -301,7 +301,7 @@ groups:
   - name: PromptMatch
     module_path: _internal.interactive
     docstring: ''
-    line_number: 403
+    line_number: 407
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -357,7 +357,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 568
+    line_number: 572
     type: exception
     mro_bases:
     - Exception
@@ -376,7 +376,7 @@ groups:
   - name: SelectOptions
     module_path: _internal.interactive
     docstring: ''
-    line_number: 151
+    line_number: 155
     type: class
     mro_bases:
     - BaseModel
@@ -417,7 +417,7 @@ groups:
   - name: confirm
     module_path: _internal.interactive
     docstring: ''
-    line_number: 109
+    line_number: 113
     type: function
     signature:
       parameters:
@@ -437,7 +437,7 @@ groups:
   - name: force_interactive
     module_path: _internal.interactive
     docstring: ''
-    line_number: 444
+    line_number: 448
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -465,7 +465,7 @@ groups:
       thread pools, prompt_toolkit may still write to closed streams.
 
       '
-    line_number: 460
+    line_number: 464
     type: class
     mro_bases:
     - force_interactive
@@ -508,7 +508,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 574
+    line_number: 578
     type: class
     mro_bases:
     - force_interactive
@@ -534,7 +534,7 @@ groups:
   - name: select_dict
     module_path: _internal.interactive
     docstring: ''
-    line_number: 292
+    line_number: 296
     type: function
     signature:
       parameters:
@@ -566,7 +566,7 @@ groups:
   - name: select_list
     module_path: _internal.interactive
     docstring: ''
-    line_number: 319
+    line_number: 323
     type: function
     signature:
       parameters:
@@ -598,7 +598,7 @@ groups:
   - name: select_list_choice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 356
+    line_number: 360
     type: function
     signature:
       parameters:
@@ -630,7 +630,7 @@ groups:
   - name: select_list_multiple
     module_path: _internal.interactive
     docstring: ''
-    line_number: 241
+    line_number: 245
     type: function
     signature:
       parameters:
@@ -662,7 +662,7 @@ groups:
   - name: select_list_multiple_choices
     module_path: _internal.interactive
     docstring: ''
-    line_number: 267
+    line_number: 271
     type: function
     signature:
       parameters:
@@ -694,7 +694,7 @@ groups:
   - name: text
     module_path: _internal.interactive
     docstring: ''
-    line_number: 129
+    line_number: 133
     type: function
     signature:
       parameters:
@@ -2373,4 +2373,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-09-11 14:59:54.267562+00:00
+dumped_at: 2026-09-17 12:31:56.878125+00:00

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.4 2026-09-17T12-31Z
+
+### Ask
+- fix(ask): Do not replay an unscoped prompt file in a TTY [5681d9](https://github.com/EspenAlbert/ask-shell/commit/5681d9)
+
+
 ## 0.11.3 2026-09-11T14-59Z
 
 ### __Root__
