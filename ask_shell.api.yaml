@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.11.4
+version: 0.11.5
 groups:
 - name: __ROOT__
   symbols:
@@ -92,6 +92,18 @@ groups:
       env_vars:
       - ask_shell_skip_non_interactive_prompt_file
       - skip_non_interactive_prompt_file
+    - name: replay_prompt_file_in_tty
+      type_annotation: bool
+      type_imports: []
+      default:
+        value_repr: 'False'
+        is_factory: false
+      is_class_var: false
+      is_computed: false
+      description: In an interactive shell, replay and record the non-interactive prompt file instead of asking directly. Use to resume after a crash.
+      env_vars:
+      - ask_shell_replay_prompt_file_in_tty
+      - replay_prompt_file_in_tty
     - name: thread_count
       type_annotation: int
       type_imports: []
@@ -264,7 +276,7 @@ groups:
   - name: KeyInput
     module_path: _internal.interactive
     docstring: ''
-    line_number: 385
+    line_number: 390
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -301,7 +313,7 @@ groups:
   - name: PromptMatch
     module_path: _internal.interactive
     docstring: ''
-    line_number: 407
+    line_number: 412
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -357,7 +369,7 @@ groups:
   - name: RaiseOnQuestionError
     module_path: _internal.interactive
     docstring: ''
-    line_number: 572
+    line_number: 577
     type: exception
     mro_bases:
     - Exception
@@ -376,7 +388,7 @@ groups:
   - name: SelectOptions
     module_path: _internal.interactive
     docstring: ''
-    line_number: 155
+    line_number: 160
     type: class
     mro_bases:
     - BaseModel
@@ -417,7 +429,7 @@ groups:
   - name: confirm
     module_path: _internal.interactive
     docstring: ''
-    line_number: 113
+    line_number: 118
     type: function
     signature:
       parameters:
@@ -437,7 +449,7 @@ groups:
   - name: force_interactive
     module_path: _internal.interactive
     docstring: ''
-    line_number: 448
+    line_number: 453
     type: class
     mro_bases: []
     num_direct_bases: 0
@@ -465,7 +477,7 @@ groups:
       thread pools, prompt_toolkit may still write to closed streams.
 
       '
-    line_number: 464
+    line_number: 469
     type: class
     mro_bases:
     - force_interactive
@@ -508,7 +520,7 @@ groups:
   - name: raise_on_question
     module_path: _internal.interactive
     docstring: ''
-    line_number: 578
+    line_number: 583
     type: class
     mro_bases:
     - force_interactive
@@ -534,7 +546,7 @@ groups:
   - name: select_dict
     module_path: _internal.interactive
     docstring: ''
-    line_number: 296
+    line_number: 301
     type: function
     signature:
       parameters:
@@ -566,7 +578,7 @@ groups:
   - name: select_list
     module_path: _internal.interactive
     docstring: ''
-    line_number: 323
+    line_number: 328
     type: function
     signature:
       parameters:
@@ -598,7 +610,7 @@ groups:
   - name: select_list_choice
     module_path: _internal.interactive
     docstring: ''
-    line_number: 360
+    line_number: 365
     type: function
     signature:
       parameters:
@@ -630,7 +642,7 @@ groups:
   - name: select_list_multiple
     module_path: _internal.interactive
     docstring: ''
-    line_number: 245
+    line_number: 250
     type: function
     signature:
       parameters:
@@ -662,7 +674,7 @@ groups:
   - name: select_list_multiple_choices
     module_path: _internal.interactive
     docstring: ''
-    line_number: 271
+    line_number: 276
     type: function
     signature:
       parameters:
@@ -694,7 +706,7 @@ groups:
   - name: text
     module_path: _internal.interactive
     docstring: ''
-    line_number: 133
+    line_number: 138
     type: function
     signature:
       parameters:
@@ -1216,7 +1228,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 251
+    line_number: 259
     type: function
     signature:
       parameters:
@@ -2373,4 +2385,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-09-17 12:31:56.878125+00:00
+dumped_at: 2026-09-22 11:21:37.150375+00:00

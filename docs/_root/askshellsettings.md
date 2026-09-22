@@ -77,7 +77,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
-| unreleased | added optional field 'replay_prompt_file_in_tty' (default: False) |
+| 0.11.5 | added optional field 'replay_prompt_file_in_tty' (default: False) |
 | 0.11.3 | added optional field 'skip_non_interactive_prompt_file' (default: False) |
 | 0.11.0 | added optional field 'use_defaults' (default: True) |
 | 0.11.0 | added optional field 'non_interactive_prompt_path' (default: None) |

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.5 2026-09-22T11-21Z
+
+### __Root__
+- `__ROOT__.AskShellSettings`: added optional field 'replay_prompt_file_in_tty' (default: False)
+
+### Ask
+- fix(ask): Make TTY prompt-file replay opt-in [986140](https://github.com/EspenAlbert/ask-shell/commit/986140)
+
+
 ## 0.11.4 2026-09-17T12-31Z
 
 ### Ask
