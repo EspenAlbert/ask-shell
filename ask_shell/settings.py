@@ -125,6 +125,12 @@ class AskShellSettings(StaticSettings):
         alias=ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE,
         description="Skip the non-interactive prompt session file and lock entirely. For long-running commands that never ask a prompt.",
     )
+    ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY: ClassVar[str] = f"{ENV_PREFIX}REPLAY_PROMPT_FILE_IN_TTY"
+    replay_prompt_file_in_tty: bool = Field(
+        default=False,
+        alias=ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY,
+        description="In an interactive shell, replay and record the non-interactive prompt file instead of asking directly. Use to resume after a crash.",
+    )
     ENV_NAME_THREAD_COUNT: ClassVar[str] = f"{ENV_PREFIX}THREAD_COUNT"
     thread_count: int = Field(
         default=100,

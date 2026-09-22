@@ -182,6 +182,27 @@ def test_error_keeps_live_file(settings, monkeypatch):
     assert settings.prompt_path_export_line() in joined
 
 
+def test_error_with_answered_rows_names_the_replay_opt_in(settings, monkeypatch):
+    live = _leaf_live(settings, "root", "leaf")
+    file_utils.ensure_parents_write_text(
+        live,
+        "questions:\n  - kind: confirm\n    prompt: Ship?\n    response: true\n",
+    )
+    lines = _capture_live(monkeypatch)
+
+    def boom() -> None:
+        raise RuntimeError("nope")
+
+    with pytest.raises(RuntimeError, match="nope"):
+        _wrap(settings, boom)()
+    assert live.exists()
+    assert _archives(live) == []
+    joined = "\n".join(lines)
+    assert str(live) in joined
+    assert AskShellSettings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY in joined
+    assert settings.prompt_path_export_line() in joined
+
+
 @pytest.mark.parametrize(
     ("exc_type", "exc_factory"),
     [

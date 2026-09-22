@@ -59,10 +59,16 @@ def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
     if not live.exists():
         return
     doc, _ = load_prompt_file(live)
-    if not prompt_session_needs_attention(doc):
+    if not doc.questions:
         discard_empty_prompt_stub(live)
         return
-    log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+    if prompt_session_needs_attention(doc):
+        log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+    elif not settings.replay_prompt_file_in_tty:
+        log_to_live(
+            f"Prompt session file left at {live} with recorded answers. Re-run with "
+            f"{settings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY}=true to replay, or delete the file to start over."
+        )
     log_to_live(settings.prompt_path_export_line())
 
 

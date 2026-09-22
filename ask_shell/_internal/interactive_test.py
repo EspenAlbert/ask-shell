@@ -384,7 +384,7 @@ def test_tty_unconfigured_does_not_write_prompt_file(settings, monkeypatch):
     assert not settings.non_interactive_prompt_file.exists()
 
 
-def test_tty_replays_configured_prompt_file(settings, monkeypatch):
+def test_tty_ignores_pinned_prompt_file_without_opt_in(settings, monkeypatch):
     path = settings.non_interactive_prompt_file
     file_utils.ensure_parents_write_text(
         path,
@@ -396,8 +396,74 @@ questions:
 """,
     )
     monkeypatch.setenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, str(path))
+    asker = _ScriptedAsker(False)
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        assert confirm("Go?") is False
+    assert asker.calls == 1
+
+
+def test_tty_replays_when_opted_in(settings, monkeypatch):
+    path = settings.non_interactive_prompt_file
+    file_utils.ensure_parents_write_text(
+        path,
+        """\
+questions:
+  - kind: confirm
+    prompt: Go?
+    response: true
+""",
+    )
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, str(path))
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY, "true")
     asker = _ScriptedAsker()
     _patch_askers(monkeypatch, asker)
     with force_interactive():
         assert confirm("Go?") is True
     assert asker.calls == 0
+
+
+def test_tty_records_answers_without_opt_in(settings, monkeypatch):
+    path = settings.non_interactive_prompt_file
+    path.unlink(missing_ok=True)
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, str(path))
+    asker = _ScriptedAsker(False)
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        assert confirm("Go?") is False
+    assert asker.calls == 1
+    doc = _load_prompt(settings)
+    assert len(doc.questions) == 1
+    match doc.questions[0]:
+        case ConfirmQuestion(response=False):
+            pass
+        case _:
+            raise AssertionError(f"expected answered confirm, got {doc.questions[0]!r}")
+
+
+def test_tty_fresh_answers_replace_stale_rows(settings, monkeypatch):
+    path = settings.non_interactive_prompt_file
+    file_utils.ensure_parents_write_text(
+        path,
+        """\
+questions:
+  - kind: confirm
+    prompt: Apply this plan?
+    response: true
+  - kind: confirm
+    prompt: Delete everything?
+    response: true
+""",
+    )
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_NON_INTERACTIVE_PROMPT_PATH, str(path))
+    asker = _ScriptedAsker(False)
+    _patch_askers(monkeypatch, asker)
+    with force_interactive():
+        assert confirm("Go?") is False
+    doc = _load_prompt(settings)
+    assert len(doc.questions) == 1
+    match doc.questions[0]:
+        case ConfirmQuestion(prompt="Go?", response=False):
+            pass
+        case _:
+            raise AssertionError(f"expected only the fresh answered confirm, got {doc.questions!r}")
