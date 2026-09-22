@@ -14,6 +14,7 @@ from rich.logging import RichHandler
 from rich.traceback import Traceback
 
 import ask_shell
+from ask_shell._internal._run_env import interactive_shell
 from ask_shell._internal.non_interactive import (
     NonInteractivePromptError,
     PromptSessionLockedError,
@@ -59,10 +60,17 @@ def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
     if not live.exists():
         return
     doc, _ = load_prompt_file(live)
-    if not prompt_session_needs_attention(doc):
+    if not doc.questions:
         discard_empty_prompt_stub(live)
         return
-    log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+    if prompt_session_needs_attention(doc):
+        log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+    elif interactive_shell() and not settings.replay_prompt_file_in_tty:
+        # Opt-in is TTY-only; non-interactive re-runs already replay without this env.
+        log_to_live(
+            f"Prompt session file left at {live} with recorded answers. Re-run with "
+            f"{settings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY}=true to replay, or delete the file to start over."
+        )
     log_to_live(settings.prompt_path_export_line())
 
 

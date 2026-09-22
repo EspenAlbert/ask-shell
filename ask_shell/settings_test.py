@@ -66,6 +66,12 @@ def test_skip_non_interactive_prompt_file_default_and_env(settings, monkeypatch)
     assert AskShellSettings.from_env().skip_non_interactive_prompt_file is True
 
 
+def test_replay_prompt_file_in_tty_default_and_env(settings, monkeypatch):
+    assert settings.replay_prompt_file_in_tty is False
+    monkeypatch.setenv(AskShellSettings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY, "true")
+    assert AskShellSettings.from_env().replay_prompt_file_in_tty is True
+
+
 def test_configure_prompt_path_if_unset_and_noop(settings):
     filename = AskShellSettings.NON_INTERACTIVE_PROMPT_FILENAME
     first = settings.configure_non_interactive_prompt_path_if_unset(

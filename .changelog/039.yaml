@@ -1,0 +1,17 @@
+name: ask
+ts: 2026-09-22 09:25:03.881535+00:00
+type: fix
+author: Espen Albert
+changelog_message: 'fix(ask): Make TTY prompt-file replay opt-in'
+group: ask
+message: 'fix(ask): Make TTY prompt-file replay opt-in'
+short_sha: '986140'
+---
+name: AskShellSettings
+ts: 2026-09-22 09:25:52.947440+00:00
+type: additional_change
+auto_generated: true
+change_kind: optional_field_added
+details: 'added optional field ''replay_prompt_file_in_tty'' (default: False)'
+field_name: replay_prompt_file_in_tty
+group: __ROOT__

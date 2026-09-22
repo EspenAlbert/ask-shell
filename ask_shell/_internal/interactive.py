@@ -99,10 +99,15 @@ def _ask_with_session(
             return usable_default
         return replay_or_dump(kind=kind, prompt=prompt, settings=settings, choices=choices)
     if settings.non_interactive_prompt_path is None:
-        # An unconfigured process must not read or write the shared default prompt file in a TTY.
+        # An unconfigured process must not read or write the shared default prompt file in a TTY either.
         logger.debug("No session prompt path configured for this process, prompting directly.")
         return ask_fn()
-    replayed = try_replay_answered(kind=kind, prompt=prompt, settings=settings, choices=choices)
+    # Replay is for resuming after a crash, so it is opt-in; recording always runs so the resume has data.
+    replayed = (
+        try_replay_answered(kind=kind, prompt=prompt, settings=settings, choices=choices)
+        if settings.replay_prompt_file_in_tty
+        else None
+    )
     if replayed is not None:
         return replayed
     value = ask_fn()
