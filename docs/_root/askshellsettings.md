@@ -14,6 +14,7 @@ class AskShellSettings(StaticSettings):
     force_interactive_shell: bool = False
     disable_interactive_shell: bool = False
     skip_non_interactive_prompt_file: bool = False
+    replay_prompt_file_in_tty: bool = False
     thread_count: int = 100
     thread_pool_full_wait_time_seconds: float = 5
     search_enabled_after_choices: int = 7
@@ -76,6 +77,7 @@ class AskShellSettings(StaticSettings):
 
 | Version | Change |
 |---------|--------|
+| unreleased | added optional field 'replay_prompt_file_in_tty' (default: False) |
 | 0.11.3 | added optional field 'skip_non_interactive_prompt_file' (default: False) |
 | 0.11.0 | added optional field 'use_defaults' (default: True) |
 | 0.11.0 | added optional field 'non_interactive_prompt_path' (default: None) |

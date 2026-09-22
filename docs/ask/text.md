@@ -2,7 +2,7 @@
 
 <!-- === DO_NOT_EDIT: pkg-ext text_def === -->
 ## function: text
-- [source](../../ask_shell/_internal/interactive.py#L133)
+- [source](../../ask_shell/_internal/interactive.py#L138)
 > **Since:** 0.3.0
 
 ```python
