@@ -123,13 +123,13 @@ class AskShellSettings(StaticSettings):
     skip_non_interactive_prompt_file: bool = Field(
         default=False,
         alias=ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE,
-        description="Skip the non-interactive prompt session file and lock entirely. For long-running commands that never ask a prompt.",
+        description="Skip the non-interactive prompt file and its lock entirely. Use for long-running commands that never prompt, so a leftover file from another run cannot block or confuse them.",
     )
     ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY: ClassVar[str] = f"{ENV_PREFIX}REPLAY_PROMPT_FILE_IN_TTY"
     replay_prompt_file_in_tty: bool = Field(
         default=False,
         alias=ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY,
-        description="In an interactive shell, replay and record the non-interactive prompt file instead of asking directly. Use to resume after a crash.",
+        description="In a TTY, replay the recorded answers in the non-interactive prompt file instead of asking again. Opt-in; use to resume after a crash. Non-interactive runs already replay without this flag.",
     )
     ENV_NAME_THREAD_COUNT: ClassVar[str] = f"{ENV_PREFIX}THREAD_COUNT"
     thread_count: int = Field(
@@ -186,7 +186,7 @@ class AskShellSettings(StaticSettings):
     non_interactive_prompt_path: Path | None = Field(
         default=None,
         alias=ENV_NAME_NON_INTERACTIVE_PROMPT_PATH,
-        description="Absolute working file for the non-interactive prompt session. Unset means cache_root / filename.",
+        description="Pin the working file for the non-interactive prompt session. Unset means cache_root / {app}/{command} / non_interactive_prompt.yaml. Set it to a file that already has answers to replay them.",
     )
     NON_INTERACTIVE_PROMPT_FILENAME: ClassVar[str] = "non_interactive_prompt.yaml"
 
