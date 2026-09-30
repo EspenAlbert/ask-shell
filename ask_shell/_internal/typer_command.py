@@ -63,14 +63,22 @@ def _hint_prompt_file_on_error(settings: AskShellSettings) -> None:
     if not doc.questions:
         discard_empty_prompt_stub(live)
         return
+    log_to_live(f"The failure above is unrelated to this prompt file. It is left over from an earlier run: {live}")
+    skip_hint = (
+        f"Delete the file to start over, or set "
+        f"{settings.ENV_NAME_SKIP_NON_INTERACTIVE_PROMPT_FILE}=true for a command that never prompts."
+    )
     if prompt_session_needs_attention(doc):
-        log_to_live(f"Prompt session file left at {live}. Re-run to replay. Delete the file to start over.")
+        log_to_live(f"Re-run to replay the recorded answers. {skip_hint}")
     elif interactive_shell() and not settings.replay_prompt_file_in_tty:
         # Opt-in is TTY-only; non-interactive re-runs already replay without this env.
         log_to_live(
-            f"Prompt session file left at {live} with recorded answers. Re-run with "
-            f"{settings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY}=true to replay, or delete the file to start over."
+            f"Recorded answers exist. Re-run with "
+            f"{settings.ENV_NAME_REPLAY_PROMPT_FILE_IN_TTY}=true to replay. {skip_hint}"
         )
+    else:
+        log_to_live(skip_hint)
+    log_to_live("See the ask-shell README, Non-interactive prompts section.")
     log_to_live(settings.prompt_path_export_line())
 
 
