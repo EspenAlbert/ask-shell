@@ -18,6 +18,8 @@ def _not_interactive_reason() -> str:
         return "TERM environment variable is set to 'dumb' or 'unknown'"
     if not sys.stdout.isatty():
         return "Standard output is not a TTY"
+    if not sys.stdin.isatty():
+        return "Standard input is not a TTY"
     if getenv("CI", "false").lower() in ("true", "1", "yes"):
         return "Running in CI environment"
     if running_in_container_environment():
