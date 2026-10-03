@@ -6,3 +6,8 @@ changelog_message: 'fix(ask): Detect split-TTY shells as non-interactive'
 group: ask
 message: 'fix(ask): Detect split-TTY shells as non-interactive'
 short_sha: b385f3
+---
+name: 0.11.6
+ts: 2026-10-03 11:40:29.956244+00:00
+type: release
+old_version: 0.11.5

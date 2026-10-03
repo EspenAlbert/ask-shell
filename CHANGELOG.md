@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.6 2026-10-03T11-40Z
+
+### Ask
+- fix(ask): Detect split-TTY shells as non-interactive [b385f3](https://github.com/EspenAlbert/ask-shell/commit/b385f3)
+
+
 ## 0.11.5 2026-09-22T11-21Z
 
 ### __Root__

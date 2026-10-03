@@ -1,5 +1,5 @@
 pkg_import_name: ask_shell
-version: 0.11.5
+version: 0.11.6
 groups:
 - name: __ROOT__
   symbols:
@@ -88,7 +88,7 @@ groups:
         is_factory: false
       is_class_var: false
       is_computed: false
-      description: Skip the non-interactive prompt session file and lock entirely. For long-running commands that never ask a prompt.
+      description: Skip the non-interactive prompt file and its lock entirely. Use for long-running commands that never prompt, so a leftover file from another run cannot block or confuse them.
       env_vars:
       - ask_shell_skip_non_interactive_prompt_file
       - skip_non_interactive_prompt_file
@@ -100,7 +100,7 @@ groups:
         is_factory: false
       is_class_var: false
       is_computed: false
-      description: In an interactive shell, replay and record the non-interactive prompt file instead of asking directly. Use to resume after a crash.
+      description: In a TTY, replay the recorded answers in the non-interactive prompt file instead of asking again. Opt-in; use to resume after a crash. Non-interactive runs already replay without this flag.
       env_vars:
       - ask_shell_replay_prompt_file_in_tty
       - replay_prompt_file_in_tty
@@ -244,7 +244,7 @@ groups:
         is_factory: false
       is_class_var: false
       is_computed: false
-      description: Absolute working file for the non-interactive prompt session. Unset means cache_root / filename.
+      description: Pin the working file for the non-interactive prompt session. Unset means cache_root / {app}/{command} / non_interactive_prompt.yaml. Set it to a file that already has answers to replay them.
       env_vars:
       - ask_shell_non_interactive_prompt_path
       - non_interactive_prompt_path
@@ -834,7 +834,7 @@ groups:
   - name: disable_interactive_shell
     module_path: _internal._run_env
     docstring: Force non-interactive mode for the remainder of this process.
-    line_number: 47
+    line_number: 49
     type: function
     signature:
       parameters: []
@@ -843,7 +843,7 @@ groups:
   - name: interactive_shell
     module_path: _internal._run_env
     docstring: ''
-    line_number: 28
+    line_number: 30
     type: function
     signature:
       parameters: []
@@ -1228,7 +1228,7 @@ groups:
   - name: configure_logging
     module_path: _internal.typer_command
     docstring: ''
-    line_number: 259
+    line_number: 267
     type: function
     signature:
       parameters:
@@ -2385,4 +2385,4 @@ groups:
       - pathlib.Path
       is_class_var: false
       is_computed: false
-dumped_at: 2026-09-22 11:21:37.150375+00:00
+dumped_at: 2026-10-03 11:40:29.897445+00:00
