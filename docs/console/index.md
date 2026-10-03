@@ -106,7 +106,7 @@ def get_live_console() -> Console: ...
 <a id="interactive_shell_def"></a>
 
 ### function: `interactive_shell`
-- [source](../../ask_shell/_internal/_run_env.py#L28)
+- [source](../../ask_shell/_internal/_run_env.py#L30)
 > **Since:** 0.3.0
 
 ```python
@@ -220,7 +220,7 @@ def print_to_live(
 <a id="disable_interactive_shell_def"></a>
 
 ### function: `disable_interactive_shell`
-- [source](../../ask_shell/_internal/_run_env.py#L47)
+- [source](../../ask_shell/_internal/_run_env.py#L49)
 > **Since:** 0.9.0
 
 ```python

@@ -1,0 +1,8 @@
+name: ask
+ts: 2026-10-03 11:38:40.071494+00:00
+type: fix
+author: EspenAlbert
+changelog_message: 'fix(ask): Detect split-TTY shells as non-interactive'
+group: ask
+message: 'fix(ask): Detect split-TTY shells as non-interactive'
+short_sha: b385f3
